@@ -1,12 +1,15 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const Layout = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <nav>
-        <Link to="/page1">page1</Link>
-        <Link to="/page2">page2</Link>
+      <nav id='layout-nav'>
+        <button onClick={() => navigate("/products")}>Products</button>
+        <button onClick={() => navigate("/transactions")}>Transactions</button>
+        <button onClick={() => navigate("/inventory")}>Inventory</button>
+        <button onClick={() => navigate("/equipment")}>Equipment</button>
       </nav>
       <Outlet />
     </>

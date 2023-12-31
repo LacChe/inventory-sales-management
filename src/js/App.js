@@ -5,19 +5,21 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Page1 from './pages/Page1.js';
-import Page2 from './pages/Page2.js';
+import Products from './pages/Products.js';
+import Transactions from './pages/Transactions.js';
+import Inventory from './pages/Inventory.js';
+import Equipment from './pages/Equipment.js';
 
 export default function App() {
-
-
   return (<>
     <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/page1" element={<Page1 />} />
-          <Route path="/page2" element={<Page2 />} />
-          <Route path="/" element={<Page1 />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/" element={<Products />} />
         </Route>
       </Routes>
     </HashRouter>
