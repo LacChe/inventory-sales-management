@@ -11,7 +11,9 @@ const Layout = () => {
         <button onClick={() => navigate("/inventory")}>Inventory</button>
         <button onClick={() => navigate("/equipment")}>Equipment</button>
       </nav>
-      <Outlet />
+      <div id='content-wrapper'>
+        <Outlet />
+      </div>
     </>
   )
 };
