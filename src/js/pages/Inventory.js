@@ -1,13 +1,13 @@
 import React from 'react'
 import { useStateContext } from '../utils/StateContext';
+import Table from '../components/Table.js';
 
 const Inventory = () => {
-  const { 
-    inventoryData
-  } = useStateContext();
+  const { inventoryData } = useStateContext();
+  
   return (
     <>
-      <div>Inventory {inventoryData[0].name["en"]}</div>
+      {inventoryData.length > 0 && <Table data={inventoryData} />}
     </>
   )
 }
