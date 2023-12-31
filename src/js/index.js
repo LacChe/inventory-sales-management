@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { StateContext } from './utils/StateContext';
 
 import App from './App.js';
 
@@ -11,6 +12,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
+    <StateContext>
       <App />
+    </StateContext>
   </React.StrictMode>
 );

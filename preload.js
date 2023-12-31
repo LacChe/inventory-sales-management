@@ -1,9 +1,19 @@
 const { ipcRenderer, contextBridge } = require('electron');
 
-contextBridge.exposeInMainWorld('electron', {
-  notificationApi: {
-    sendNotification(message) {
-      ipcRenderer.send('notify', message);
-    }
+const validChannels = ["readFile", "receiveFile"];
+
+contextBridge.exposeInMainWorld(
+  "api", {
+      send: (channel, data) => {
+          if (validChannels.includes(channel)) {
+              ipcRenderer.send(channel, data);
+          }
+      },
+      receive: (channel, func) => {
+          if (validChannels.includes(channel)) {
+              // Deliberately strip event as it includes `sender` 
+              ipcRenderer.on(channel, (event, ...args) => func(...args));
+          }
+      }
   }
-});
+);

@@ -3,12 +3,6 @@
   margin: 0;
 }
 
-a {
-  display: inline-block;
-  text-decoration: none;
-  color: black;
-}
-
 #layout-nav {
   position: fixed;
   width: 100%;
@@ -26,6 +20,10 @@ a {
 #layout-nav button:active {
   background-color: #565656;
   color: white;
+}
+
+#layout-nav button:hover {
+  cursor: pointer;
 }
 
 #content-wrapper {
