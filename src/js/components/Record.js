@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const PopupComp = ({ fields, item, filePath, allItems }) => {
+const Record = ({ fields, item, filePath, allItems }) => {
 
   function generateUID() {
     var firstPart = (Math.random() * 46656) | 0;
@@ -30,7 +30,7 @@ const PopupComp = ({ fields, item, filePath, allItems }) => {
 
     // send to main for saving
     window.api.send("saveFile", { filePath, newAllItems });
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   function dataTable() {
@@ -39,7 +39,7 @@ const PopupComp = ({ fields, item, filePath, allItems }) => {
         {fields.map(key => 
           <Fragment key={key}>
             <label htmlFor={key+'input'} className='popup-grid-cell'>{key}</label>
-            {key==='id' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : generateUID()} readOnly></input>}
+            {key==='id' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : generateUID()} readOnly/>}
             {key==='notes' && <textarea id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
             {key!=='id' && key!=='notes' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
           </Fragment>
@@ -56,4 +56,4 @@ const PopupComp = ({ fields, item, filePath, allItems }) => {
   )
 }
 
-export default PopupComp
+export default Record

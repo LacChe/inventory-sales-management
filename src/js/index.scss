@@ -50,7 +50,7 @@
   align-self: center;
 }
 
-.field-toggle-buttons button, .edit-button {
+.field-toggle-buttons button, .edit-button , .delete-button {
   height: 100%;
   cursor: pointer;
   border-style: none;
@@ -74,9 +74,16 @@
   height: 20px;
 }
 
-.edit-button-column {
+.edit-button-column, .delete-button-column {
   display: flex;
   flex-direction: column;
+}
+
+.notes {
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // DATA TABLE END //
@@ -103,6 +110,12 @@
 .popup-grid-cell {
   border: 1px solid black;
   padding: 2px;
+}
+
+
+.popup-comp textArea {
+  width: 12rem;
+  height: 8rem;
 }
 
 // POPUPCOMP END //

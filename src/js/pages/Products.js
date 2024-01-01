@@ -1,8 +1,12 @@
 import React from 'react'
+import { useStateContext } from '../utils/StateContext';
+import Table from '../components/Table.js';
 
 const Products = () => {
+  const { productData, productDataFilePath, productDataFields } = useStateContext();
+
   return (
-    <div>Products</div>
+    <Table fields={productDataFields} data={productData} filePath={productDataFilePath} />
   )
 }
 

@@ -5,32 +5,48 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
 
   const inventoryDataFilePath = "inventoryData.json";
+  const productDataFilePath = "productData.json";
+  const equipmentDataFilePath = "equipmentData.json";
+  const transactionDataFilePath = "transactionData.json";
+  const settingsFilePath = "settings.json";
 
   const [inventoryData, setInventoryData] = useState([]);
   const [productData, setProductData] = useState([]);
   const [equipmentData, setEquipmentData] = useState([]);
   const [transactionData, setTransactionData] = useState([]);
 
+  const [inventoryDataFields, setInventoryDataFields] = useState([]);
+  const [productDataFields, setProductDataFields] = useState([]);
+  const [equipmentDataFields, setEquipmentDataFields] = useState([]);
+  const [transactionDataFields, setTransactionDataFields] = useState([]);
+
     // ask main for files
     useEffect(() => {
-      window.api.send("readFile", "inventoryData.json");
-      window.api.send("readFile", "productData.json");
-      window.api.send("readFile", "equipmentData.json");
-      window.api.send("readFile", "transactionData.json");
+      window.api.send("readFile", inventoryDataFilePath);
+      window.api.send("readFile", productDataFilePath);
+      window.api.send("readFile", equipmentDataFilePath);
+      window.api.send("readFile", transactionDataFilePath);
+      window.api.send("readFile", settingsFilePath);
     }, [])
     window.api.receive("receiveFile", (data) => {
       switch (data[0]) {
-        case "inventoryData.json":
+        case inventoryDataFilePath:
           setInventoryData(JSON.parse(data[1]));
           break;
-        case "productData.json":
+        case productDataFilePath:
           setProductData(JSON.parse(data[1]));
           break;
-        case "equipmentData.json":
+        case equipmentDataFilePath:
           setEquipmentData(JSON.parse(data[1]));
           break;
-        case "transactionData.json":
+        case transactionDataFilePath:
           setTransactionData(JSON.parse(data[1]));
+          break;
+        case settingsFilePath:
+          setInventoryDataFields(JSON.parse(data[1]).inventoryDataFields);
+          setProductDataFields(JSON.parse(data[1]).productDataFields);
+          setEquipmentDataFields(JSON.parse(data[1]).equipmentDataFields);
+          setTransactionDataFields(JSON.parse(data[1]).transactionDataFields);
           break;
         case "error":
           console.log("error: file not found ", data[1]);
@@ -45,13 +61,22 @@ export const StateContext = ({ children }) => {
         <Context.Provider
             value={{
               inventoryDataFilePath,
+              productDataFilePath,
+              equipmentDataFilePath,
+              transactionDataFilePath,
+
               inventoryData,
               productData,
               equipmentData,
               transactionData,
+
+              inventoryDataFields,
+              productDataFields,
+              equipmentDataFields,
+              transactionDataFields,
             }}
         >
-            { children }
+          { children }
         </Context.Provider>
     )
 }

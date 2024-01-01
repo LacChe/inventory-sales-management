@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
-import PopupComp from './PopupComp.js';
+import Record from './Record.js';
+import DeleteConfirmation from './DeleteConfirmation.js';
 
-const Table = ({ data, filePath }) => {
+const Table = ({ fields, data, filePath }) => {
   
-  const fields = Object.keys(data[0]);
-  const [shownFields, setShownFields] = useState(fields.filter(filterItem => filterItem !== 'id'));
+  const [shownFields, setShownFields] = useState([]);
+  useEffect(() => {
+    if(fields.length > 0) setShownFields(fields.filter(filterItem => filterItem !== 'id'));
+  }, [fields])
+  
 
   function toggleShownField(item) {
     if(shownFields.includes(item)) {
@@ -21,7 +25,7 @@ const Table = ({ data, filePath }) => {
       <div className='field-toggle-buttons'>
         <div>
           <Popup modal trigger={<button className='add-button'>Add</button>}>
-            <PopupComp fields={fields} filePath={filePath} allItems={data} />
+            <Record fields={fields} filePath={filePath} allItems={data} />
           </Popup>
         </div>
         <p>Show Field: </p>
@@ -37,13 +41,13 @@ const Table = ({ data, filePath }) => {
       {/* data table */}
       <div className='table'>
         {/* render columns of fields that are shown */}
-        {data.length > 0 && fields.filter(filterItem => shownFields.includes(filterItem)).map(col => {
+        {fields.filter(filterItem => shownFields.includes(filterItem)).map(col => {
           return (
             <div key={col} className='column'>
               <div className='column-header'>{col}</div>
               {/* render each row for every field*/}
               {data.map(row => {
-                return <div className='cell' key={row[fields[0]]+col}>{row[col]}</div>
+                return <div className={'cell' + (col==='notes' ? ' notes' : '')} key={row[fields[0]]+col}>{row[col]}</div>
               })}
             </div>
           )
@@ -54,11 +58,22 @@ const Table = ({ data, filePath }) => {
           {data.map(row => {
             return (
             <Popup key={row.id} modal trigger={<button className='edit-button'>Edit</button>}>
-              <PopupComp fields={fields} item={row} filePath={filePath} allItems={data}/>
+              <Record fields={fields} item={row} filePath={filePath} allItems={data}/>
+            </Popup>
+          )})}
+        </div>
+        {/* delete button column */}
+        <div className='delete-button-column'>
+          <div className='column-header'>Delete</div>
+          {data.map(row => {
+            return (
+            <Popup key={row.id} modal trigger={<button className='delete-button'>Delete</button>}>
+              <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={data}/>
             </Popup>
           )})}
         </div>
       </div>
+      {data.length <=0 && <div>No Records</div>}
     </div>
   )
 }
