@@ -71,6 +71,7 @@
 .cell, .column-header {
   border: 1px solid black;
   padding: 2px;
+  height: 20px;
 }
 
 .edit-button-column {
@@ -79,3 +80,29 @@
 }
 
 // DATA TABLE END //
+
+// POPUPCOMP //
+
+.popup-overlay {
+  background-color: #AAAAAAAA;
+}
+
+.popup-comp {
+  background-color: white;
+  border: 1px solid black;
+  width: 100%;
+  border: 1px solid black;
+  padding: 2px;
+}
+
+.popup-grid {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+}
+
+.popup-grid-cell {
+  border: 1px solid black;
+  padding: 2px;
+}
+
+// POPUPCOMP END //

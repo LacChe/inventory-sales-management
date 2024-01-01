@@ -40,12 +40,42 @@ app.on('window-all-closed', function () {
 })
 
 ipcMain.on("readFile", (event, args) => {
-  fs.readFile(`./files/${args}`, "utf8", (error, data) => {
-    if(error){
-      // console.log("fs error: ", error);
-      win.webContents.send("receiveFile", ['error', error]);
+  fs.access(`./files/${args}`, fs.constants.R_OK, e => {
+    if(e) {
+      // if file doesnt exist, create one with empty array
+      fs.writeFile(`./files/${args}`, '[]', (error) => {
+        if(error){
+          console.log("fs write error: ", error);
+        } else {
+          // then read and send to react
+          fs.readFile(`./files/${args}`, "utf8", (error, data) => {
+            if(error){
+              console.log("fs read error: ", error);
+              win.webContents.send("receiveFile", ['error', error]);
+            } else {
+              win.webContents.send("receiveFile", [args, data]);
+            }
+          });
+        }
+      });
     } else {
-      win.webContents.send("receiveFile", [args, data]);
+      // else read and send to react
+      fs.readFile(`./files/${args}`, "utf8", (error, data) => {
+        if(error){
+          console.log("fs read error: ", error);
+          win.webContents.send("receiveFile", ['error', error]);
+        } else {
+          win.webContents.send("receiveFile", [args, data]);
+        }
+      });
+    }
+  });
+});
+
+ipcMain.on("saveFile", (event, args) => {
+  fs.writeFile(`./files/${args.filePath}`, JSON.stringify(args.newAllItems), (error) => {
+    if(error){
+      console.log("fs write error: ", error);
     }
   });
 });

@@ -1,6 +1,6 @@
 const { ipcRenderer, contextBridge } = require('electron');
 
-const validChannels = ["readFile", "receiveFile"];
+const validChannels = ["readFile", "receiveFile", "saveFile"];
 
 contextBridge.exposeInMainWorld(
   "api", {

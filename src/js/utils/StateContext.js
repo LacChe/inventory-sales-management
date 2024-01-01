@@ -4,6 +4,8 @@ const Context = createContext();
 
 export const StateContext = ({ children }) => {
 
+  const inventoryDataFilePath = "inventoryData.json";
+
   const [inventoryData, setInventoryData] = useState([]);
   const [productData, setProductData] = useState([]);
   const [equipmentData, setEquipmentData] = useState([]);
@@ -42,10 +44,11 @@ export const StateContext = ({ children }) => {
     return (
         <Context.Provider
             value={{
+              inventoryDataFilePath,
               inventoryData,
               productData,
               equipmentData,
-              transactionData
+              transactionData,
             }}
         >
             { children }

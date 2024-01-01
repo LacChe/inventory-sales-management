@@ -3,11 +3,11 @@ import { useStateContext } from '../utils/StateContext';
 import Table from '../components/Table.js';
 
 const Inventory = () => {
-  const { inventoryData } = useStateContext();
+  const { inventoryData, inventoryDataFilePath } = useStateContext();
   
   return (
     <>
-      {inventoryData.length > 0 && <Table data={inventoryData} />}
+      {inventoryData.length > 0 && <Table data={inventoryData} filePath={inventoryDataFilePath} />}
     </>
   )
 }

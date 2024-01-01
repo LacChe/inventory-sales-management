@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import Popup from 'reactjs-popup';
+import PopupComp from './PopupComp.js';
 
-const Table = ({ data }) => {
+const Table = ({ data, filePath }) => {
   
   const fields = Object.keys(data[0]);
-  const [shownFields, setShownFields] = useState(fields.filter(filterItem => !filterItem.includes('_id')));
+  const [shownFields, setShownFields] = useState(fields.filter(filterItem => filterItem !== 'id'));
 
   function toggleShownField(item) {
     if(shownFields.includes(item)) {
@@ -13,24 +15,15 @@ const Table = ({ data }) => {
     }
   }
 
-  // todo open in modal window and send to main to save to files
-  // order by clicking table header
-
-  function editRow() {
-    // todo
-    console.log('edit roe');
-  }
-
-  function addRow() {
-    // todo
-    console.log('add roe');
-  }
-
   return (
     <div>
       {/* toggles for displaying fields */}
       <div className='field-toggle-buttons'>
-        <div><button className='add-button' onClick={addRow}>Add</button></div>
+        <div>
+          <Popup modal trigger={<button className='add-button'>Add</button>}>
+            <PopupComp fields={fields} filePath={filePath} allItems={data} />
+          </Popup>
+        </div>
         <p>Show Field: </p>
         {fields.map(item => {
           return (
@@ -59,8 +52,11 @@ const Table = ({ data }) => {
         <div className='edit-button-column'>
           <div className='column-header'>Edit</div>
           {data.map(row => {
-            return <button onClick={editRow} className='edit-button' key={row[fields[0]]}>Edit</button>
-          })}
+            return (
+            <Popup key={row.id} modal trigger={<button className='edit-button'>Edit</button>}>
+              <PopupComp fields={fields} item={row} filePath={filePath} allItems={data}/>
+            </Popup>
+          )})}
         </div>
       </div>
     </div>
