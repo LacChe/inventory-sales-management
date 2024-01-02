@@ -19,7 +19,7 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/equipment" element={<Equipment />} />
-          <Route path="/" element={<Inventory />} />
+          <Route path="/" element={<Products />} />
         </Route>
       </Routes>
     </HashRouter>

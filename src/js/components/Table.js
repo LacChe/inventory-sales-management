@@ -6,19 +6,61 @@ import { useStateContext } from '../utils/StateContext';
 
 const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
-  const { toggleShownField, toggleOrder } = useStateContext();
-  //const [sortedData, setSortedData] = useState({});
+  const { toggleShownField, toggleOrder, productDataFilePath, inventoryDataFilePath, inventoryData, productData } = useStateContext();
 
   let sortedData = data;
+
+  // add amount
+  if(filePath === inventoryDataFilePath || filePath === productDataFilePath){
+    sortedData = sortedData.map(mapItem => {
+      return {
+        ...mapItem,
+        amount: calculateAmount(mapItem)
+      }
+    });
+  }
+
   sortedData.sort((a, b) => {
-    if(a[fieldOrder.field] > b[fieldOrder.field]){
+
+    // if empty, get data from inventory
+    if(filePath===productDataFilePath && a[fieldOrder.field] === '' && 
+    (fieldOrder.field === 'name_en' || fieldOrder.field === 'name_cn' || fieldOrder.field === 'size')) {
+        const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === a.inventory_item_id)[0];
+        if(dataFromInventory) a = dataFromInventory;
+    }
+    if(filePath===productDataFilePath && b[fieldOrder.field] === '' && 
+    (fieldOrder.field === 'name_en' || fieldOrder.field === 'name_cn' || fieldOrder.field === 'size')) {
+        const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === b.inventory_item_id)[0];
+        if(dataFromInventory) b = dataFromInventory;
+    }
+
+    if(a[fieldOrder.field]?.toString().toLowerCase() > b[fieldOrder.field]?.toString().toLowerCase()){
       return 1 * (fieldOrder.asc ? 1 : -1);
-    } else if(a[fieldOrder.field] < b[fieldOrder.field]){
+    } else if(a[fieldOrder.field]?.toString().toLowerCase() < b[fieldOrder.field]?.toString().toLowerCase()){
       return -1 * (fieldOrder.asc ? 1 : -1);
     } else {
       return 0;
     }
   });
+
+  function calculateAmount(row) {
+    // find ids of products needing sum
+    let ids;
+    switch(filePath) {
+      case productDataFilePath:
+        ids = [row.id];
+        break;
+      case inventoryDataFilePath:
+        ids = productData.filter(filterItem => filterItem.inventory_item_id === row.id).map(mapItem => mapItem.id);
+        break;
+      default:
+        console.log('error: unknown item type');
+        break;
+    }
+    // TODO, sum transactions and amounts with product ids
+    // TODO, change to amount from transactions
+    return ids;
+  }
 
   return (
     <div className='table-wrapper'>
@@ -30,11 +72,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
           </Popup>
         </div>
         <div>
-        <p>Show Field: </p>
+        <p>Show Columns: </p>
           {fields.map(item => {
             return (
               <div key={item}>
-                <button className={showFields.includes(item) ? 'selected' : ''} onClick={() => toggleShownField(filePath, item)}>{item.replace('_', ' ')}</button>
+                <button className={showFields.includes(item) ? 'selected' : ''} onClick={() => toggleShownField(filePath, item)}>{item.replaceAll('_', ' ')}</button>
               </div>
             )
           })}
@@ -53,10 +95,18 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         {fields.filter(filterItem => showFields.includes(filterItem)).map(col => {
           return (
             <div key={col} className='column'>
-              <div className='column-header' onClick={() => toggleOrder(filePath, col)}>{col.replace('_', ' ')}</div>
-              {/* render each row for every field*/}
+              {/* render header */}
+              <div className='column-header' onClick={() => toggleOrder(filePath, col)}>{col.replaceAll('_', ' ')}</div>
+              {/* render each row for every field */}
               {sortedData.map(row => {
-                return <div className={'cell' + (col==='notes' ? ' notes' : '')} key={row[fields[0]]+col}>{row[col]}</div>
+                let innerHtml = row[col];
+                // if empty, get data from inventory
+                if(filePath===productDataFilePath && row[col] === '' && 
+                (col === 'name_en' || col === 'name_cn' || col === 'size')) {
+                    const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === row.inventory_item_id)[0];
+                    if(dataFromInventory) innerHtml = dataFromInventory[col];
+                }
+                return <div className={'cell' + (col==='notes' ? ' notes' : '')} key={row[fields[0]]+col}>{innerHtml}</div>
               })}
             </div>
           )
