@@ -4,24 +4,10 @@ import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
 import { useStateContext } from '../utils/StateContext';
 
-const Table = ({ fields, data, filePath }) => {
+const Table = ({ fields, data, filePath, showFields }) => {
   
-  const { showEdit, toggleShowEdit, showDelete, toggleShowDelete } = useStateContext();
+  const { toggleShownField } = useStateContext();
   
-  const [shownFields, setShownFields] = useState([]);
-  useEffect(() => {
-    if(fields.length > 0) setShownFields(fields.filter(filterItem => filterItem !== 'id'));
-  }, [fields])
-  
-
-  function toggleShownField(item) {
-    if(shownFields.includes(item)) {
-      setShownFields(prev => prev.filter(filterItem => filterItem !== item));
-    } else {
-      setShownFields(prev => prev.concat(item));
-    }
-  }
-
   return (
     <div className='table-wrapper'>
       {/* toggles for displaying fields */}
@@ -36,15 +22,15 @@ const Table = ({ fields, data, filePath }) => {
           {fields.map(item => {
             return (
               <div key={item}>
-                <button className={shownFields.includes(item) ? 'selected' : ''} onClick={() => toggleShownField(item)}>{item.replace('_', ' ')}</button>
+                <button className={showFields.includes(item) ? 'selected' : ''} onClick={() => toggleShownField(filePath, item)}>{item.replace('_', ' ')}</button>
               </div>
             )
           })}
           <div>
-            <button className={showEdit ? 'selected' : ''} onClick={() => toggleShowEdit()}>Edit</button>
+            <button className={showFields.includes('edit') ? 'selected' : ''} onClick={() => toggleShownField(filePath, 'edit')}>Edit</button>
           </div>
           <div>
-            <button className={showDelete ? 'selected' : ''} onClick={() => toggleShowDelete()}>Delete</button>
+            <button className={showFields.includes('delete') ? 'selected' : ''} onClick={() => toggleShownField(filePath, 'delete')}>Delete</button>
           </div>
         </div>
       </div>
@@ -52,7 +38,7 @@ const Table = ({ fields, data, filePath }) => {
       {/* data table */}
       <div className='table'>
         {/* render columns of fields that are shown */}
-        {fields.filter(filterItem => shownFields.includes(filterItem)).map(col => {
+        {fields.filter(filterItem => showFields.includes(filterItem)).map(col => {
           return (
             <div key={col} className='column'>
               <div className='column-header'>{col.replace('_', ' ')}</div>
@@ -64,7 +50,7 @@ const Table = ({ fields, data, filePath }) => {
           )
         })}
         {/* edit button column */}
-        {showEdit &&
+        {showFields.includes('edit') &&
           <div className='edit-button-column'>
             <div className='column-header'>Edit</div>
             {data.map(row => {
@@ -76,7 +62,7 @@ const Table = ({ fields, data, filePath }) => {
           </div>
         }
         {/* delete button column */}
-        {showDelete &&
+        {showFields.includes('delete') &&
           <div className='delete-button-column'>
             <div className='column-header'>Delete</div>
             {data.map(row => {
