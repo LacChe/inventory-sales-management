@@ -1,14 +1,1 @@
-{
-  "inventoryDataFields": [
-    "id", "name_en", "name_cn", "size", "manufacturer", "country", "reminder_amount", "notes"
-  ],
-  "productDataFields": [
-    "id", "name_en", "name_cn", "inventory_items_id", "price", "sale_price", "size", "notes"
-  ],
-  "equipmentDataFields": [
-    "id", "name_en", "name_cn", "date_bought", "manufacturer", "notes"
-  ],
-  "transactionDataFields": [
-    "id", "date", "product_id", "amount", "revenue", "notes"
-  ]
-}
+{"showEdit":true,"showDelete":true,"showInventoryDataFields":["id","name_en","name_cn","size","manufacturer","country","reminder_amount","notes"],"showProductDataFields":["id","name_en","name_cn","inventory_items_id","price","sale_price","size","notes"],"showEquipmentDataFields":["id","name_en","name_cn","date_bought","manufacturer","notes"],"showTransactionDataFields":["id","date","product_id","amount","revenue","notes"],"inventoryDataFields":["id","name_en","name_cn","size","manufacturer","country","reminder_amount","notes"],"productDataFields":["id","name_en","name_cn","inventory_items_id","price","sale_price","size","notes"],"equipmentDataFields":["id","name_en","name_cn","date_bought","manufacturer","notes"],"transactionDataFields":["id","date","product_id","amount","revenue","notes"]}

@@ -7,11 +7,13 @@
 
 #layout-nav {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 25px;
-  border-bottom: 1px solid black;
   display: flex;
   flex-wrap: nowrap;
+  background-color: white;
 } 
 
 #layout-nav button {
@@ -30,33 +32,50 @@
   cursor: pointer;
 }
 
-#content-wrapper {
-  padding-top: 25px;
-}
-
 // LAYOUT END //
 
 // DATA TABLE //
 
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .field-toggle-buttons {
+  height: 25px;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  position: fixed;
+  top: 25px;
+  background-color: white;
+}
+
+.field-toggle-buttons > * {
   display: flex;
   flex-wrap: nowrap;
 }
 
 .field-toggle-buttons p {
-  padding: 0 2px 0 20px;
+  padding: 0 2px;
   font-size: 0.8rem;
   white-space: nowrap;
   align-self: center;
 }
 
 .field-toggle-buttons button, .edit-button , .delete-button {
+  text-transform: capitalize;
   height: 100%;
   cursor: pointer;
   border-style: none;
-  border: 1px solid black;
   white-space: nowrap;
   padding: 2px 5px;
+  border-left: 1px solid black;
 }
 
 .field-toggle-buttons .selected {
@@ -65,14 +84,26 @@
 }
 
 .table {
+  margin: auto;
   display: flex;
+  margin-top:50px;
+  border-right: 1px solid black;
 }
 
 .cell, .column-header {
-  border: 1px solid black;
+  text-transform: capitalize;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
   padding: 2px;
   height: 20px;
   white-space: nowrap;
+}
+
+.column-header {
+  position: sticky;
+  background-color: #dedede;
+  top: 51px;
+  border-bottom-width: 2px;
 }
 
 .edit-button-column, .delete-button-column {
@@ -85,6 +116,15 @@
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.delete-button, .edit-button {
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.add-button-wrapper {
+  border-right: 1px solid black;
 }
 
 // DATA TABLE END //

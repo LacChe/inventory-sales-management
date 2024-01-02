@@ -15,7 +15,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
     let newAllItems = allItems.filter(filterItem => filterItem.id !== item.id);
 
     // send to main for saving
-    window.api.send("saveFile", { filePath, newAllItems });
+    window.api.send("saveFile", { filePath, data: newAllItems });
     // event.preventDefault();
   }
 

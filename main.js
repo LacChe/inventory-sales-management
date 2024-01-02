@@ -23,8 +23,10 @@ function createWindow() {
 }
 
 if(isDev) {
+  const ignore = '/files';
   require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+    ignored: path.join(__dirname, 'files')
   });
 }
 
@@ -73,7 +75,8 @@ ipcMain.on("readFile", (event, args) => {
 });
 
 ipcMain.on("saveFile", (event, args) => {
-  fs.writeFile(`./files/${args.filePath}`, JSON.stringify(args.newAllItems), (error) => {
+  fs.writeFile(`./files/${args.filePath}`, JSON.stringify(args.data), (error) => {
+    return;
     if(error){
       console.log("fs write error: ", error);
     }

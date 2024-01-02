@@ -29,7 +29,7 @@ const Record = ({ fields, item, filePath, allItems }) => {
     }
 
     // send to main for saving
-    window.api.send("saveFile", { filePath, newAllItems });
+    window.api.send("saveFile", { filePath, data: newAllItems });
     // event.preventDefault();
   }
 
