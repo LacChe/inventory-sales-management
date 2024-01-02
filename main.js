@@ -8,7 +8,7 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 1200,
+    width: 1400,
     height: 800,
     autoHideMenuBar: true,
     webPreferences: {
