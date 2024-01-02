@@ -4,17 +4,29 @@ import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
 import { useStateContext } from '../utils/StateContext';
 
-const Table = ({ fields, data, filePath, showFields }) => {
+const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
-  const { toggleShownField } = useStateContext();
-  
+  const { toggleShownField, toggleOrder } = useStateContext();
+  //const [sortedData, setSortedData] = useState({});
+
+  let sortedData = data;
+  sortedData.sort((a, b) => {
+    if(a[fieldOrder.field] > b[fieldOrder.field]){
+      return 1 * (fieldOrder.asc ? 1 : -1);
+    } else if(a[fieldOrder.field] < b[fieldOrder.field]){
+      return -1 * (fieldOrder.asc ? 1 : -1);
+    } else {
+      return 0;
+    }
+  });
+
   return (
     <div className='table-wrapper'>
       {/* toggles for displaying fields */}
       <div className='field-toggle-buttons'>
         <div className='add-button-wrapper'>
           <Popup modal trigger={<button className='add-button'>Add</button>}>
-            <Record fields={fields} filePath={filePath} allItems={data} />
+            <Record fields={fields} filePath={filePath} allItems={sortedData} />
           </Popup>
         </div>
         <div>
@@ -41,9 +53,9 @@ const Table = ({ fields, data, filePath, showFields }) => {
         {fields.filter(filterItem => showFields.includes(filterItem)).map(col => {
           return (
             <div key={col} className='column'>
-              <div className='column-header'>{col.replace('_', ' ')}</div>
+              <div className='column-header' onClick={() => toggleOrder(filePath, col)}>{col.replace('_', ' ')}</div>
               {/* render each row for every field*/}
-              {data.map(row => {
+              {sortedData.map(row => {
                 return <div className={'cell' + (col==='notes' ? ' notes' : '')} key={row[fields[0]]+col}>{row[col]}</div>
               })}
             </div>
@@ -53,10 +65,10 @@ const Table = ({ fields, data, filePath, showFields }) => {
         {showFields.includes('edit') &&
           <div className='edit-button-column'>
             <div className='column-header'>Edit</div>
-            {data.map(row => {
+            {sortedData.map(row => {
               return (
               <Popup key={row.id} modal trigger={<button className='edit-button'>Edit</button>}>
-                <Record fields={fields} item={row} filePath={filePath} allItems={data}/>
+                <Record fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}
           </div>
@@ -65,16 +77,16 @@ const Table = ({ fields, data, filePath, showFields }) => {
         {showFields.includes('delete') &&
           <div className='delete-button-column'>
             <div className='column-header'>Delete</div>
-            {data.map(row => {
+            {sortedData.map(row => {
               return (
               <Popup key={row.id} modal trigger={<button className='delete-button'>Delete</button>}>
-                <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={data}/>
+                <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}
           </div>
         }
       </div>
-      {data.length <=0 && <div>No Records</div>}
+      {sortedData.length <=0 && <div>No Records</div>}
     </div>
   )
 }

@@ -23,7 +23,6 @@ function createWindow() {
 }
 
 if(isDev) {
-  const ignore = '/files';
   require('electron-reload')(__dirname, {
     electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
     ignored: path.join(__dirname, 'files')

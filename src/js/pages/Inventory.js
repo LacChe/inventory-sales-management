@@ -3,10 +3,10 @@ import { useStateContext } from '../utils/StateContext';
 import Table from '../components/Table.js';
 
 const Inventory = () => {
-  const { inventoryData, inventoryDataFilePath, inventoryDataFields, showInventoryDataFields } = useStateContext();
+  const { inventoryData, inventoryDataFilePath, inventoryDataFields, showInventoryDataFields, inventoryDataFieldsOrder } = useStateContext();
   
   return (
-    <Table fields={inventoryDataFields} data={inventoryData} filePath={inventoryDataFilePath} showFields={showInventoryDataFields} />
+    <Table fields={inventoryDataFields} data={inventoryData} filePath={inventoryDataFilePath} showFields={showInventoryDataFields} fieldOrder={inventoryDataFieldsOrder} />
   )
 }
 

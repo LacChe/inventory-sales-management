@@ -27,6 +27,11 @@ export const StateContext = ({ children }) => {
   const [showEquipmentDataFields, setShowEquipmentDataFields] = useState([]);
   const [showTransactionDataFields, setShowTransactionDataFields] = useState([]);
 
+  const [inventoryDataFieldsOrder, setInventoryDataFieldsOrder] = useState({field: "", asc: true});
+  const [productDataFieldsOrder, setProductDataFieldsOrder] = useState({field: "", asc: true});
+  const [equipmentDataFieldsOrder, setEquipmentDataFieldsOrder] = useState({field: "", asc: true});
+  const [transactionDataFieldsOrder, setTransactionDataFieldsOrder] = useState({field: "", asc: true});
+
   // ask main for files
   useEffect(() => {
     window.api.send("readFile", inventoryDataFilePath);
@@ -51,16 +56,21 @@ export const StateContext = ({ children }) => {
         break;
       case settingsFilePath:
         setSettings(JSON.parse(data[1]));
+        
+        setInventoryDataFields(JSON.parse(data[1]).inventory.inventoryDataFields);
+        setProductDataFields(JSON.parse(data[1]).product.productDataFields);
+        setEquipmentDataFields(JSON.parse(data[1]).equipment.equipmentDataFields);
+        setTransactionDataFields(JSON.parse(data[1]).transaction.transactionDataFields);
 
-        setInventoryDataFields(JSON.parse(data[1]).inventoryDataFields);
-        setProductDataFields(JSON.parse(data[1]).productDataFields);
-        setEquipmentDataFields(JSON.parse(data[1]).equipmentDataFields);
-        setTransactionDataFields(JSON.parse(data[1]).transactionDataFields);
+        setShowInventoryDataFields(JSON.parse(data[1]).inventory.showInventoryDataFields);
+        setShowProductDataFields(JSON.parse(data[1]).product.showProductDataFields);
+        setShowEquipmentDataFields(JSON.parse(data[1]).equipment.showEquipmentDataFields);
+        setShowTransactionDataFields(JSON.parse(data[1]).transaction.showTransactionDataFields);
 
-        setShowInventoryDataFields(JSON.parse(data[1]).showInventoryDataFields);
-        setShowProductDataFields(JSON.parse(data[1]).showProductDataFields);
-        setShowEquipmentDataFields(JSON.parse(data[1]).showEquipmentDataFields);
-        setShowTransactionDataFields(JSON.parse(data[1]).showTransactionDataFields);
+        setInventoryDataFieldsOrder(JSON.parse(data[1]).inventory.order);
+        setProductDataFieldsOrder(JSON.parse(data[1]).product.order);
+        setEquipmentDataFieldsOrder(JSON.parse(data[1]).equipment.order);
+        setTransactionDataFieldsOrder(JSON.parse(data[1]).transaction.order);
         break;
       case "error":
         console.log("error: file not found ", data[1]);
@@ -76,13 +86,13 @@ export const StateContext = ({ children }) => {
       case inventoryDataFilePath:
         if(showInventoryDataFields.includes(field)) {
           setShowInventoryDataFields(prev => {
-            settings.showInventoryDataFields = prev.filter(filterItem => filterItem !== field);
+            settings.inventory.showInventoryDataFields = prev.filter(filterItem => filterItem !== field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.filter(filterItem => filterItem !== field);
           });
         } else {
           setShowInventoryDataFields(prev => {
-            settings.showInventoryDataFields = prev.concat(field);
+            settings.inventory.showInventoryDataFields = prev.concat(field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.concat(field);
           });
@@ -91,13 +101,13 @@ export const StateContext = ({ children }) => {
       case productDataFilePath:
         if(showProductDataFields.includes(field)) {
           setShowProductDataFields(prev => {
-            settings.showProductDataFields = prev.filter(filterItem => filterItem !== field);
+            settings.product.showProductDataFields = prev.filter(filterItem => filterItem !== field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.filter(filterItem => filterItem !== field);
           });
         } else {
           setShowProductDataFields(prev => {
-            settings.showProductDataFields = prev.concat(field);
+            settings.product.showProductDataFields = prev.concat(field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.concat(field);
           });
@@ -106,13 +116,13 @@ export const StateContext = ({ children }) => {
       case equipmentDataFilePath:
         if(showEquipmentDataFields.includes(field)) {
           setShowEquipmentDataFields(prev => {
-            settings.showEquipmentDataFields = prev.filter(filterItem => filterItem !== field);
+            settings.equipment.showEquipmentDataFields = prev.filter(filterItem => filterItem !== field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.filter(filterItem => filterItem !== field);
           });
         } else {
           setShowEquipmentDataFields(prev => {
-            settings.showEquipmentDataFields = prev.concat(field);
+            settings.equipment.showEquipmentDataFields = prev.concat(field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.concat(field);
           });
@@ -121,17 +131,84 @@ export const StateContext = ({ children }) => {
       case transactionDataFilePath:
         if(showTransactionDataFields.includes(field)) {
           setShowTransactionDataFields(prev => {
-            settings.showTransactionDataFields = prev.filter(filterItem => filterItem !== field);
+            settings.transaction.showTransactionDataFields = prev.filter(filterItem => filterItem !== field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.filter(filterItem => filterItem !== field);
           });
         } else {
           setShowTransactionDataFields(prev => {
-            settings.showTransactionDataFields = prev.concat(field);
+            settings.transaction.showTransactionDataFields = prev.concat(field);
             window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
             return prev.concat(field);
           });
         }
+        break;
+      default:
+        console.log('error: no field set found');
+    }
+  }
+
+  const toggleOrder = function toggleOrder(filePath, field) {
+    switch(filePath) {
+      case inventoryDataFilePath:
+        setInventoryDataFieldsOrder(prev => {
+          let newPrev = { field: prev.field, asc: prev.asc };
+          if(newPrev.field === field){
+            newPrev.asc = !newPrev.asc;
+            settings.inventory.order.asc = newPrev.asc;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          } else {
+            newPrev.field = field;
+            settings.inventory.order.field = newPrev.field;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          }
+          return newPrev;
+        });
+        break;
+      case productDataFilePath:
+        setProductDataFieldsOrder(prev => {
+          let newPrev = { field: prev.field, asc: prev.asc };
+          if(newPrev.field === field){
+            newPrev.asc = !newPrev.asc;
+            settings.product.order.asc = newPrev.asc;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          } else {
+            newPrev.field = field;
+            settings.product.order.field = newPrev.field;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          }
+          return newPrev;
+        });
+        break;
+      case equipmentDataFilePath:
+        setEquipmentDataFieldsOrder(prev => {
+          let newPrev = { field: prev.field, asc: prev.asc };
+          if(newPrev.field === field){
+            newPrev.asc = !newPrev.asc;
+            settings.equipment.order.asc = newPrev.asc;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          } else {
+            newPrev.field = field;
+            settings.equipment.order.field = newPrev.field;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          }
+          return newPrev;
+        });
+        break;
+      case transactionDataFilePath:
+        setTransactionDataFieldsOrder(prev => {
+          let newPrev = { field: prev.field, asc: prev.asc };
+          if(newPrev.field === field){
+            newPrev.asc = !newPrev.asc;
+            settings.transaction.order.asc = newPrev.asc;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          } else {
+            newPrev.field = field;
+            settings.transaction.order.field = newPrev.field;
+            window.api.send("saveFile", { filePath: settingsFilePath, data: settings});
+          }
+          return newPrev;
+        });
         break;
       default:
         console.log('error: no field set found');
@@ -163,7 +240,13 @@ export const StateContext = ({ children }) => {
           showEquipmentDataFields,
           showTransactionDataFields,
 
-          toggleShownField
+          inventoryDataFieldsOrder,
+          productDataFieldsOrder,
+          equipmentDataFieldsOrder,
+          transactionDataFieldsOrder,
+
+          toggleShownField,
+          toggleOrder
         }}
     >
       { children }
