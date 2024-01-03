@@ -1,6 +1,36 @@
 import React, { Fragment } from 'react';
+import { useStateContext } from '../utils/StateContext';
 
 const Record = ({ fields, item, filePath, allItems }) => {
+
+  const { inventoryDataFilePath, transactionDataFilePath, productDataFilePath } = useStateContext();
+
+  // remove calculated fields
+  if(filePath === inventoryDataFilePath) {
+    if(item) {
+      delete item.amount;
+    }
+    fields = fields.filter(filterItem => {
+      if(filterItem !== 'amount') return filterItem;
+    });
+  }
+  if(filePath === transactionDataFilePath) {
+    if(item) {
+      delete item.name_en;
+      delete item.name_cn;
+    }
+    fields = fields.filter(filterItem => {
+      if(filterItem !== 'name_en' && filterItem !== 'name_cn') return filterItem;
+    });
+  }
+  if(filePath === productDataFilePath) {
+    if(item) {
+      delete item.size;
+    }
+    fields = fields.filter(filterItem => {
+      if(filterItem !== 'size') return filterItem;
+    });
+  }
 
   function generateUID() {
     var firstPart = (Math.random() * 46656) | 0;
