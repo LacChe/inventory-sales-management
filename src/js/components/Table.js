@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Popup from 'reactjs-popup';
 import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
@@ -72,7 +72,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       });
       break;
     default:
-      console.log('error: filepath not found');
       break;
   }
 
@@ -115,8 +114,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         <p>Show Columns: </p>
           {fields.map(item => {
             return (
-              <div key={item}>
-                <button className={showFields.includes(item) ? 'selected' : ''} onClick={() => toggleShownField(filePath, item)}>{item.replaceAll('_', ' ')}</button>
+              <div key={item.name}>
+                <button className={showFields.includes(item.name) ? 'selected' : ''} onClick={() => toggleShownField(filePath, item.name)}>{item.name.replaceAll('_', ' ')}</button>
               </div>
             )
           })}
@@ -132,22 +131,22 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       {/* data table */}
       <div className='table'>
         {/* render columns of fields that are shown */}
-        {fields.filter(filterItem => showFields.includes(filterItem)).map(col => {
+        {fields.filter(filterItem => showFields.includes(filterItem.name)).map(col => {
           return (
-            <div key={col} className='column'>
+            <div key={col.name} className='column'>
               {/* render header */}
-              <div className='column-header' onClick={() => toggleOrder(filePath, col)}>{col.replaceAll('_', ' ')}</div>
+              <div className='column-header' onClick={() => toggleOrder(filePath, col.name)}>{col.name.replaceAll('_', ' ')}</div>
               {/* render each row for every field */}
               {sortedData.map(row => {
-                let innerHtml = row[col];
+                let innerHtml = row[col.name];
                 if(typeof innerHtml === 'object') innerHtml = JSON.stringify(innerHtml);
                 // if empty, get data from inventory
-                if(filePath===productDataFilePath && row[col] === '' && 
-                (col === 'name_en' || col === 'name_cn' || col === 'size')) {
+                if(filePath===productDataFilePath && row[col.name] === '' && 
+                (col.name === 'name_en' || col.name === 'name_cn' || col.name === 'size')) {
                     const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(row.inventory_items)[0])[0];
-                    if(dataFromInventory) innerHtml = dataFromInventory[col];
+                    if(dataFromInventory) innerHtml = dataFromInventory[col.name];
                 }
-                return <div className={'cell' + (col==='notes' ? ' notes' : '')} key={row[fields[0]]+col}>{innerHtml}</div>
+                return <div className={'cell' + (col.name==='notes' ? ' notes' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
               })}
             </div>
           )

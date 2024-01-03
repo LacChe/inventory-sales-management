@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO convert json files to objects instead of arrays
-// TODO sometimes submit doesnt refresh
+// TODO show product id list when adding editing transaction
+// TODO charts: products sold per duration, inventory in stock per duration
+// TODO styling
+// TODO move all ipc calls to statecontext
+// todo add remove inventory ids when adding editing products and set amount
+// todo convert json files to objects instead of arrays ?
+// todo sometimes submit doesnt refresh
 
 const Context = createContext();
 
@@ -42,47 +47,47 @@ export const StateContext = ({ children }) => {
     window.api.send("readFile", equipmentDataFilePath);
     window.api.send("readFile", transactionDataFilePath);
     window.api.send("readFile", settingsFilePath);
+    window.api.receive("receiveFile", (data) => {
+      switch (data[0]) {
+        case inventoryDataFilePath:
+          setInventoryData(JSON.parse(data[1]));
+          break;
+        case productDataFilePath:
+          setProductData(JSON.parse(data[1]));
+          break;
+        case equipmentDataFilePath:
+          setEquipmentData(JSON.parse(data[1]));
+          break;
+        case transactionDataFilePath:
+          setTransactionData(JSON.parse(data[1]));
+          break;
+        case settingsFilePath:
+          setSettings(JSON.parse(data[1]));
+          
+          setInventoryDataFields(JSON.parse(data[1]).inventory.inventoryDataFields);
+          setProductDataFields(JSON.parse(data[1]).product.productDataFields);
+          setEquipmentDataFields(JSON.parse(data[1]).equipment.equipmentDataFields);
+          setTransactionDataFields(JSON.parse(data[1]).transaction.transactionDataFields);
+  
+          setShowInventoryDataFields(JSON.parse(data[1]).inventory.showInventoryDataFields);
+          setShowProductDataFields(JSON.parse(data[1]).product.showProductDataFields);
+          setShowEquipmentDataFields(JSON.parse(data[1]).equipment.showEquipmentDataFields);
+          setShowTransactionDataFields(JSON.parse(data[1]).transaction.showTransactionDataFields);
+  
+          setInventoryDataFieldsOrder(JSON.parse(data[1]).inventory.order);
+          setProductDataFieldsOrder(JSON.parse(data[1]).product.order);
+          setEquipmentDataFieldsOrder(JSON.parse(data[1]).equipment.order);
+          setTransactionDataFieldsOrder(JSON.parse(data[1]).transaction.order);
+          break;
+        case "error":
+          console.log("error: file not found ", data[1]);
+          break;
+        default:
+          console.log("error: unknown file");
+          break;
+      }
+    });
   }, [])
-  window.api.receive("receiveFile", (data) => {
-    switch (data[0]) {
-      case inventoryDataFilePath:
-        setInventoryData(JSON.parse(data[1]));
-        break;
-      case productDataFilePath:
-        setProductData(JSON.parse(data[1]));
-        break;
-      case equipmentDataFilePath:
-        setEquipmentData(JSON.parse(data[1]));
-        break;
-      case transactionDataFilePath:
-        setTransactionData(JSON.parse(data[1]));
-        break;
-      case settingsFilePath:
-        setSettings(JSON.parse(data[1]));
-        
-        setInventoryDataFields(JSON.parse(data[1]).inventory.inventoryDataFields);
-        setProductDataFields(JSON.parse(data[1]).product.productDataFields);
-        setEquipmentDataFields(JSON.parse(data[1]).equipment.equipmentDataFields);
-        setTransactionDataFields(JSON.parse(data[1]).transaction.transactionDataFields);
-
-        setShowInventoryDataFields(JSON.parse(data[1]).inventory.showInventoryDataFields);
-        setShowProductDataFields(JSON.parse(data[1]).product.showProductDataFields);
-        setShowEquipmentDataFields(JSON.parse(data[1]).equipment.showEquipmentDataFields);
-        setShowTransactionDataFields(JSON.parse(data[1]).transaction.showTransactionDataFields);
-
-        setInventoryDataFieldsOrder(JSON.parse(data[1]).inventory.order);
-        setProductDataFieldsOrder(JSON.parse(data[1]).product.order);
-        setEquipmentDataFieldsOrder(JSON.parse(data[1]).equipment.order);
-        setTransactionDataFieldsOrder(JSON.parse(data[1]).transaction.order);
-        break;
-      case "error":
-        console.log("error: file not found ", data[1]);
-        break;
-      default:
-        console.log("error: unknown file");
-        break;
-    }
-  });
 
   const toggleShownField = function toggleShownField(filePath, field) {
     switch(filePath) {

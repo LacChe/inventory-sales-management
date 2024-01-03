@@ -1,36 +1,15 @@
 import React, { Fragment } from 'react';
-import { useStateContext } from '../utils/StateContext';
 
 const Record = ({ fields, item, filePath, allItems }) => {
 
-  const { inventoryDataFilePath, transactionDataFilePath, productDataFilePath } = useStateContext();
-
-  // remove calculated fields
-  if(filePath === inventoryDataFilePath) {
-    if(item) {
-      delete item.amount;
+  // remove formula fields
+  fields = fields.filter(field => {
+    if(field.type === 'formula') {
+      if(item) delete item[field.name];
+      return;
     }
-    fields = fields.filter(filterItem => {
-      if(filterItem !== 'amount') return filterItem;
-    });
-  }
-  if(filePath === transactionDataFilePath) {
-    if(item) {
-      delete item.name_en;
-      delete item.name_cn;
-    }
-    fields = fields.filter(filterItem => {
-      if(filterItem !== 'name_en' && filterItem !== 'name_cn') return filterItem;
-    });
-  }
-  if(filePath === productDataFilePath) {
-    if(item) {
-      delete item.size;
-    }
-    fields = fields.filter(filterItem => {
-      if(filterItem !== 'size') return filterItem;
-    });
-  }
+    return field;
+  })
 
   function generateUID() {
     var firstPart = (Math.random() * 46656) | 0;
@@ -70,13 +49,13 @@ const Record = ({ fields, item, filePath, allItems }) => {
     return (
       <form className='popup-grid' onSubmit={saveData}>
         {fields.map(key => 
-          <Fragment key={key}>
-            <label htmlFor={key+'input'} className='popup-grid-cell'>{key}</label>
-            {key==='id' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : generateUID()} readOnly/>}
-            {key==='notes' && <textarea id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
-            {key==='date' && <input type='date' id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
-            {key==='inventory_items' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? JSON.stringify(item[key]) : ''} />}
-            {key!=='id' && key!=='inventory_items' && key!=='notes' && key!=='date' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
+          <Fragment key={key.name}>
+            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
+            {key.name==='id' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : generateUID()} readOnly/>}
+            {key.name==='notes' && <textarea id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
+            {key.type==='date' && <input type='date' id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
+            {key.type==='object' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? JSON.stringify(item[key.name]) : ''} />}
+            {key.name!=='id' && key.type!=='object' && key.name!=='notes' && key.type!=='date' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
           </Fragment>
         )}
         <button type='submit' className='popup-save-button'>Save</button>

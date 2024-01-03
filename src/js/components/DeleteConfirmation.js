@@ -15,9 +15,9 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
     return (
       <form className='popup-grid' onSubmit={saveData}>
         {fields.map(key => 
-          <Fragment key={key}>
-            <label htmlFor={key+'input'} className='popup-grid-cell'>{key}</label>
-            <input id={key+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(item[key])} readOnly></input>
+          <Fragment key={key.name}>
+            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
+            <input id={key.name+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(item[key.name])} readOnly></input>
           </Fragment>
         )}
         <button type='submit' className='popup-delete-button'>Delete</button>
