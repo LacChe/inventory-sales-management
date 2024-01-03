@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // TODO convert json files to objects instead of arrays
+// TODO sometimes submit doesnt refresh
 
 const Context = createContext();
 

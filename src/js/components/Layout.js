@@ -1,15 +1,24 @@
-import React from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Layout = () => {
+
   const navigate = useNavigate();
+
+  const [selectedTab, setSelectedTab] = useState('products');
+  
+  const tabClick = function tabClick(tabName) {
+    setSelectedTab(tabName);
+    navigate("/"+tabName);
+  }
+
   return (
     <>
       <nav id='layout-nav'>
-        <button onClick={() => navigate("/products")}>Products</button>
-        <button onClick={() => navigate("/transactions")}>Transactions</button>
-        <button onClick={() => navigate("/inventory")}>Inventory</button>
-        <button onClick={() => navigate("/equipment")}>Equipment</button>
+        <button className={selectedTab==='products' ? 'selected' : ''} onClick={() => tabClick("products")}>Products</button>
+        <button className={selectedTab==='transactions' ? 'selected' : ''} onClick={() => tabClick("transactions")}>Transactions</button>
+        <button className={selectedTab==='inventory' ? 'selected' : ''} onClick={() => tabClick("inventory")}>Inventory</button>
+        <button className={selectedTab==='equipment' ? 'selected' : ''} onClick={() => tabClick("equipment")}>Equipment</button>
       </nav>
       <div id='content-wrapper'>
         <Outlet />

@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+.selected {
+  background-color: #565656;
+  color: white;
+}
+
 // LAYOUT //
 
 #layout-nav {
@@ -76,11 +81,6 @@
   white-space: nowrap;
   padding: 2px 5px;
   border-left: 1px solid black;
-}
-
-.field-toggle-buttons .selected {
-  background-color: #565656;
-  color: white;
 }
 
 .table {
