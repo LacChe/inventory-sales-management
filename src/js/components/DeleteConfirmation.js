@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 
-  function saveData(event) {
+  function saveData() {
     // remove from allItems
     let newAllItems = allItems.filter(filterItem => filterItem.id !== item.id);
 
@@ -17,7 +17,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
         {fields.map(key => 
           <Fragment key={key}>
             <label htmlFor={key+'input'} className='popup-grid-cell'>{key}</label>
-            <input id={key+'input'} className='popup-grid-cell' defaultValue={item[key]} readOnly></input>
+            <input id={key+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(item[key])} readOnly></input>
           </Fragment>
         )}
         <button type='submit' className='popup-delete-button'>Delete</button>

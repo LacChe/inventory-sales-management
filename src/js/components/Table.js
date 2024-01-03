@@ -90,12 +90,12 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         if(dataFromInventory) b = dataFromInventory;
     }
 
-    // sort by number or string accordingly
+    // sort by number string accordingly
     if(fieldOrder.field === 'amount' || fieldOrder.field === 'revenue' || fieldOrder.field === 'price') {
       return ((parseInt(a[fieldOrder.field]) || 0) - (parseInt(b[fieldOrder.field]) || 0)) * (fieldOrder.asc ? 1 : -1);
-    } else if(a[fieldOrder.field]?.toString().toLowerCase() > b[fieldOrder.field]?.toString().toLowerCase()){
+    } else if(JSON.stringify(a[fieldOrder.field])?.toString().toLowerCase() > JSON.stringify(b[fieldOrder.field])?.toString().toLowerCase()){
       return 1 * (fieldOrder.asc ? 1 : -1);
-    } else if(a[fieldOrder.field]?.toString().toLowerCase() < b[fieldOrder.field]?.toString().toLowerCase()){
+    } else if(JSON.stringify(a[fieldOrder.field])?.toLowerCase() < JSON.stringify(b[fieldOrder.field])?.toString().toLowerCase()){
       return -1 * (fieldOrder.asc ? 1 : -1);
     } else {
       return 0;
@@ -178,9 +178,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         }
       </div>
       {sortedData.length <=0 && <div>No Records</div>}
-      {sortedData.length <=0 && <input onChange={(e) => {
-        console.log(e.target.value)
-      }} type='date' className='popup-grid-cell' defaultValue={'2023-01-13'} />}
     </div>
   )
 }

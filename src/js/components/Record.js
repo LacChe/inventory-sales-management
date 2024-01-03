@@ -14,9 +14,12 @@ const Record = ({ fields, item, filePath, allItems }) => {
     // create new item
     let newItem = {};
     for(let i = 0; i < fields.length; i++) {
-      newItem[fields[i]] = event.target[i].value;
+      if(event.target[i].id === 'inventory_itemsinput') {
+        newItem[fields[i]] = JSON.parse(event.target[i].value);
+      } else {
+        newItem[fields[i]] = event.target[i].value;
+      }
     }
-
     // add or change in allItems
     let newAllItems = allItems;
     if(newAllItems.filter(filterItem => filterItem.id === newItem.id).length === 0){
@@ -42,7 +45,8 @@ const Record = ({ fields, item, filePath, allItems }) => {
             {key==='id' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : generateUID()} readOnly/>}
             {key==='notes' && <textarea id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
             {key==='date' && <input type='date' id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
-            {key!=='id' && key!=='notes' && key!=='date' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
+            {key==='inventory_items' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? JSON.stringify(item[key]) : ''} />}
+            {key!=='id' && key!=='inventory_items' && key!=='notes' && key!=='date' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
           </Fragment>
         )}
         <button type='submit' className='popup-save-button'>Save</button>
