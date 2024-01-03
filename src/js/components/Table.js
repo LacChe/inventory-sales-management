@@ -102,25 +102,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     }
   });
 
-  function calculateAmount(row) {
-    // find ids of products needing sum
-    let ids;
-    switch(filePath) {
-      case productDataFilePath:
-        ids = [row.id];
-        break;
-      case inventoryDataFilePath:
-        ids = productData.filter(filterItem => filterItem.inventory_items === row.id).map(mapItem => mapItem.id);
-        break;
-      default:
-        console.log('error: unknown item type');
-        break;
-    }
-    // TODO, sum transactions and amounts with product ids
-    // TODO, change to amount from transactions
-    return ids;
-  }
-
   return (
     <div className='table-wrapper'>
       {/* toggles for displaying fields */}
