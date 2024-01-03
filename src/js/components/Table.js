@@ -66,8 +66,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         })[0];
         return {
           ...mapItem,
-          name_en: names.name_en + ' ' + names.size,
-          name_cn: names.name_cn + ' ' + names.size
+          name_en: names?.name_en + ' ' + names?.size,
+          name_cn: names?.name_cn + ' ' + names?.size
         }
       });
       break;
@@ -178,6 +178,9 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         }
       </div>
       {sortedData.length <=0 && <div>No Records</div>}
+      {sortedData.length <=0 && <input onChange={(e) => {
+        console.log(e.target.value)
+      }} type='date' className='popup-grid-cell' defaultValue={'2023-01-13'} />}
     </div>
   )
 }

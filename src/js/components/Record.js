@@ -41,7 +41,8 @@ const Record = ({ fields, item, filePath, allItems }) => {
             <label htmlFor={key+'input'} className='popup-grid-cell'>{key}</label>
             {key==='id' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : generateUID()} readOnly/>}
             {key==='notes' && <textarea id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
-            {key!=='id' && key!=='notes' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
+            {key==='date' && <input type='date' id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
+            {key!=='id' && key!=='notes' && key!=='date' && <input id={key+'input'} className='popup-grid-cell' defaultValue={item ? item[key] : ''} />}
           </Fragment>
         )}
         <button type='submit' className='popup-save-button'>Save</button>
