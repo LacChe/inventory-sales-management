@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+// TODO convert json files to objects instead of arrays
+
 const Context = createContext();
 
 export const StateContext = ({ children }) => {

@@ -1,1 +1,1642 @@
-[]
+[
+  {
+      "id": "s8j1pe",
+      "date": "2023/11/04",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "3pojzx",
+      "date": "2023/11/04",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "ktire8",
+      "date": "2023/11/04",
+      "product_id": "sblcpk",
+      "amount": "2",
+      "revenue": "40",
+      "notes": ""
+  },
+  {
+      "id": "g8ziq1",
+      "date": "2023/11/04",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": ""
+  },
+  {
+      "id": "5g5wu8",
+      "date": "2023/11/04",
+      "product_id": "zbbn5d",
+      "amount": "1",
+      "revenue": "168",
+      "notes": "gifted reniu noni soap"
+  },
+  {
+      "id": "2xwh4i",
+      "date": "2023/11/05",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "pvhl5l",
+      "date": "2023/11/05",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "ack7do",
+      "date": "2023/11/05",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "tq7yie",
+      "date": "2023/11/11",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "1n6x6n",
+      "date": "2023/11/14",
+      "product_id": "5kt1od",
+      "amount": "2",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "0pw6ms",
+      "date": "2023/11/14",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": ""
+  },
+  {
+      "id": "1xhpnc",
+      "date": "2023/11/14",
+      "product_id": "5kt1od",
+      "amount": "-22",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "bnkcmj",
+      "date": "2023/11/14",
+      "product_id": "hefptc",
+      "amount": "-21",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "v0ev6z",
+      "date": "2023/11/14",
+      "product_id": "4mn21j",
+      "amount": "-19",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "ql2fkk",
+      "date": "2023/11/14",
+      "product_id": "gfni80",
+      "amount": "-24",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "gr8ef8",
+      "date": "2023/11/14",
+      "product_id": "babusx",
+      "amount": "-46",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "8c4r15",
+      "date": "2023/11/14",
+      "product_id": "u7s3u8",
+      "amount": "-41",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "vcybfo",
+      "date": "2023/11/14",
+      "product_id": "sblcpk",
+      "amount": "-45",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "yltbao",
+      "date": "2023/11/14",
+      "product_id": "2lt55q",
+      "amount": "-164",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "6dyvo2",
+      "date": "2023/11/14",
+      "product_id": "gugkdg",
+      "amount": "-120",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "jlk308",
+      "date": "2023/11/14",
+      "product_id": "95cjmc",
+      "amount": "-60",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "6no3yt",
+      "date": "2023/11/14",
+      "product_id": "wqrvy1",
+      "amount": "-36",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "3d1nzz",
+      "date": "2023/11/14",
+      "product_id": "6ksvb6",
+      "amount": "-40",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "6gt8o5",
+      "date": "2023/11/14",
+      "product_id": "jtaajf",
+      "amount": "-14",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "gfya1v",
+      "date": "2023/11/14",
+      "product_id": "nukrnk",
+      "amount": "-24",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "nrxftj",
+      "date": "2023/11/14",
+      "product_id": "w0f0kp",
+      "amount": "-23",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "cu92gk",
+      "date": "2023/11/14",
+      "product_id": "yrgewl",
+      "amount": "-9",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "79q1st",
+      "date": "2023/11/14",
+      "product_id": "kmmy41",
+      "amount": "-41",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "vbrpja",
+      "date": "2023/11/14",
+      "product_id": "xaowmk",
+      "amount": "-9",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "4gsuat",
+      "date": "2023/11/14",
+      "product_id": "zbbn5d",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "odzgfh",
+      "date": "2023/11/14",
+      "product_id": "av2qto",
+      "amount": "-7",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "a4qwdj",
+      "date": "2023/11/14",
+      "product_id": "ciupiq",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "sm6roo",
+      "date": "2023/11/14",
+      "product_id": "j4u631",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "d0i67t",
+      "date": "2023/11/14",
+      "product_id": "frmb12",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "kdpufi",
+      "date": "2023/11/14",
+      "product_id": "u9jrp0",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "mvx9ve",
+      "date": "2023/11/14",
+      "product_id": "ag8349",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "jrn6qu",
+      "date": "2023/11/14",
+      "product_id": "54waai",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "7ykjn5",
+      "date": "2023/11/14",
+      "product_id": "5bhy59",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "12yhmd",
+      "date": "2023/11/14",
+      "product_id": "868oha",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "3yk39r",
+      "date": "2023/11/14",
+      "product_id": "fcv94u",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "rp8oev",
+      "date": "2023/11/14",
+      "product_id": "gf1mtl",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "3p5gp2",
+      "date": "2023/11/14",
+      "product_id": "zt4kty",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "4aott3",
+      "date": "2023/11/14",
+      "product_id": "b0ucp3",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "f6o1p5",
+      "date": "2023/11/14",
+      "product_id": "sxmvna",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "sfi9re",
+      "date": "2023/11/14",
+      "product_id": "k6dk5f",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "3vdkuk",
+      "date": "2023/11/14",
+      "product_id": "qit8he",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "wvros6",
+      "date": "2023/11/14",
+      "product_id": "3dnwe7",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "cdvmkb",
+      "date": "2023/11/14",
+      "product_id": "kjeofq",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "v20433",
+      "date": "2023/11/14",
+      "product_id": "hvo8a3",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "90su38",
+      "date": "2023/11/14",
+      "product_id": "bzc156",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "fqj5bv",
+      "date": "2023/11/14",
+      "product_id": "2b7hay",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "kx6wd5",
+      "date": "2023/11/14",
+      "product_id": "zfzvfu",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "h74llt",
+      "date": "2023/11/14",
+      "product_id": "55492m",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "paathy",
+      "date": "2023/11/14",
+      "product_id": "k3663g",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "xauu7k",
+      "date": "2023/11/14",
+      "product_id": "3v5ste",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "at8nmk",
+      "date": "2023/11/14",
+      "product_id": "834a9z",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "zvs8bz",
+      "date": "2023/11/14",
+      "product_id": "ggmt8h",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "xb6crs",
+      "date": "2023/11/14",
+      "product_id": "pyyolw",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "p28w6x",
+      "date": "2023/11/14",
+      "product_id": "iaap4r",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "2a9e64",
+      "date": "2023/11/14",
+      "product_id": "0sh75q",
+      "amount": "-6",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "74hmbm",
+      "date": "2023/11/14",
+      "product_id": "qbgdsu",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "24ud38",
+      "date": "2023/11/14",
+      "product_id": "kmymw3",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "oyxa05",
+      "date": "2023/11/14",
+      "product_id": "xhq0sn",
+      "amount": "-6",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "86c6qm",
+      "date": "2023/11/14",
+      "product_id": "cb6z7m",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "from counting inventory"
+  },
+  {
+      "id": "8ta4eo",
+      "date": "2023/11/15",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift jimmy's friend"
+  },
+  {
+      "id": "541peo",
+      "date": "2023/11/15",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift jimmy's friend"
+  },
+  {
+      "id": "fpt2vb",
+      "date": "2023/11/15",
+      "product_id": "sblcpk",
+      "amount": "4",
+      "revenue": "40",
+      "notes": "gift jimmy's friend"
+  },
+  {
+      "id": "qqqand",
+      "date": "2023/11/15",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": ""
+  },
+  {
+      "id": "276xt6",
+      "date": "2023/11/15",
+      "product_id": "jtaajf",
+      "amount": "6",
+      "revenue": "272",
+      "notes": ""
+  },
+  {
+      "id": "eeaaob",
+      "date": "2023/11/15",
+      "product_id": "nukrnk",
+      "amount": "3",
+      "revenue": "136",
+      "notes": ""
+  },
+  {
+      "id": "f9xorj",
+      "date": "2023/11/15",
+      "product_id": "w0f0kp",
+      "amount": "9",
+      "revenue": "408",
+      "notes": ""
+  },
+  {
+      "id": "wgxqca",
+      "date": "2023/11/15",
+      "product_id": "kmmy41",
+      "amount": "4",
+      "revenue": "",
+      "notes": "gift jimmy's friend"
+  },
+  {
+      "id": "68flsr",
+      "date": "2023/11/15",
+      "product_id": "0sh75q",
+      "amount": "1",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "zjbhm6",
+      "date": "2023/11/15",
+      "product_id": "xhq0sn",
+      "amount": "1",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "7zb65p",
+      "date": "2023/11/17",
+      "product_id": "wqrvy1",
+      "amount": "2",
+      "revenue": "",
+      "notes": "for taste testing"
+  },
+  {
+      "id": "7zbll3",
+      "date": "2023/11/17",
+      "product_id": "zbbn5d",
+      "amount": "1",
+      "revenue": "168",
+      "notes": ""
+  },
+  {
+      "id": "qd10nl",
+      "date": "2023/11/17",
+      "product_id": "av2qto",
+      "amount": "1",
+      "revenue": "",
+      "notes": "for taste testing"
+  },
+  {
+      "id": "eqey80",
+      "date": "2023/11/17",
+      "product_id": "j4u631",
+      "amount": "1",
+      "revenue": "",
+      "notes": "for taste testing"
+  },
+  {
+      "id": "tnrhgz",
+      "date": "2023/11/18",
+      "product_id": "sblcpk",
+      "amount": "3",
+      "revenue": "60",
+      "notes": ""
+  },
+  {
+      "id": "syyo7v",
+      "date": "2023/11/18",
+      "product_id": "nukrnk",
+      "amount": "1",
+      "revenue": "136",
+      "notes": "3 for 2"
+  },
+  {
+      "id": "ukr521",
+      "date": "2023/11/18",
+      "product_id": "w0f0kp",
+      "amount": "1",
+      "revenue": "68",
+      "notes": ""
+  },
+  {
+      "id": "8rwfzr",
+      "date": "2023/11/18",
+      "product_id": "yrgewl",
+      "amount": "1",
+      "revenue": "68",
+      "notes": ""
+  },
+  {
+      "id": "a4sp1b",
+      "date": "2023/11/18",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift with noni juice"
+  },
+  {
+      "id": "bw95w1",
+      "date": "2023/11/18",
+      "product_id": "zbbn5d",
+      "amount": "1",
+      "revenue": "168",
+      "notes": "gift reniu soap"
+  },
+  {
+      "id": "u18h7c",
+      "date": "2023/11/19",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "ryclef",
+      "date": "2023/11/19",
+      "product_id": "2lt55q",
+      "amount": "5",
+      "revenue": "40",
+      "notes": "1 customer 4 Miri"
+  },
+  {
+      "id": "npr39u",
+      "date": "2023/11/20",
+      "product_id": "hefptc",
+      "amount": "1",
+      "revenue": "5",
+      "notes": ""
+  },
+  {
+      "id": "l9873p",
+      "date": "2023/11/20",
+      "product_id": "4mn21j",
+      "amount": "1",
+      "revenue": "5",
+      "notes": ""
+  },
+  {
+      "id": "r2hbdh",
+      "date": "2023/11/20",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "f79pyy",
+      "date": "2023/11/20",
+      "product_id": "95cjmc",
+      "amount": "2",
+      "revenue": "",
+      "notes": "for meeting"
+  },
+  {
+      "id": "k934bz",
+      "date": "2023/11/21",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "",
+      "notes": "making tea"
+  },
+  {
+      "id": "qq4w4a",
+      "date": "2023/11/21",
+      "product_id": "95cjmc",
+      "amount": "1",
+      "revenue": "",
+      "notes": "making tea"
+  },
+  {
+      "id": "md3opb",
+      "date": "2023/11/21",
+      "product_id": "qit8he",
+      "amount": "1",
+      "revenue": "",
+      "notes": "testing for coffee lady"
+  },
+  {
+      "id": "384f4x",
+      "date": "2023/11/21",
+      "product_id": "3dnwe7",
+      "amount": "1",
+      "revenue": "",
+      "notes": "testing for coffee lady"
+  },
+  {
+      "id": "h68wu0",
+      "date": "2023/11/21",
+      "product_id": "2b7hay",
+      "amount": "1",
+      "revenue": "",
+      "notes": "testing for coffee lady"
+  },
+  {
+      "id": "yyvipp",
+      "date": "2023/11/21",
+      "product_id": "5kt1od",
+      "amount": "8",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "79kmhd",
+      "date": "2023/11/21",
+      "product_id": "hefptc",
+      "amount": "2",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "wnl0ft",
+      "date": "2023/11/21",
+      "product_id": "4mn21j",
+      "amount": "1",
+      "revenue": "",
+      "notes": "mixing drinks"
+  },
+  {
+      "id": "wuqufy",
+      "date": "2023/11/21",
+      "product_id": "2lt55q",
+      "amount": "2",
+      "revenue": "",
+      "notes": "for meeting"
+  },
+  {
+      "id": "trauhy",
+      "date": "2023/11/21",
+      "product_id": "zbbn5d",
+      "amount": "2",
+      "revenue": "168",
+      "notes": "1 sold to driver date not sure, 1 taken home Anna"
+  },
+  {
+      "id": "4dwgzs",
+      "date": "2023/11/21",
+      "product_id": "zt4kty",
+      "amount": "1",
+      "revenue": "",
+      "notes": "for meeting"
+  },
+  {
+      "id": "s7s134",
+      "date": "2023/11/22",
+      "product_id": "babusx",
+      "amount": "7",
+      "revenue": "",
+      "notes": "promoting"
+  },
+  {
+      "id": "cxzbqw",
+      "date": "2023/11/22",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "",
+      "notes": "promoting"
+  },
+  {
+      "id": "4qm8by",
+      "date": "2023/11/22",
+      "product_id": "2lt55q",
+      "amount": "3",
+      "revenue": "",
+      "notes": "promoting"
+  },
+  {
+      "id": "w6wvds",
+      "date": "2023/11/22",
+      "product_id": "gugkdg",
+      "amount": "1",
+      "revenue": "",
+      "notes": "tea"
+  },
+  {
+      "id": "1i4a6v",
+      "date": "2023/11/22",
+      "product_id": "95cjmc",
+      "amount": "3",
+      "revenue": "",
+      "notes": "tea"
+  },
+  {
+      "id": "v1qwpg",
+      "date": "2023/11/22",
+      "product_id": "jtaajf",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift"
+  },
+  {
+      "id": "g7t7dv",
+      "date": "2023/11/22",
+      "product_id": "kmmy41",
+      "amount": "3",
+      "revenue": "",
+      "notes": "gift"
+  },
+  {
+      "id": "kcnrsi",
+      "date": "2023/11/22",
+      "product_id": "av2qto",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Anna testing"
+  },
+  {
+      "id": "ppuk0k",
+      "date": "2023/11/22",
+      "product_id": "xwb6n5",
+      "amount": "-45",
+      "revenue": "",
+      "notes": "adding to stock"
+  },
+  {
+      "id": "utla57",
+      "date": "2023/11/22",
+      "product_id": "1jkpda",
+      "amount": "-43",
+      "revenue": "",
+      "notes": "adding to stock"
+  },
+  {
+      "id": "6hnp3m",
+      "date": "2023/11/22",
+      "product_id": "q0xcfg",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "adding to stock"
+  },
+  {
+      "id": "t8h7r5",
+      "date": "2023/11/22",
+      "product_id": "x34q3t",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "adding to stock"
+  },
+  {
+      "id": "7nkzg1",
+      "date": "2023/11/24",
+      "product_id": "sblcpk",
+      "amount": "2",
+      "revenue": "",
+      "notes": "promoting"
+  },
+  {
+      "id": "1rffhi",
+      "date": "2023/11/25",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": "Miri"
+  },
+  {
+      "id": "uvsmns",
+      "date": "2023/11/27",
+      "product_id": "2lt55q",
+      "amount": "2",
+      "revenue": "16",
+      "notes": "Miri"
+  },
+  {
+      "id": "0c701v",
+      "date": "2023/11/27",
+      "product_id": "gugkdg",
+      "amount": "1",
+      "revenue": "13",
+      "notes": "Miri"
+  },
+  {
+      "id": "hv4xmi",
+      "date": "2023/11/27",
+      "product_id": "95cjmc",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Anna"
+  },
+  {
+      "id": "zcx8wh",
+      "date": "2023/11/28",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "gnmnb7",
+      "date": "2023/11/28",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Macedonia"
+  },
+  {
+      "id": "iwfnh1",
+      "date": "2023/11/29",
+      "product_id": "95cjmc",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Anna"
+  },
+  {
+      "id": "l0y6wh",
+      "date": "2023/11/29",
+      "product_id": "kmmy41",
+      "amount": "2",
+      "revenue": "",
+      "notes": "Anna"
+  },
+  {
+      "id": "1tg9xx",
+      "date": "2023/11/29",
+      "product_id": "xaowmk",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Anna"
+  },
+  {
+      "id": "c82f6x",
+      "date": "2023/11/29",
+      "product_id": "av2qto",
+      "amount": "2",
+      "revenue": "",
+      "notes": "Anna"
+  },
+  {
+      "id": "9rtexv",
+      "date": "2023/11/30",
+      "product_id": "jtaajf",
+      "amount": "1",
+      "revenue": "68",
+      "notes": "from before"
+  },
+  {
+      "id": "4vzfsw",
+      "date": "2023/11/30",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "58",
+      "notes": "from before"
+  },
+  {
+      "id": "06c6l2",
+      "date": "2023/12/02",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "",
+      "notes": ""
+  },
+  {
+      "id": "ua1ppt",
+      "date": "2023/12/02",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": "Miri"
+  },
+  {
+      "id": "5nrd4b",
+      "date": "2023/12/02",
+      "product_id": "95cjmc",
+      "amount": "1",
+      "revenue": "",
+      "notes": "Christy"
+  },
+  {
+      "id": "myq8hq",
+      "date": "2023/12/03",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": "Miri"
+  },
+  {
+      "id": "cveub6",
+      "date": "2023/12/04",
+      "product_id": "2lt55q",
+      "amount": "2",
+      "revenue": "16",
+      "notes": "Miri"
+  },
+  {
+      "id": "73r8t6",
+      "date": "2023/12/04",
+      "product_id": "3cuum7",
+      "amount": "-36",
+      "revenue": "",
+      "notes": "stock"
+  },
+  {
+      "id": "lwajoo",
+      "date": "2023/12/04",
+      "product_id": "m6vvtc",
+      "amount": "-24",
+      "revenue": "",
+      "notes": "stock"
+  },
+  {
+      "id": "fsowli",
+      "date": "2023/12/04",
+      "product_id": "l4zss0",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "stock"
+  },
+  {
+      "id": "fktdae",
+      "date": "2023/12/04",
+      "product_id": "pzv50a",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "stock"
+  },
+  {
+      "id": "vafhet",
+      "date": "2023/12/05",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "a725gt",
+      "date": "2023/12/05",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "8",
+      "notes": "Miri"
+  },
+  {
+      "id": "ibej5i",
+      "date": "2023/12/05",
+      "product_id": "zbbn5d",
+      "amount": "2",
+      "revenue": "336",
+      "notes": ""
+  },
+  {
+      "id": "lasg3e",
+      "date": "2023/12/05",
+      "product_id": "40msi8",
+      "amount": "1",
+      "revenue": "68",
+      "notes": "dont know which rum"
+  },
+  {
+      "id": "wuj9pr",
+      "date": "2023/12/05",
+      "product_id": "3cuum7",
+      "amount": "4",
+      "revenue": "",
+      "notes": "1 Anna 3 guests"
+  },
+  {
+      "id": "2pmy6g",
+      "date": "2023/12/05",
+      "product_id": "2lt55q",
+      "amount": "5",
+      "revenue": "",
+      "notes": "guest"
+  },
+  {
+      "id": "crmsfl",
+      "date": "2023/12/07",
+      "product_id": "5kt1od",
+      "amount": "3",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "7s5opq",
+      "date": "2023/12/07",
+      "product_id": "hefptc",
+      "amount": "2",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "k5pea4",
+      "date": "2023/12/07",
+      "product_id": "4mn21j",
+      "amount": "2",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "x96uet",
+      "date": "2023/12/07",
+      "product_id": "gfni80",
+      "amount": "5",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "sgi031",
+      "date": "2023/12/07",
+      "product_id": "babusx",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "extra"
+  },
+  {
+      "id": "c8t5fo",
+      "date": "2023/12/07",
+      "product_id": "2lt55q",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "sphdtr",
+      "date": "2023/12/07",
+      "product_id": "gugkdg",
+      "amount": "2",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "h55h43",
+      "date": "2023/12/07",
+      "product_id": "95cjmc",
+      "amount": "5",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "agzler",
+      "date": "2023/12/07",
+      "product_id": "nukrnk",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "o90ze5",
+      "date": "2023/12/07",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift with babich"
+  },
+  {
+      "id": "7l3xl5",
+      "date": "2023/12/07",
+      "product_id": "iaap4r",
+      "amount": "-2",
+      "revenue": "",
+      "notes": "extra"
+  },
+  {
+      "id": "orrsdx",
+      "date": "2023/12/07",
+      "product_id": "kmymw3",
+      "amount": "-3",
+      "revenue": "",
+      "notes": "extra"
+  },
+  {
+      "id": "gv5q9r",
+      "date": "2023/12/07",
+      "product_id": "sjrc2m",
+      "amount": "-1",
+      "revenue": "",
+      "notes": "extra"
+  },
+  {
+      "id": "sn74tz",
+      "date": "2023/12/07",
+      "product_id": "xhq0sn",
+      "amount": "1",
+      "revenue": "268",
+      "notes": "gifted reniu soap"
+  },
+  {
+      "id": "yp10y7",
+      "date": "2023/12/07",
+      "product_id": "3cuum7",
+      "amount": "4",
+      "revenue": "",
+      "notes": "testing"
+  },
+  {
+      "id": "43mq7j",
+      "date": "2023/12/08",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "5cf1e7",
+      "date": "2023/12/08",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "juy1xt",
+      "date": "2023/12/09",
+      "product_id": "2lt55q",
+      "amount": "3",
+      "revenue": "24",
+      "notes": "1 miri"
+  },
+  {
+      "id": "f82d9e",
+      "date": "2023/12/09",
+      "product_id": "yrgewl",
+      "amount": "2",
+      "revenue": "68",
+      "notes": "1 guest 1 sold"
+  },
+  {
+      "id": "vm2x54",
+      "date": "2023/12/09",
+      "product_id": "ag8349",
+      "amount": "1",
+      "revenue": "138",
+      "notes": ""
+  },
+  {
+      "id": "i7kmta",
+      "date": "2023/12/10",
+      "product_id": "b0ucp3",
+      "amount": "1",
+      "revenue": "350",
+      "notes": ""
+  },
+  {
+      "id": "51iycn",
+      "date": "2023/12/10",
+      "product_id": "3cuum7",
+      "amount": "2",
+      "revenue": "16",
+      "notes": "1 miri"
+  },
+  {
+      "id": "mf7wq7",
+      "date": "2023/12/11",
+      "product_id": "gfni80",
+      "amount": "1",
+      "revenue": "",
+      "notes": "guest"
+  },
+  {
+      "id": "lc1x7r",
+      "date": "2023/12/11",
+      "product_id": "zbbn5d",
+      "amount": "1",
+      "revenue": "",
+      "notes": "? Anna"
+  },
+  {
+      "id": "toiazp",
+      "date": "2023/12/11",
+      "product_id": "3cuum7",
+      "amount": "3",
+      "revenue": "",
+      "notes": "guest"
+  },
+  {
+      "id": "ncgl65",
+      "date": "2023/12/12",
+      "product_id": "gfni80",
+      "amount": "1",
+      "revenue": "",
+      "notes": "? Anna"
+  },
+  {
+      "id": "bfl73n",
+      "date": "2023/12/12",
+      "product_id": "2lt55q",
+      "amount": "2",
+      "revenue": "16",
+      "notes": "Miri"
+  },
+  {
+      "id": "gs37yu",
+      "date": "2023/12/12",
+      "product_id": "iaap4r",
+      "amount": "2",
+      "revenue": "560",
+      "notes": ""
+  },
+  {
+      "id": "egju2w",
+      "date": "2023/12/12",
+      "product_id": "3cuum7",
+      "amount": "2",
+      "revenue": "",
+      "notes": "? Jimmy"
+  },
+  {
+      "id": "hdzj9d",
+      "date": "2023/12/12",
+      "product_id": "m6vvtc",
+      "amount": "1",
+      "revenue": "13",
+      "notes": "Miri"
+  },
+  {
+      "id": "tfm3k3",
+      "date": "2023/12/12",
+      "product_id": "l4zss0",
+      "amount": "1",
+      "revenue": "",
+      "notes": "? Anna"
+  },
+  {
+      "id": "0i6fol",
+      "date": "2023/12/13",
+      "product_id": "sigbgm",
+      "amount": "1",
+      "revenue": "88",
+      "notes": ""
+  },
+  {
+      "id": "mj31bv",
+      "date": "2023/12/13",
+      "product_id": "3cuum7",
+      "amount": "2",
+      "revenue": "16",
+      "notes": "Miri"
+  },
+  {
+      "id": "ypbbib",
+      "date": "2023/12/14",
+      "product_id": "5kt1od",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "k6zw1e",
+      "date": "2023/12/14",
+      "product_id": "hefptc",
+      "amount": "2",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "ysjsxd",
+      "date": "2023/12/14",
+      "product_id": "gfni80",
+      "amount": "5",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "w0yile",
+      "date": "2023/12/14",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "ek8qea",
+      "date": "2023/12/14",
+      "product_id": "zbbn5d",
+      "amount": "2",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "mvq3fm",
+      "date": "2023/12/14",
+      "product_id": "kmymw3",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "lztxag",
+      "date": "2023/12/14",
+      "product_id": "3cuum7",
+      "amount": "-4",
+      "revenue": "",
+      "notes": "extra"
+  },
+  {
+      "id": "hcf13a",
+      "date": "2023/12/14",
+      "product_id": "m6vvtc",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "kylh7i",
+      "date": "2023/12/14",
+      "product_id": "l4zss0",
+      "amount": "3",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "qz4m5r",
+      "date": "2023/12/14",
+      "product_id": "zbbn5d",
+      "amount": "-12",
+      "revenue": "",
+      "notes": "restock"
+  },
+  {
+      "id": "p6h17a",
+      "date": "2023/12/15",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift cassie"
+  },
+  {
+      "id": "7yznl9",
+      "date": "2023/12/15",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift cassie"
+  },
+  {
+      "id": "gx5giy",
+      "date": "2023/12/15",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "",
+      "notes": ""
+  },
+  {
+      "id": "d4ye07",
+      "date": "2023/12/15",
+      "product_id": "qbgdsu",
+      "amount": "1",
+      "revenue": "",
+      "notes": ""
+  },
+  {
+      "id": "jker7v",
+      "date": "2023/12/15",
+      "product_id": "essq7w",
+      "amount": "14",
+      "revenue": "",
+      "notes": "2 gift cassie, 4 testing, 8 missing"
+  },
+  {
+      "id": "89oy3l",
+      "date": "2023/12/15",
+      "product_id": "essq7w",
+      "amount": "-150",
+      "revenue": "",
+      "notes": "restocking"
+  },
+  {
+      "id": "u5a74b",
+      "date": "2023/12/17",
+      "product_id": "u7s3u8",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "3bui0o",
+      "date": "2023/12/17",
+      "product_id": "sblcpk",
+      "amount": "3",
+      "revenue": "60",
+      "notes": ""
+  },
+  {
+      "id": "koa116",
+      "date": "2023/12/17",
+      "product_id": "kmmy41",
+      "amount": "1",
+      "revenue": "",
+      "notes": "gift with fijian noni"
+  },
+  {
+      "id": "3gjp03",
+      "date": "2023/12/17",
+      "product_id": "zbbn5d",
+      "amount": "1",
+      "revenue": "168",
+      "notes": "gift reniu"
+  },
+  {
+      "id": "51548u",
+      "date": "2023/12/17",
+      "product_id": "xwb6n5",
+      "amount": "1",
+      "revenue": "69",
+      "notes": ""
+  },
+  {
+      "id": "d16pgu",
+      "date": "2023/12/17",
+      "product_id": "essq7w",
+      "amount": "5",
+      "revenue": "10",
+      "notes": "4 miri"
+  },
+  {
+      "id": "gtmisk",
+      "date": "2023/12/18",
+      "product_id": "gfni80",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "by4agz",
+      "date": "2023/12/18",
+      "product_id": "babusx",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "d0outd",
+      "date": "2023/12/18",
+      "product_id": "sblcpk",
+      "amount": "1",
+      "revenue": "20",
+      "notes": ""
+  },
+  {
+      "id": "8y8o72",
+      "date": "2023/12/18",
+      "product_id": "w0f0kp",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "dxeeoe",
+      "date": "2023/12/18",
+      "product_id": "3cuum7",
+      "amount": "1",
+      "revenue": "",
+      "notes": "missing"
+  },
+  {
+      "id": "qgnsxe",
+      "date": "2023/12/18",
+      "product_id": "essq7w",
+      "amount": "2",
+      "revenue": "5",
+      "notes": "miri"
+  },
+  {
+      "id": "9165gj",
+      "date": "2023/12/19",
+      "product_id": "3cuum7",
+      "amount": "1",
+      "revenue": "8",
+      "notes": "miri"
+  },
+  {
+      "id": "xq4zvr",
+      "date": "2023/12/19",
+      "product_id": "essq7w",
+      "amount": "2",
+      "revenue": "5",
+      "notes": "miri"
+  },
+  {
+      "id": "me483l",
+      "date": "2023/12/20",
+      "product_id": "essq7w",
+      "amount": "1",
+      "revenue": "2.5",
+      "notes": "miri"
+  }
+]
