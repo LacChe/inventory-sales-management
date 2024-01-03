@@ -6,7 +6,7 @@ import { useStateContext } from '../utils/StateContext';
 
 const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
-  const { toggleShownField, toggleOrder, productDataFilePath, inventoryDataFilePath, transactionDataFilePath, inventoryData, productData } = useStateContext();
+  const { toggleShownField, toggleOrder, productDataFilePath, inventoryDataFilePath, transactionDataFilePath, inventoryData, productData, transactionData } = useStateContext();
 
   let sortedData = data;
 
@@ -15,13 +15,25 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     case inventoryDataFilePath:
       // add amount
       sortedData = sortedData.map(mapItem => {
-        // TODO TEMP get array of products with this inventory id
+        let amount = 0
+        // get products that use this inventory item
         const prodArr = productData.filter(filterItem => {
           if(filterItem.inventory_items[mapItem.id] !== undefined) return filterItem;
-        }).map(mapItem => mapItem.id);
+        });
+        // get transactions that use this product
+        const transArr = transactionData.filter(filterItem => {
+          if(prodArr.map(mapItem => mapItem.id).includes(filterItem.product_id)) return filterItem;
+        });
+        // sum total inventory items
+        prodArr.forEach(product => {
+          for(let i = 0; i < product.inventory_items[mapItem.id]; i++) {
+            transArr.forEach(transaction => amount += parseInt(transaction.amount))
+          }
+        });
+        // add to sortedItems
         return {
           ...mapItem,
-          amount: prodArr
+          amount: amount*=-1
         }
       });
       break;
@@ -78,7 +90,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         if(dataFromInventory) b = dataFromInventory;
     }
 
-    if(a[fieldOrder.field]?.toString().toLowerCase() > b[fieldOrder.field]?.toString().toLowerCase()){
+    // sort by number or string accordingly
+    if(fieldOrder.field === 'amount' || fieldOrder.field === 'revenue' || fieldOrder.field === 'price') {
+      return ((parseInt(a[fieldOrder.field]) || 0) - (parseInt(b[fieldOrder.field]) || 0)) * (fieldOrder.asc ? 1 : -1);
+    } else if(a[fieldOrder.field]?.toString().toLowerCase() > b[fieldOrder.field]?.toString().toLowerCase()){
       return 1 * (fieldOrder.asc ? 1 : -1);
     } else if(a[fieldOrder.field]?.toString().toLowerCase() < b[fieldOrder.field]?.toString().toLowerCase()){
       return -1 * (fieldOrder.asc ? 1 : -1);
