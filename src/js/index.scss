@@ -135,7 +135,14 @@
   border: 1px solid black;
   background-color: white;
   display: grid;
-  grid-template-columns: max-content max-content max-content;
+  height: 50vh;
+  overflow: auto;
+}
+
+.dropdown {
+  border: 1px solid black;
+  background-color: white;
+  display: grid;
   height: 50vh;
   overflow: auto;
 }
@@ -145,6 +152,14 @@
   padding: 0 2px;
   border-bottom: 1px solid black;
   cursor: pointer;
+}
+
+.grid-col-3 {
+  grid-template-columns: max-content max-content max-content;
+}
+
+.grid-col-5 {
+  grid-template-columns: max-content max-content max-content max-content max-content;
 }
 
 // DATA TABLE END //

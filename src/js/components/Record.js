@@ -5,7 +5,8 @@ import { useStateContext } from '../utils/StateContext';
 const Record = ({ fields, item, filePath, allItems }) => {
 
   const [productId, setProductId] = useState(item?.product_id);
-  const { productData, inventoryData } = useStateContext();
+  const [inventoryItems, setInventoryItems] = useState(item?.inventory_items);
+  const { productData, inventoryData, transactionDataFilePath, productDataFilePath } = useStateContext();
 
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
@@ -59,16 +60,19 @@ const Record = ({ fields, item, filePath, allItems }) => {
         {fields.map(key => 
           <Fragment key={key.name}>
             <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
-            {key.name!=='id' && key.type!=='object' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
+            {key.name!=='id' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
             {key.name==='id' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : generateUID()} readOnly/>}
             {key.name==='notes' && <textarea id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
             {key.type==='date' && <input type='date' id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
-            {key.type==='object' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? JSON.stringify(item[key.name]) : ''} />}
-            {key.type==='dropdown' && 
+            {key.type==='dropdown' && filePath===transactionDataFilePath &&
               <Popup open={open} nested key={key.name+'input'} trigger={<input id={key.name+'input'} className='popup-grid-cell' value={item ? productId : ''} readOnly/>}>
                 <div>{productIdDropdown()}</div>
               </Popup>
-                
+            }
+            {key.type==='dropdown' && filePath===productDataFilePath &&
+              <Popup open={open} nested key={key.name+'input'} trigger={<input id={key.name+'input'} className='popup-grid-cell' value={item ? JSON.stringify(inventoryItems) : ''} readOnly/>}>
+                <div>{inventoryIdAmountDropdown()}</div>
+              </Popup>
             }
           </Fragment>
         )}
@@ -96,9 +100,27 @@ const Record = ({ fields, item, filePath, allItems }) => {
           if(invData) size = invData.size;
         }
         return {id: mapItem.id, name_en: en ? (en + ' ' + size) : '', name_cn: cn ? (cn + ' ' + size) : ''}
+      }).sort((a, b) => {
+        // if empty, get data from inventory
+        if(filePath===productDataFilePath && a.name_en === '') {
+            const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(a.inventory_items)[0])[0];
+            if(dataFromInventory) a = dataFromInventory;
+        }
+        if(filePath===productDataFilePath && b.name_en === '') {
+            const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(b.inventory_items)[0])[0];
+            if(dataFromInventory) b = dataFromInventory;
+        }
+        // sort
+        if(JSON.stringify(a.name_en)?.toString().toLowerCase() > JSON.stringify(b.name_en)?.toString().toLowerCase()){
+          return 1;
+        } else if(JSON.stringify(a.name_en)?.toLowerCase() < JSON.stringify(b.name_en)?.toString().toLowerCase()){
+          return -1;
+        } else {
+          return 0;
+        }
       });
     return (
-      <div className='dropdown'>
+      <div className='dropdown grid-col-3'>
         {sortedData.map(data => 
           <Fragment key={data.id}>
             <button className={data.id === productId ? 'selected' : ''} onClick={() => { setProductId(data.id); closeModal(); }}>{data.id}</button>
@@ -108,6 +130,49 @@ const Record = ({ fields, item, filePath, allItems }) => {
         )}
       </div>
     )
+  }
+
+  const inventoryIdAmountDropdown = function inventoryIdAmountDropdown() {
+    let sortedData = inventoryData.sort((a, b) => {
+      // sort
+      if(JSON.stringify(a.name_en)?.toString().toLowerCase() > JSON.stringify(b.name_en)?.toString().toLowerCase()){
+        return 1;
+      } else if(JSON.stringify(a.name_en)?.toLowerCase() < JSON.stringify(b.name_en)?.toString().toLowerCase()){
+        return -1;
+      } else {
+        return 0;
+      }
+    });;
+
+    let itemIds = Object.keys(inventoryItems);
+    return (
+      <div className='dropdown grid-col-5'>
+        {sortedData.map(data => 
+          <Fragment key={data.id}>
+            <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.id}</button>
+            <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.name_en}</button>
+            <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.name_cn}</button>
+            <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.size}</button>
+            <input type='number' onChange={(e) => { toggleInventoryIds(data.id, e.target.value) }} defaultValue={itemIds.includes(data.id) ? inventoryItems[data.id] : 0} />
+          </Fragment>
+        )}
+      </div>
+    )
+  }
+
+  const toggleInventoryIds = function toggleInventoryIds(id, amount) {
+    setInventoryItems(prev => {
+      let newPrev = {...prev};
+      if(!amount) {
+        // toggle id
+        if(Object.keys(newPrev).includes(id)) delete newPrev[id] 
+        else newPrev[id] = 0; 
+      } else {
+        // set amount
+        if(Object.keys(newPrev).includes(id)) newPrev[id] = amount;
+      }
+      return newPrev;
+    });
   }
 
   return (

@@ -106,7 +106,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       {/* toggles for displaying fields */}
       <div className='field-toggle-buttons'>
         <div className='add-button-wrapper'>
-          <Popup modal trigger={<button className='add-button'>Add</button>}>
+          <Popup modal nested trigger={<button className='add-button'>Add</button>}>
             <Record fields={fields} filePath={filePath} allItems={sortedData} />
           </Popup>
         </div>
@@ -139,7 +139,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               {/* render each row for every field */}
               {sortedData.map(row => {
                 let innerHtml = row[col.name];
-                if(typeof innerHtml === 'object') innerHtml = JSON.stringify(innerHtml);
+                if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
                 // if empty, get data from inventory
                 if(filePath===productDataFilePath && row[col.name] === '' && 
                 (col.name === 'name_en' || col.name === 'name_cn' || col.name === 'size')) {

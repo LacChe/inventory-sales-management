@@ -4,10 +4,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 // TODO export spreadsheet
 // TODO styling
 // TODO move all ipc calls to statecontext
-// todo add remove inventory ids when adding editing products and set amount
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
-// todo add edit record sub popup doesnt close
+// todo set num input to 0 when deselecting inv item for product
 
 const Context = createContext();
 
