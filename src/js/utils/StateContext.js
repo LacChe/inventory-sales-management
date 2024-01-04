@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO show product id list when adding editing transaction
-// TODO charts: products sold per duration, inventory in stock per duration
+// TODO charts: sales: sales transactions within duration for selected products grouped by day month year
+// TODO export spreadsheet
 // TODO styling
 // TODO move all ipc calls to statecontext
 // todo add remove inventory ids when adding editing products and set amount
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
+// todo add edit record sub popup doesnt close
 
 const Context = createContext();
 

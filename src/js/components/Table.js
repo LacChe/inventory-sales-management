@@ -157,7 +157,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             <div className='column-header'>Edit</div>
             {sortedData.map(row => {
               return (
-              <Popup key={row.id} modal trigger={<button className='edit-button'>Edit</button>}>
+              <Popup key={row.id} modal nested trigger={<button className='edit-button'>Edit</button>}>
                 <Record fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}
