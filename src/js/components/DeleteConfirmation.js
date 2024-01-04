@@ -2,12 +2,14 @@ import React, { Fragment } from 'react';
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 
+  const { saveFileToApi } = useStateContext();
+
   function saveData() {
     // remove from allItems
     let newAllItems = allItems.filter(filterItem => filterItem.id !== item.id);
 
     // send to main for saving
-    window.api.send("saveFile", { filePath, data: newAllItems });
+    saveFileToApi({ filePath, data: newAllItems });
     // event.preventDefault();
   }
 

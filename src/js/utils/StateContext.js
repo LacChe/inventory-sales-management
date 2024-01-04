@@ -89,6 +89,10 @@ export const StateContext = ({ children }) => {
     });
   }, [])
 
+  const saveFileToApi = function saveFileToApi(data) {
+    window.api.send("saveFile", data);
+  }
+
   const toggleShownField = function toggleShownField(filePath, field) {
     switch(filePath) {
       case inventoryDataFilePath:
@@ -254,7 +258,8 @@ export const StateContext = ({ children }) => {
           transactionDataFieldsOrder,
 
           toggleShownField,
-          toggleOrder
+          toggleOrder,
+          saveFileToApi
         }}
     >
       { children }

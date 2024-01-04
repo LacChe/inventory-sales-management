@@ -6,7 +6,7 @@ const Record = ({ fields, item, filePath, allItems }) => {
 
   const [productId, setProductId] = useState(item?.product_id);
   const [inventoryItems, setInventoryItems] = useState(item?.inventory_items);
-  const { productData, inventoryData, transactionDataFilePath, productDataFilePath } = useStateContext();
+  const { productData, inventoryData, transactionDataFilePath, productDataFilePath, saveFileToApi } = useStateContext();
 
   const [open, setOpen] = useState(false);
   const closeModal = () => setOpen(false);
@@ -50,7 +50,7 @@ const Record = ({ fields, item, filePath, allItems }) => {
     }
 
     // send to main for saving
-    window.api.send("saveFile", { filePath, data: newAllItems });
+    saveFileToApi({ filePath, data: newAllItems });
     // event.preventDefault();
   }
 
@@ -153,7 +153,7 @@ const Record = ({ fields, item, filePath, allItems }) => {
             <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.name_en}</button>
             <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.name_cn}</button>
             <button className={itemIds.includes(data.id) ? 'selected' : ''} onClick={() => { toggleInventoryIds(data.id) }}>{data.size}</button>
-            <input type='number' onChange={(e) => { toggleInventoryIds(data.id, e.target.value) }} defaultValue={itemIds.includes(data.id) ? inventoryItems[data.id] : 0} />
+            <input type='number' className={itemIds.includes(data.id) ? 'selected' : ''} onChange={(e) => { toggleInventoryIds(data.id, e.target.value) }} readOnly={itemIds.includes(data.id) ? false : true} defaultValue={itemIds.includes(data.id) ? inventoryItems[data.id] : 0} />
           </Fragment>
         )}
       </div>
