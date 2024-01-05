@@ -11,6 +11,7 @@ function createWindow() {
     width: 1400,
     height: 800,
     autoHideMenuBar: true,
+    icon: 'res/icon.png',
     webPreferences: {
       nodeIntegration: false,
       worldSafeExecuteJavaScript: true,
