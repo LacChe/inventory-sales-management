@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useStateContext } from '../utils/StateContext';
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 

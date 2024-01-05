@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // TODO charts: sales: sales transactions within duration for selected products grouped by day month year
+// TODO fill in blank values for delete confimation
 // TODO styling
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
@@ -225,6 +226,15 @@ export const StateContext = ({ children }) => {
     }
   }
 
+  const saveChartData = function saveChartData(data) {
+    if(settings.chartData) {
+      setSettings(prev => {
+        window.api.send("saveFile", { filePath: settingsFilePath, data: {...prev, 'chartData': data}});
+        return {...prev, 'chartData': data}
+      });
+    }
+  }
+
   return (
     <Context.Provider
         value={{
@@ -257,7 +267,8 @@ export const StateContext = ({ children }) => {
 
           toggleShownField,
           toggleOrder,
-          saveFileToApi
+          saveFileToApi,
+          saveChartData
         }}
     >
       { children }

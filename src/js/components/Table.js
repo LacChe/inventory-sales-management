@@ -154,7 +154,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
           </div>
         </div>
         <div>
-        <p>Show Columns: </p>
+          <p>Show Columns: </p>
           {fields.map(item => {
             return (
               <div key={item.name}>
@@ -183,6 +183,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               {sortedData.map(row => {
                 let innerHtml = row[col.name];
                 if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
+                if(col.type === 'boolean') innerHtml = (innerHtml === 'true' ? '#' : '');
                 // if empty, get data from inventory
                 if(filePath===productDataFilePath && row[col.name] === '' && 
                 (col.name === 'name_en' || col.name === 'name_cn' || col.name === 'size')) {

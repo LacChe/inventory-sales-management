@@ -34,6 +34,8 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
     for(let i = 0; i < fields.length; i++) {
       if(event.target[i].id === 'inventory_itemsinput') {
         newItem[fields[i].name] = JSON.parse(event.target[i].value);
+      } else if(event.target[i].id === 'not_a_saleinput') {
+        newItem[fields[i].name] = item[fields[i].name];
       } else {
         newItem[fields[i].name] = event.target[i].value;
       }
@@ -60,10 +62,14 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
         {fields.map(key => 
           <Fragment key={key.name}>
             <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
-            {key.name!=='id' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
-            {key.name==='id' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : generateUID()} readOnly/>}
+            {key.name!=='id' && key.type!=='boolean' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
+            {key.name==='id' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item.id ? item.id : generateUID()} readOnly/>}
             {key.name==='notes' && <textarea id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
             {key.type==='date' && <input type='date' id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
+            {key.type==='boolean' && <input type='checkbox' id={key.name+'input'} className='popup-grid-cell' defaultChecked={!(!item || !item.not_a_sale || item.not_a_sale === 'false')} onChange={(e)=>{
+              if(!item.not_a_sale || item.not_a_sale === 'false') item.not_a_sale = 'true';
+              else item.not_a_sale = 'false';
+            }}/>}
             {key.type==='dropdown' && filePath===transactionDataFilePath &&
               <Popup open={open} nested key={key.name+'input'} trigger={<input id={key.name+'input'} className='popup-grid-cell' value={item ? productId : ''} readOnly/>}>
                 <div>{productIdDropdown()}</div>

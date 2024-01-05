@@ -19,6 +19,7 @@ const Layout = () => {
         <button className={selectedTab==='transactions' ? 'selected' : ''} onClick={() => tabClick("transactions")}>Transactions</button>
         <button className={selectedTab==='inventory' ? 'selected' : ''} onClick={() => tabClick("inventory")}>Inventory</button>
         <button className={selectedTab==='equipment' ? 'selected' : ''} onClick={() => tabClick("equipment")}>Equipment</button>
+        <button className={selectedTab==='charts' ? 'selected' : ''} onClick={() => tabClick("charts")}>Charts</button>
       </nav>
       <div id='content-wrapper'>
         <Outlet />

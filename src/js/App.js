@@ -9,6 +9,7 @@ import Products from './pages/Products.js';
 import Transactions from './pages/Transactions.js';
 import Inventory from './pages/Inventory.js';
 import Equipment from './pages/Equipment.js';
+import Charts from './pages/Charts.js';
 
 export default function App() {
   return (<>
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/equipment" element={<Equipment />} />
+          <Route path="/charts" element={<Charts />} />
           <Route path="/" element={<Products />} />
         </Route>
       </Routes>
