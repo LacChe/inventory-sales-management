@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO charts: sales: sales transactions within duration for selected products grouped by day month year
-// TODO fill in blank values for delete confimation
 // TODO styling
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh

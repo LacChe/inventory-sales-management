@@ -3,7 +3,23 @@ import { useStateContext } from '../utils/StateContext';
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 
-  const { saveFileToApi } = useStateContext();
+  const { saveFileToApi, productDataFilePath, inventoryData } = useStateContext();
+
+  // fill in blank product fields
+  if(filePath===productDataFilePath) {
+    if(item.name_en === '') {
+      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
+      item.name_en = dataFromInventory.name_en;
+    }
+    if(item.name_cn === '') {
+      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
+      item.name_cn = dataFromInventory.name_cn;
+    }
+    if(item.size === '') {
+      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
+      item.size = dataFromInventory.size;
+    }
+  }
 
   function saveData() {
     // remove from allItems
