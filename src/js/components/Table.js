@@ -101,14 +101,57 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     }
   });
 
+  const exportSpreadSheet = function exportSpreadSheet() {
+    let exportData = '';
+
+    // add column headers
+    fields.forEach(field => {if(showFields.includes(field.name)) exportData += (field.name?.replaceAll(',', '-').replaceAll('_', ' ') + ',')});
+    exportData = exportData.slice(0, -1) + '\n';
+
+    // add records
+    sortedData.forEach(record => {
+      fields.forEach(field => {
+        if(showFields.includes(field.name)) {
+          if(filePath===productDataFilePath && record[field.name] === '' && 
+            (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
+              const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(record.inventory_items)[0])[0];
+              if(dataFromInventory) exportData += (JSON.stringify(dataFromInventory[field.name])?.replaceAll(',', '-') + ',');
+              else exportData += ',';
+              if(field.name === 'size') {
+                console.log(record.id)
+                console.log(dataFromInventory ? dataFromInventory[field.name] : 'no')
+              }
+          } else {
+            exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
+          }
+        }
+      });
+      exportData = exportData.slice(0, -1) + '\n';
+    })
+
+    const url = window.URL.createObjectURL(new Blob([exportData])) ;
+    const link = document.createElement('a');
+    link.href = url;
+    const fileName = `${filePath.slice(0, -5)}.csv`;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   return (
     <div className='table-wrapper'>
       {/* toggles for displaying fields */}
       <div className='field-toggle-buttons'>
-        <div className='add-button-wrapper'>
-          <Popup modal nested trigger={<button className='add-button'>Add</button>}>
-            <Record fields={fields} filePath={filePath} allItems={sortedData} />
-          </Popup>
+        <div>
+          <div className='add-button-wrapper'>
+            <Popup modal nested trigger={<button className='add-button'>Add Record</button>}>
+              <Record fields={fields} filePath={filePath} allItems={sortedData} />
+            </Popup>
+          </div>
+          <div className='export-button-wrapper'>
+            <button className='export-button' onClick={() => exportSpreadSheet()}>Export Spreadsheet</button>
+          </div>
         </div>
         <div>
         <p>Show Columns: </p>

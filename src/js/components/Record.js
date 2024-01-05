@@ -2,10 +2,10 @@ import React, { Fragment, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useStateContext } from '../utils/StateContext';
 
-const Record = ({ fields, item, filePath, allItems }) => {
+const Record = ({ fields, item = {}, filePath, allItems }) => {
 
-  const [productId, setProductId] = useState(item?.product_id);
-  const [inventoryItems, setInventoryItems] = useState(item?.inventory_items);
+  const [productId, setProductId] = useState(item?.product_id ? item?.product_id : '');
+  const [inventoryItems, setInventoryItems] = useState(item?.inventory_items ? item?.inventory_items : {});
   const { productData, inventoryData, transactionDataFilePath, productDataFilePath, saveFileToApi } = useStateContext();
 
   const [open, setOpen] = useState(false);
@@ -144,7 +144,7 @@ const Record = ({ fields, item, filePath, allItems }) => {
       }
     });;
 
-    let itemIds = Object.keys(inventoryItems);
+    let itemIds = inventoryItems ? Object.keys(inventoryItems) : [];
     return (
       <div className='dropdown grid-col-5'>
         {sortedData.map(data => 

@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 // TODO charts: sales: sales transactions within duration for selected products grouped by day month year
-// TODO export spreadsheet
 // TODO styling
-// TODO move all ipc calls to statecontext
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
 // todo set num input to 0 when deselecting inv item for product
