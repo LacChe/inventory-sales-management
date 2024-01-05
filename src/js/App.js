@@ -9,7 +9,7 @@ import Products from './pages/Products.js';
 import Transactions from './pages/Transactions.js';
 import Inventory from './pages/Inventory.js';
 import Equipment from './pages/Equipment.js';
-import Charts from './pages/Charts.js';
+import Charts from './components/Charts.js';
 
 export default function App() {
   return (<>
