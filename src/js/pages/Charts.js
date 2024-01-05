@@ -52,6 +52,13 @@ const Charts = () => {
       }
     });
   }
+
+  const toggleAllRecords = function toggleAllRecords() {
+    setRecords(prev => {
+      if(prev.length > 0) return [];
+      else return productData;
+    });
+  }
   // END sales chart data
 
   const setDateRangeState = function setDateRangeState(dates) {
@@ -216,6 +223,7 @@ const Charts = () => {
       </div>
       <div className='chart-parameters'>
         <div>
+          <button onClick={() => toggleAllRecords()}>Toggle All</button>
           <Popup position='bottom left' trigger={<button>Choose Records</button>}>
             <div>{productIdDropdown()}</div>
           </Popup>
