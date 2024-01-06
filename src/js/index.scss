@@ -1,40 +1,100 @@
 * {
   padding: 0;
   margin: 0;
+  color: var(--color-text);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  height: 4px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-text);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+:root {
+  --color-a: #41644A;
+  --color-b: #263A29;
+  --color-b-80: #263A29CC;
+  --color-highlight: #E86A33;
+  --color-text: #F2E3DB;
+  --trasition-all-time: 300ms;
+  --row-height: 30px;
+}
+
+body {
+  background-color: var(--color-b);
+  overflow: overlay;
 }
 
 .selected {
-  background-color: #565656;
-  color: white;
+  border-radius: 5px;
+  background-color: var(--color-a) !important;
+  transition: all var(--trasition-all-time);
+}
+
+.clickable-button {
+  border-radius: 5px;
+  border: 1px solid var(--color-text) !important;
+}
+
+button {
+  text-decoration: underline 0.1em rgba(255, 255, 255, 0);
+  transition: all var(--trasition-all-time);
+  background-color: var(--color-b);
+  margin: 4px 2px;
+  height: 80%;
+}
+
+button:hover {
+  cursor: pointer;
+  text-decoration-color: var(--color-text);
+}
+
+.clickable-button:active {
+  opacity: 70%;
+}
+
+input {
+  background-color: var(--color-b);
+  border-radius: 5px;
+  border: 1px solid var(--color-text) !important;
+  scrollbar-width: none;
 }
 
 // LAYOUT //
 
-#layout-nav {
+.layout-nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 25px;
+  height: var(--row-height);
   display: flex;
   flex-wrap: nowrap;
-  background-color: white;
+  background-color: var(--color-b);
+  padding-left: 3px;
 } 
 
-#layout-nav button {
-  height: 100%;
+.layout-nav button {
   border-style: none;
   padding: 5px 10px;
-  border-right: 1px solid black;
-}
-
-#layout-nav button:active {
-  background-color: #565656;
-  color: white;
-}
-
-#layout-nav button:hover {
-  cursor: pointer;
+  transition: all var(--trasition-all-time);
 }
 
 // LAYOUT END //
@@ -49,21 +109,21 @@
 }
 
 .field-toggle-buttons {
-  height: 25px;
-  width: 100%;
+  height: var(--row-height);
+  width: calc(100% - 10px);
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   position: fixed;
-  top: 25px;
-  background-color: white;
+  top: var(--row-height);
+  background-color: var(--color-b);
+  padding: 0 3px;
 }
 
 .field-toggle-buttons > * {
   display: flex;
   flex-wrap: nowrap;
+  transition: all var(--trasition-all-time);
 }
 
 .field-toggle-buttons p {
@@ -75,39 +135,38 @@
 
 .field-toggle-buttons button, .edit-button , .delete-button {
   text-transform: capitalize;
-  height: 100%;
   cursor: pointer;
   border-style: none;
   white-space: nowrap;
   padding: 2px 5px;
-  border-left: 1px solid black;
+  background-color: var(--color-b);
+  transition: all var(--trasition-all-time);
+}
+
+.edit-button , .delete-button {
+  height: 16px;
+  font-size: 0.7rem;
 }
 
 .table {
   margin: auto;
   display: flex;
-  margin-top:50px;
-  border-right: 1px solid black;
-}
-
-.column-header {
-  text-transform: capitalize;
+  margin-top: calc(var(--row-height) * 2);
 }
 
 .cell, .column-header {
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
   padding: 2px;
   height: 20px;
   white-space: nowrap;
 }
 
 .column-header {
+  text-transform: capitalize;
+  background-color: var(--color-b);
   cursor: pointer;
   position: sticky;
-  background-color: #dedede;
-  top: 51px;
-  border-bottom-width: 2px;
+  top: calc(var(--row-height) * 2);
+  border-bottom: var(--color-text) 2px solid;
 }
 
 .edit-button-column, .delete-button-column {
@@ -122,26 +181,10 @@
   text-overflow: ellipsis;
 }
 
-.delete-button, .edit-button {
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-.export-button-wrapper {
-  border-right: 1px solid black;
-}
-
 .dropdown {
-  border: 1px solid black;
-  background-color: white;
-  display: grid;
-  height: 50vh;
-  overflow: auto;
-}
-
-.dropdown {
-  border: 1px solid black;
-  background-color: white;
+  background-color: var(--color-b);
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
   display: grid;
   height: 50vh;
   overflow: auto;
@@ -150,8 +193,12 @@
 .dropdown > button {
   border-style: none;
   padding: 0 2px;
-  border-bottom: 1px solid black;
   cursor: pointer;
+}
+
+.dropdown > input[type=number] {
+  margin: 2px;
+  padding: 0 2px;
 }
 
 .grid-col-3 {
@@ -159,7 +206,7 @@
 }
 
 .grid-col-5 {
-  grid-template-columns: max-content max-content max-content max-content max-content;
+  grid-template-columns: max-content max-content max-content max-content 50px;
 }
 
 // DATA TABLE END //
@@ -167,15 +214,15 @@
 // POPUPCOMP //
 
 .popup-overlay {
-  background-color: #AAAAAAAA;
+  background-color: var(--color-b-80);
 }
 
 .popup-comp {
-  background-color: white;
-  border: 1px solid black;
+  border: 1px solid var(--color-text);
+  border-radius: 5px;
   width: 100%;
-  border: 1px solid black;
   padding: 2px;
+  background-color: var(--color-b);
 }
 
 .popup-grid {
@@ -184,13 +231,18 @@
 }
 
 .popup-grid-cell {
-  border: 1px solid black;
   padding: 2px;
+  margin: 2px;
 }
 
 .popup-comp textArea {
-  width: 12rem;
   height: 8rem;
+  background-color: var(--color-b);
+  border-radius: 5px;
+}
+
+.popup-grid * {
+  outline: none;
 }
 
 // POPUPCOMP END //
@@ -205,55 +257,44 @@
 }
 
 .chart-selection, .chart-parameters  {
-  height: 25px;
+  height: var(--row-height);
   width: 100%;
   display: flex;
   flex-wrap: nowrap;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  background-color: white;
+  background-color: var(--color-b);
   position: fixed;
-  top: 25px;
+  top: var(--row-height);
 }
 
 .chart-selection  {
-  top: 25px;
+  top: var(--row-height);
+  padding-left: 5px;
 }
 
 .chart-parameters {
-  top: 50px;
-}
-
-.chart-parameters div:last-child {
-  border-right: 1px solid black;
+  top: calc(var(--row-height) * 2);
+  padding-left: 5px;
 }
 
 .chart-label {
-  border-left: 1px solid black;
   padding: 0px 10px;
 }
 
 .chart-selection button, .chart-parameters button {
-  height: 100%;
   cursor: pointer;
   border-style: none;
   white-space: nowrap;
   padding: 2px 5px;
-  border-left: 1px solid black;
 }
 
 .chart {
   margin: auto;
   display: flex;
-  margin-top:76px;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
+  margin-top: calc(var(--row-height) * 3);
   padding: 2px;
 }
 
 .chart-group, .chart-bars {
-  border: 1px solid black;
   padding: 2px;
 }
 
@@ -261,9 +302,59 @@
   white-space: nowrap;
 }
 
+.chart-label {
+  padding: 0 2px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  align-self: center;
+  margin-left: 10px;
+}
+
+.chart-date-input-wrapper {
+  display: flex;
+}
+
+.chart-date-input-wrapper * {
+  align-self: center;
+}
+
 .chart-group, .chart-bars, .chart-section {
   display: flex;
   flex-direction: column;
+}
+
+.chart-group, .chart-bars {
+  border-bottom: solid var(--color-text) 1px;
+}
+
+.chart-group {
+  text-align: right;
+}
+
+.chart-bar, .chart-group > div, .chart-group-header {
+  padding-left: 3px;
+  height: calc(var(--row-height) * 0.5);
+  margin: 2px;
+  padding-bottom: 2px;
+  font-size: 0.8rem;
+}
+
+.chart-group-header {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.chart-bar {
+  border-radius: 3px;
+  transition: all 100ms ease-out;
+}
+
+.chart-bar-label {
+  transition: all 300ms;
+}
+
+.chart-section:last-child {
+  width: 630px;
 }
 
 // CHARTS END //

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO styling
+// TODO code review
+// TODO add seach filter for tables
 // TODO reminders for low stock
 // TODO abstract chart page
 // todo convert json files to objects instead of arrays ?

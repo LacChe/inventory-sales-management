@@ -117,10 +117,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(record.inventory_items)[0])[0];
               if(dataFromInventory) exportData += (JSON.stringify(dataFromInventory[field.name])?.replaceAll(',', '-') + ',');
               else exportData += ',';
-              if(field.name === 'size') {
-                console.log(record.id)
-                console.log(dataFromInventory ? dataFromInventory[field.name] : 'no')
-              }
           } else {
             exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
           }
@@ -145,12 +141,12 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       <div className='field-toggle-buttons'>
         <div>
           <div className='add-button-wrapper'>
-            <Popup modal nested trigger={<button className='add-button'>Add Record</button>}>
+            <Popup modal nested trigger={<button className='add-button clickable-button'>Add Record</button>}>
               <Record fields={fields} filePath={filePath} allItems={sortedData} />
             </Popup>
           </div>
           <div className='export-button-wrapper'>
-            <button className='export-button' onClick={() => exportSpreadSheet()}>Export Spreadsheet</button>
+            <button className='export-button clickable-button' onClick={() => exportSpreadSheet()}>Export Spreadsheet</button>
           </div>
         </div>
         <div>
@@ -201,7 +197,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             <div className='column-header'>Edit</div>
             {sortedData.map(row => {
               return (
-              <Popup key={row.id} modal nested trigger={<button className='edit-button'>Edit</button>}>
+              <Popup key={row.id} modal nested trigger={<button className='clickable-button edit-button'>Edit</button>}>
                 <Record fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}
@@ -213,7 +209,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             <div className='column-header'>Delete</div>
             {sortedData.map(row => {
               return (
-              <Popup key={row.id} modal trigger={<button className='delete-button'>Delete</button>}>
+              <Popup key={row.id} modal trigger={<button className='clickable-button delete-button'>Delete</button>}>
                 <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}

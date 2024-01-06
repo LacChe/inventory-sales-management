@@ -14,7 +14,7 @@ const Layout = () => {
 
   return (
     <>
-      <nav id='layout-nav'>
+      <nav className='layout-nav'>
         <button className={selectedTab==='products' ? 'selected' : ''} onClick={() => tabClick("products")}>Products</button>
         <button className={selectedTab==='transactions' ? 'selected' : ''} onClick={() => tabClick("transactions")}>Transactions</button>
         <button className={selectedTab==='inventory' ? 'selected' : ''} onClick={() => tabClick("inventory")}>Inventory</button>

@@ -9,15 +9,15 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
   if(filePath===productDataFilePath) {
     if(item.name_en === '') {
       const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
-      item.name_en = dataFromInventory.name_en;
+      item.name_en = dataFromInventory?.name_en;
     }
     if(item.name_cn === '') {
       const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
-      item.name_cn = dataFromInventory.name_cn;
+      item.name_cn = dataFromInventory?.name_cn;
     }
     if(item.size === '') {
       const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(item.inventory_items)[0])[0];
-      item.size = dataFromInventory.size;
+      item.size = dataFromInventory?.size;
     }
   }
 
@@ -35,11 +35,11 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
       <form className='popup-grid' onSubmit={saveData}>
         {fields.map(key => 
           <Fragment key={key.name}>
-            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
+            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name.replaceAll('_', ' ')}</label>
             <input id={key.name+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(item[key.name])} readOnly></input>
           </Fragment>
         )}
-        <button type='submit' className='popup-delete-button'>Delete</button>
+        <button type='submit' className='clickable-button popup-delete-button'>Delete</button>
       </form>
     )
   }

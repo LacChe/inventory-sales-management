@@ -8,6 +8,7 @@ const Charts = () => {
   const { productData, inventoryData, transactionData, productDataFilePath, saveChartData, settings } = useStateContext();
   
   // START sales chart data
+  const [selectedRecord, setSelectedRecord] = useState('');
   const [records, setRecords] = useState(settings.chartData?.records ? JSON.parse(settings.chartData.records) : []);
   const [dateRange, setDateRange] = useState(settings.chartData?.dateRange ? JSON.parse(settings.chartData.dateRange) : ['','']);
   const [precision, setPrecision] = useState(settings.chartData?.precision ? JSON.parse(settings.chartData.precision) : 'day');
@@ -187,8 +188,9 @@ const Charts = () => {
           {Object.keys(groupedTransactions).map(precision => {
             return (
               <div className='chart-group' key={precision}>
-                <div style={{height: '1rem'}}>{precision}</div>
-                {Object.keys(groupedTransactions[precision]).map(prodId => <div key={prodId}>{groupedTransactions[precision][prodId].name_en}</div>)}
+                <div className='chart-group-header'>{precision}</div>
+                {Object.keys(groupedTransactions[precision]).map(prodId => <div style={{textDecoration: `${selectedRecord === prodId ? `underline 2px ${getComputedStyle(document.body)
+                      .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className='chart-bar-label' onClick={() => setSelectedRecord(prodId)}key={prodId}>{groupedTransactions[precision][prodId].name_en}</div>)}
               </div>
             )
           })}
@@ -197,12 +199,14 @@ const Charts = () => {
           {Object.keys(groupedTransactions).map(precision => {
             return (
               <div className='chart-bars' key={precision}>
-                <div style={{height: '1rem'}}></div>
+                <div className='chart-group-header'></div>
                 {Object.keys(groupedTransactions[precision]).map(prodId => 
                   <div
+                  onClick={() => setSelectedRecord(prodId)}
                     key={prodId}
                     className='chart-bar'
-                    style={{width: `${(groupedTransactions[precision][prodId][parameter] / max) * 600 + 20}px`, backgroundColor: generateRandomHexColor(prodId), color: getContrastingHexColor(generateRandomHexColor(prodId))}}
+                    style={{outline: `${selectedRecord === prodId ? `2px solid ${getComputedStyle(document.body)
+                      .getPropertyValue('--color-highlight')}` : ''}`, width: `${(groupedTransactions[precision][prodId][parameter] / max) * 600 + 20}px`, backgroundColor: generateRandomHexColor(prodId), color: getContrastingHexColor(generateRandomHexColor(prodId))}}
                     //style={{width: `${(groupedTransactions[precision][prodId][parameter] / max - min / max) * 600 + 20}px`, backgroundColor: generateRandomHexColor(prodId)}}
                   >
                     {groupedTransactions[precision][prodId][parameter]}
@@ -223,15 +227,15 @@ const Charts = () => {
       </div>
       <div className='chart-parameters'>
         <div>
-          <button onClick={() => toggleAllRecords()}>Toggle All</button>
-          <Popup position='bottom left' trigger={<button>Choose Records</button>}>
+          <button className='clickable-button' onClick={() => toggleAllRecords()}>Toggle All</button>
+          <Popup position='bottom left' trigger={<button className='clickable-button'>Choose Records</button>}>
             <div>{productIdDropdown()}</div>
           </Popup>
         </div>
         <div className='chart-label'>Range:</div>
-        <div>
+        <div className='chart-date-input-wrapper'>
           <input type='date' value={dateRange[0]} onChange={e => {setDateRangeState([e.target.value, dateRange[1]])}} />
-          -
+          <div>~</div>
           <input type='date' value={dateRange[1]} onChange={e => {setDateRangeState([dateRange[0], e.target.value])}} />
         </div>
         <div className='chart-label'>Precision:</div>

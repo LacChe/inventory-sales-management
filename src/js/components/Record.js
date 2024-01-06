@@ -61,7 +61,7 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
       <form className='popup-grid' onSubmit={saveData}>
         {fields.map(key => 
           <Fragment key={key.name}>
-            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name}</label>
+            <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name.replaceAll('_', ' ')}</label>
             {key.name!=='id' && key.type!=='boolean' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
             {key.name==='id' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item.id ? item.id : generateUID()} readOnly/>}
             {key.name==='notes' && <textarea id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}
@@ -82,7 +82,7 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
             }
           </Fragment>
         )}
-        <button type='submit' className='popup-save-button'>Save</button>
+        <button type='submit' className='clickable-button popup-save-button'>Save</button>
       </form>
     )
   }
@@ -95,15 +95,15 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
         // if product names or size empty, get from inventory item
         if(en === '') {
           const invData = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) en = invData.name_en;
+          if(invData) en = invData?.name_en;
         }
         if(cn === '') {
           const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) cn = invData.name_cn;
+          if(invData) cn = invData?.name_cn;
         }
         if(size === '') {
           const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) size = invData.size;
+          if(invData) size = invData?.size;
         }
         return {id: mapItem.id, name_en: en ? (en + ' ' + size) : '', name_cn: cn ? (cn + ' ' + size) : ''}
       }).sort((a, b) => {
