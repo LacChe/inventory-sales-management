@@ -42,6 +42,19 @@ body {
   overflow: overlay;
 }
 
+.search-bar, .filter-bar {
+  margin: 4px 2px;
+  height: 75%;
+  width: 120px;
+  padding-left: 4px;
+  padding-top: 1px;
+  outline: none;
+}
+
+.search-bar {
+  margin-right: 8px;
+}
+
 .selected {
   border-radius: 5px;
   background-color: var(--color-a) !important;
@@ -158,6 +171,7 @@ input {
   padding: 2px;
   height: 20px;
   white-space: nowrap;
+  transition: all var(--trasition-all-time);
 }
 
 .column-header {

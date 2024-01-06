@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
@@ -9,6 +9,9 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   const { toggleShownField, toggleOrder, productDataFilePath, inventoryDataFilePath, transactionDataFilePath, inventoryData, productData, transactionData } = useStateContext();
 
   let sortedData = data;
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterTerm, setFilterTerm] = useState('');
 
   // add fields
   switch (filePath) {
@@ -101,6 +104,25 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     }
   });
 
+  // filter by filterTerm
+  sortedData = sortedData.filter(filterItem => {
+    let found = false;
+    showFields.forEach(field => {
+      let testData = filterItem[field];
+      // fill in blank fields
+      if(filePath===productDataFilePath && filterItem[field] === '' && 
+      (field === 'name_en' || field === 'name_cn' || field === 'size')) {
+          const dataFromInventory = inventoryData.filter(filterInvItem => filterInvItem.id === Object.keys(filterItem.inventory_items)[0])[0];
+          if(dataFromInventory) testData = dataFromInventory[field];
+      }
+      if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
+        found = true;
+        return;
+      }
+    });
+    if (found) return filterItem; 
+  });
+
   const exportSpreadSheet = function exportSpreadSheet() {
     let exportData = '';
 
@@ -148,6 +170,12 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
           <div className='export-button-wrapper'>
             <button className='export-button clickable-button' onClick={() => exportSpreadSheet()}>Export Spreadsheet</button>
           </div>
+          <div className='filter-bar-wrapper'>
+            <input className='filter-bar' placeholder='Filter...' onChange={(e) => setFilterTerm(e.target.value)} />
+          </div>
+          <div className='search-bar-wrapper'>
+            <input className='search-bar' placeholder='Search...' onChange={(e) => setSearchTerm(e.target.value)} />
+          </div>
         </div>
         <div>
           <p>Show Columns: </p>
@@ -186,7 +214,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
                     const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(row.inventory_items)[0])[0];
                     if(dataFromInventory) innerHtml = dataFromInventory[col.name];
                 }
-                return <div className={'cell' + (col.name==='notes' ? ' notes' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
+                return <div style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
+                  .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
               })}
             </div>
           )
