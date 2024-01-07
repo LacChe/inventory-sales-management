@@ -12,6 +12,7 @@ import Equipment from './pages/Equipment.js';
 import Charts from './pages/Charts.js';
 
 export default function App() {
+
   return (<>
     <HashRouter>
       <Routes>
@@ -27,22 +28,3 @@ export default function App() {
     </HashRouter>
   </>)
 }
-
-
-  /*
-  const [num, setNum] = useState(0);
-  return (
-    <>
-      <h1>
-          App component
-      </h1>
-      <button onClick={() => {
-        electron.notificationApi.sendNotification(num),
-        setNum(prev => prev+1)
-      }
-      }>
-        {num}
-      </button>
-    </>
-  )
-*/

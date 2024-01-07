@@ -372,3 +372,21 @@ input {
 }
 
 // CHARTS END //
+
+// TOAST //
+
+.toast-low-stock {
+  background-color: var(--color-text);
+  font-size: 0.8rem;
+  color: var(--color-b);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transform: all var(--trasition-all-time);
+}
+
+.toast-low-stock > span {
+  color: var(--color-highlight);
+}
+
+// TOAST END //
