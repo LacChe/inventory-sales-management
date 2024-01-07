@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO abstract chart page
-// TODO code review
 // TODO reminders for low stock
+// TODO code review
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
 // todo set num input to 0 when deselecting inv item for product

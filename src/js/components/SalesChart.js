@@ -1,13 +1,11 @@
 import React, { useState, Fragment, useEffect } from 'react';
-import { useStateContext } from '../utils/StateContext';
 import Popup from 'reactjs-popup';
+import { useStateContext } from '../utils/StateContext.js';
 
-const Charts = () => {
-
-  const [selectedChart, setSelectedChart] = useState('sales');
+const SalesChart = () => {
+  
   const { productData, inventoryData, transactionData, productDataFilePath, saveChartData, settings } = useStateContext();
   
-  // START sales chart data
   const [selectedRecord, setSelectedRecord] = useState('');
   const [records, setRecords] = useState(settings.chartData?.records ? JSON.parse(settings.chartData.records) : []);
   const [dateRange, setDateRange] = useState(settings.chartData?.dateRange ? JSON.parse(settings.chartData.dateRange) : ['','']);
@@ -60,7 +58,6 @@ const Charts = () => {
       else return productData;
     });
   }
-  // END sales chart data
 
   const setDateRangeState = function setDateRangeState(dates) {
     if(dates[0] && dates[1] && Date.parse(dates[0]) > Date.parse(dates[1])) return;
@@ -221,10 +218,7 @@ const Charts = () => {
   }
 
   return (
-    <div className='chart-wrapper'>
-      <div className='chart-selection'>
-        <button className={selectedChart === 'sales' ? 'selected' : ''} onClick={() => setSelectedChart('sales')}>Sales</button>
-      </div>
+    <>
       <div className='chart-parameters'>
         <div>
           <button className='clickable-button' onClick={() => toggleAllRecords()}>Toggle All</button>
@@ -251,8 +245,8 @@ const Charts = () => {
         </div>
       </div>
       {renderChart()}
-    </div>
+    </>
   )
 }
 
-export default Charts
+export default SalesChart
