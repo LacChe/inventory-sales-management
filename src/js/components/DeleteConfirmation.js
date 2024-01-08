@@ -7,7 +7,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
   const { saveFileToApi, productDataFilePath, inventoryData } = useStateContext();
 
   // fill in blank product fields
-  if(filePath===productDataFilePath) item = fillProdValFromInv(item, inventoryData);
+  if(filePath===productDataFilePath) item = fillProdValFromInv(item, fields, inventoryData);
 
   function saveData() {
     // remove from allItems

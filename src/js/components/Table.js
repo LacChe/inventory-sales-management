@@ -14,61 +14,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTerm, setFilterTerm] = useState('');
 
-  // add fields
-  switch (filePath) {
-    case inventoryDataFilePath:
-      // add amount
-      sortedData = sortedData.map(mapItem => {
-        let amount = 0
-        // get products that use this inventory item
-        const prodArr = productData.filter(filterItem => {
-          if(filterItem.inventory_items[mapItem.id] !== undefined) return filterItem;
-        });
-        // get transactions that use this product
-        const transArr = transactionData.filter(filterItem => {
-          if(prodArr.map(mapItem => mapItem.id).includes(filterItem.product_id)) return filterItem;
-        });
-        // sum total inventory items
-        prodArr.forEach(product => {
-          for(let i = 0; i < product.inventory_items[mapItem.id]; i++) {
-            transArr.forEach(transaction => amount += parseInt(transaction.amount))
-          }
-        });
-        // add to sortedItems
-        return {
-          ...mapItem,
-          amount: amount*=-1
-        }
-      });
-      break;
-    case productDataFilePath:
-      break;
-    case transactionDataFilePath:
-      // add name en name cn with size
-      sortedData = sortedData.map(transactionRecord => {
-        const names = productData.filter(filterItem => {
-          // find product
-          if(filterItem.id === transactionRecord.product_id) return filterItem;
-        }).map(prodRecord => {
-          prodRecord = fillProdValFromInv(prodRecord, inventoryData);
-          return { name_en: prodRecord.name_en, name_cn: prodRecord.name_cn, size: prodRecord.size }
-        })[0];
-        return {
-          ...transactionRecord,
-          name_en: names?.name_en + ' ' + names?.size,
-          name_cn: names?.name_cn + ' ' + names?.size
-        }
-      });
-      break;
-    default:
-      break;
-  }
-
   sortedData.sort((a, b) => {
 
     // if empty, get data from inventory
-    a = fillProdValFromInv(a, inventoryData);
-    b = fillProdValFromInv(b, inventoryData);
+    a = fillProdValFromInv(a, fields, inventoryData);
+    b = fillProdValFromInv(b, fields, inventoryData);
 
     // sort by number string accordingly
     if(fieldOrder.field === 'amount' || fieldOrder.field === 'revenue' || fieldOrder.field === 'price') {
@@ -87,7 +37,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     let found = false;
     showFields.forEach(field => {
       let testData = filterItem[field];
-      if(filePath===productDataFilePath) testData = fillProdValFromInv(testData, inventoryData);
+      if(filePath===productDataFilePath) testData = fillProdValFromInv(testData, fields, inventoryData);
       if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
         found = true;
         return;
@@ -105,7 +55,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
 
     // add records
     sortedData.forEach(record => {
-      if(filePath === productDataFilePath) record = fillProdValFromInv(record, inventoryData);
+      if(filePath === productDataFilePath) record = fillProdValFromInv(record, fields, inventoryData);
       fields.forEach(field => {
         if(showFields.includes(field.name)) {
           exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
@@ -173,7 +123,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               {/* render each row for every field */}
               {sortedData.map(row => {
                 // if prod, fill in blanks from inventory
-                if(filePath===productDataFilePath) row = fillProdValFromInv(row, inventoryData);
+                if(filePath===productDataFilePath) row = fillProdValFromInv(row, fields, inventoryData);
                 let innerHtml = row[col.name];
                 if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
                 if(col.type === 'boolean') innerHtml = (innerHtml === 'true' ? '#' : '');

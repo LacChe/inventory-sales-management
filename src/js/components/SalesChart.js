@@ -1,11 +1,11 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import { useStateContext } from '../utils/StateContext.js';
-import { getContrastingHexColor, generateRandomHexColor } from '../utils/HelperFunctions.js';
+import { getContrastingHexColor, generateRandomHexColor, fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 const SalesChart = () => {
   
-  const { productData, inventoryData, transactionData, productDataFilePath, saveChartData, settings } = useStateContext();
+  const { productData, productDataFields, inventoryData, transactionData, productDataFilePath, saveChartData, settings } = useStateContext();
   
   const [selectedRecord, setSelectedRecord] = useState('');
   const [records, setRecords] = useState(settings.chartData?.records ? JSON.parse(settings.chartData.records) : []);
@@ -67,33 +67,12 @@ const SalesChart = () => {
 
   const productIdDropdown = function productIdDropdown() {
     let sortedData = productData.map(mapItem => { 
+      mapItem = fillProdValFromInv(mapItem, productDataFields, inventoryData);
         let en = mapItem.name_en;
         let cn = mapItem.name_cn;
-        let size = mapItem.size;
-        // if product names or size empty, get from inventory item
-        if(en === '') {
-          const invData = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) en = invData.name_en;
-        }
-        if(cn === '') {
-          const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) cn = invData.name_cn;
-        }
-        if(size === '') {
-          const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-          if(invData) size = invData.size;
-        }
+        let size = mapItem.size ? mapItem.size : '';
         return {id: mapItem.id, name_en: en ? (en + ' ' + size) : '', name_cn: cn ? (cn + ' ' + size) : '', price: mapItem.price}
       }).sort((a, b) => {
-        // if empty, get data from inventory
-        if(filePath===productDataFilePath && a.name_en === '') {
-            const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(a.inventory_items)[0])[0];
-            if(dataFromInventory) a = dataFromInventory;
-        }
-        if(filePath===productDataFilePath && b.name_en === '') {
-            const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(b.inventory_items)[0])[0];
-            if(dataFromInventory) b = dataFromInventory;
-        }
         // sort
         if(JSON.stringify(a.name_en)?.toString().toLowerCase() > JSON.stringify(b.name_en)?.toString().toLowerCase()){
           return 1;

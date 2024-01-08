@@ -1,3 +1,11 @@
+export function generateUID() {
+  var firstPart = (Math.random() * 46656) | 0;
+  var secondPart = (Math.random() * 46656) | 0;
+  firstPart = ("000" + firstPart.toString(36)).slice(-3);
+  secondPart = ("000" + secondPart.toString(36)).slice(-3);
+  return firstPart + secondPart;
+}
+
 function djb2(str) {
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
@@ -24,12 +32,12 @@ export function getContrastingHexColor(hexColor) {
   return contrastingColor;
 }
 
-export function fillProdValFromInv(prod, inventoryData) {
+export function fillProdValFromInv(prod, fields, inventoryData) {
   if(!prod || !prod.inventory_items || !inventoryData) return prod;
-    Object.keys(prod).forEach((field) => {
-    if(prod[field] === '' && (field === 'name_en' || field === 'name_cn' || field === 'size')) {
-        const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(prod.inventory_items)[0])[0];
-        prod[field] = dataFromInventory ? dataFromInventory[field] : prod[field];
+  fields.forEach((field) => {
+    if((!prod[field.name] || prod[field.name] === '') && (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
+      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(prod.inventory_items)[0])[0];
+      prod[field.name] = dataFromInventory ? dataFromInventory[field.name] : prod[field.name];
     }
   })
   return prod;

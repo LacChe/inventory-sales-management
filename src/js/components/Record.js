@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useStateContext } from '../utils/StateContext';
+import { generateUID } from '../utils/HelperFunctions.js';
 
 const Record = ({ fields, item = {}, filePath, allItems }) => {
 
@@ -12,7 +13,7 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
   const closeModal = () => setOpen(false);
 
   // remove formula fields
-  fields = fields.filter(field => {
+  let fieldsNoFormula = fields.filter(field => {
     if(field.type === 'formula') {
       if(item) delete item[field.name];
       return;
@@ -20,24 +21,16 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
     return field;
   })
 
-  function generateUID() {
-    var firstPart = (Math.random() * 46656) | 0;
-    var secondPart = (Math.random() * 46656) | 0;
-    firstPart = ("000" + firstPart.toString(36)).slice(-3);
-    secondPart = ("000" + secondPart.toString(36)).slice(-3);
-    return firstPart + secondPart;
-  }
-
   function saveData(event) {
     // create new item
     let newItem = {};
-    for(let i = 0; i < fields.length; i++) {
+    for(let i = 0; i < fieldsNoFormula.length; i++) {
       if(event.target[i].id === 'inventory_itemsinput') {
-        newItem[fields[i].name] = JSON.parse(event.target[i].value);
+        newItem[fieldsNoFormula[i].name] = JSON.parse(event.target[i].value);
       } else if(event.target[i].id === 'not_a_saleinput') {
-        newItem[fields[i].name] = item[fields[i].name];
+        newItem[fieldsNoFormula[i].name] = item[fieldsNoFormula[i].name];
       } else {
-        newItem[fields[i].name] = event.target[i].value;
+        newItem[fieldsNoFormula[i].name] = event.target[i].value;
       }
     }
     // add or change in allItems
@@ -52,6 +45,12 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
     }
 
     // send to main for saving
+    // remove formula fields from saving
+    newAllItems.forEach(record => {
+      fields.forEach(field => {
+        if(field.type === 'formula') delete record[field.name];
+      })
+    })
     saveFileToApi({ filePath, data: newAllItems });
     // event.preventDefault();
   }
@@ -59,7 +58,7 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
   function dataTable() {
     return (
       <form className='popup-grid' onSubmit={saveData}>
-        {fields.map(key => 
+        {fieldsNoFormula.map(key => 
           <Fragment key={key.name}>
             <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name.replaceAll('_', ' ')}</label>
             {key.name!=='id' && key.type!=='boolean' && key.name!=='notes' && key.type!=='date' && key.type!=='dropdown' && <input id={key.name+'input'} className='popup-grid-cell' defaultValue={item ? item[key.name] : ''} />}

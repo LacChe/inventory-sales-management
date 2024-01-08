@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 // TODO highlight row on mouse over
 // TODO move calculate formula functions to utils and use only in statecontext
@@ -40,6 +41,55 @@ export const StateContext = ({ children }) => {
   const [equipmentDataFieldsOrder, setEquipmentDataFieldsOrder] = useState({field: "", asc: true});
   const [transactionDataFieldsOrder, setTransactionDataFieldsOrder] = useState({field: "", asc: true});
 
+  // calculate inventory amount
+  useEffect(() => {
+    // add amount
+    if(!isLoaded) return;
+    setInventoryData(prev => prev.map(mapItem => {
+      let amount = 0
+      // get products that use this inventory item
+      const prodArr = productData.filter(filterItem => {
+        if(filterItem.inventory_items[mapItem.id] !== undefined) return filterItem;
+      });
+      // get transactions that use this product
+      const transArr = transactionData.filter(filterItem => {
+        if(prodArr.map(mapItem => mapItem.id).includes(filterItem.product_id)) return filterItem;
+      });
+      // sum total inventory items
+      prodArr.forEach(product => {
+        for(let i = 0; i < product.inventory_items[mapItem.id]; i++) {
+          transArr.forEach(transaction => amount += parseInt(transaction.amount))
+        }
+      });
+      // add to sortedItems
+      return {
+        ...mapItem,
+        amount: amount*=-1
+      }
+    }))
+  }, [productData, transactionData])
+
+  // calculate transaction names
+  useEffect(() => {
+    if(!isLoaded) return;
+    // add name en name cn with size
+    setTransactionData(prev => prev.map(transactionRecord => {
+      const names = productData.filter(filterItem => {
+        // find product
+        if(filterItem.id === transactionRecord.product_id) return filterItem;
+      }).map(prodRecord => {
+        prodRecord = fillProdValFromInv(prodRecord, productDataFields, inventoryData);
+        return { name_en: prodRecord.name_en, name_cn: prodRecord.name_cn, size: prodRecord.size }
+      })[0];
+      let size = ' ' + (names?.size ? names.size : '');
+      return {
+        ...transactionRecord,
+        name_en: names?.name_en + size,
+        name_cn: names?.name_cn + size
+      }
+    }));
+  }, [productData])
+  
   // ask main for files
   useEffect(() => {
     window.api.send("readFile", inventoryDataFilePath);
