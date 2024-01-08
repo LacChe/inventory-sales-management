@@ -3,6 +3,7 @@ import Popup from 'reactjs-popup';
 import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
 import { useStateContext } from '../utils/StateContext';
+import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
@@ -44,31 +45,16 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       break;
     case transactionDataFilePath:
       // add name en name cn with size
-      sortedData = sortedData.map(mapItem => {
+      sortedData = sortedData.map(transactionRecord => {
         const names = productData.filter(filterItem => {
           // find product
-          if(filterItem.id === mapItem.product_id) return filterItem;
-        }).map(mapItem => { 
-          let en = mapItem.name_en;
-          let cn = mapItem.name_cn;
-          let size = mapItem.size;
-          // if product names or size empty, get from inventory item
-          if(en === '') {
-            const invData = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-            if(invData) en = invData.name_en;
-          }
-          if(cn === '') {
-            const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-            if(invData) cn = invData.name_cn;
-          }
-          if(size === '') {
-            const invData  = inventoryData.filter(filterItem => filterItem.id === Object.keys(mapItem.inventory_items)[0])[0];
-            if(invData) size = invData.size;
-          }
-          return {name_en: en, name_cn: cn, size}
+          if(filterItem.id === transactionRecord.product_id) return filterItem;
+        }).map(prodRecord => {
+          prodRecord = fillProdValFromInv(prodRecord, inventoryData);
+          return { name_en: prodRecord.name_en, name_cn: prodRecord.name_cn, size: prodRecord.size }
         })[0];
         return {
-          ...mapItem,
+          ...transactionRecord,
           name_en: names?.name_en + ' ' + names?.size,
           name_cn: names?.name_cn + ' ' + names?.size
         }
@@ -81,16 +67,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   sortedData.sort((a, b) => {
 
     // if empty, get data from inventory
-    if(filePath===productDataFilePath && a[fieldOrder.field] === '' && 
-    (fieldOrder.field === 'name_en' || fieldOrder.field === 'name_cn' || fieldOrder.field === 'size')) {
-        const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(a.inventory_items)[0])[0];
-        if(dataFromInventory) a = dataFromInventory;
-    }
-    if(filePath===productDataFilePath && b[fieldOrder.field] === '' && 
-    (fieldOrder.field === 'name_en' || fieldOrder.field === 'name_cn' || fieldOrder.field === 'size')) {
-        const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(b.inventory_items)[0])[0];
-        if(dataFromInventory) b = dataFromInventory;
-    }
+    a = fillProdValFromInv(a, inventoryData);
+    b = fillProdValFromInv(b, inventoryData);
 
     // sort by number string accordingly
     if(fieldOrder.field === 'amount' || fieldOrder.field === 'revenue' || fieldOrder.field === 'price') {
@@ -109,18 +87,13 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     let found = false;
     showFields.forEach(field => {
       let testData = filterItem[field];
-      // fill in blank fields
-      if(filePath===productDataFilePath && filterItem[field] === '' && 
-      (field === 'name_en' || field === 'name_cn' || field === 'size')) {
-          const dataFromInventory = inventoryData.filter(filterInvItem => filterInvItem.id === Object.keys(filterItem.inventory_items)[0])[0];
-          if(dataFromInventory) testData = dataFromInventory[field];
-      }
+      if(filePath===productDataFilePath) testData = fillProdValFromInv(testData, inventoryData);
       if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
         found = true;
         return;
       }
     });
-    if (found) return filterItem; 
+    if(found) return filterItem; 
   });
 
   const exportSpreadSheet = function exportSpreadSheet() {
@@ -132,16 +105,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
 
     // add records
     sortedData.forEach(record => {
+      if(filePath === productDataFilePath) record = fillProdValFromInv(record, inventoryData);
       fields.forEach(field => {
         if(showFields.includes(field.name)) {
-          if(filePath===productDataFilePath && record[field.name] === '' && 
-            (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
-              const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(record.inventory_items)[0])[0];
-              if(dataFromInventory) exportData += (JSON.stringify(dataFromInventory[field.name])?.replaceAll(',', '-') + ',');
-              else exportData += ',';
-          } else {
-            exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
-          }
+          exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
         }
       });
       exportData = exportData.slice(0, -1) + '\n';
@@ -205,15 +172,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               <div className='column-header' onClick={() => toggleOrder(filePath, col.name)}>{col.name.replaceAll('_', ' ')}</div>
               {/* render each row for every field */}
               {sortedData.map(row => {
+                // if prod, fill in blanks from inventory
+                if(filePath===productDataFilePath) row = fillProdValFromInv(row, inventoryData);
                 let innerHtml = row[col.name];
                 if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
                 if(col.type === 'boolean') innerHtml = (innerHtml === 'true' ? '#' : '');
-                // if empty, get data from inventory
-                if(filePath===productDataFilePath && row[col.name] === '' && 
-                (col.name === 'name_en' || col.name === 'name_cn' || col.name === 'size')) {
-                    const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(row.inventory_items)[0])[0];
-                    if(dataFromInventory) innerHtml = dataFromInventory[col.name];
-                }
                 return <div style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
                   .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
               })}

@@ -365,10 +365,12 @@ input {
 
 .chart-bar-label {
   transition: all 300ms;
+  cursor: pointer;
 }
 
 .chart-section:last-child {
   width: 630px;
+  cursor: pointer;
 }
 
 // CHARTS END //

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useStateContext } from '../utils/StateContext';
 import Table from '../components/Table.js';
 
@@ -10,4 +10,4 @@ const Equipment = () => {
   )
 }
 
-export default Equipment
+export default Equipment;

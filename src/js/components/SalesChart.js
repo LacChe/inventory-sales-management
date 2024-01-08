@@ -1,6 +1,7 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import { useStateContext } from '../utils/StateContext.js';
+import { getContrastingHexColor, generateRandomHexColor } from '../utils/HelperFunctions.js';
 
 const SalesChart = () => {
   
@@ -114,35 +115,6 @@ const SalesChart = () => {
       </div>
     )
   }
-
-  function djb2(str) {
-    let hash = 5381;
-    for (let i = 0; i < str.length; i++) {
-        hash = (hash * 33) ^ str.charCodeAt(i);
-    }
-    return hash >>> 0;
-  }
-
-  function generateRandomHexColor(seed) {
-      const hash = djb2(seed);
-      const hexColor = '#' + (hash & 0xFFFFFF).toString(16).padStart(6, '0');
-      return hexColor;
-  }
-  
-  function getContrastingHexColor(hexColor) {
-    // Convert hex to RGB
-    const r = parseInt(hexColor.slice(1, 3), 16);
-    const g = parseInt(hexColor.slice(3, 5), 16);
-    const b = parseInt(hexColor.slice(5, 7), 16);
-
-    // Calculate luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Decide on contrasting color
-    const contrastingColor = luminance > 0.5 ? '#000000' : '#FFFFFF';
-
-    return contrastingColor;
-}
 
   const renderChart = function renderChart() {
     let max = -1, min = -1;

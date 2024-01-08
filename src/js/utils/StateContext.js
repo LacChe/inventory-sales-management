@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-// TODO reminders for low stock
+// TODO move calculate formula functions to utils and use only in statecontext
 // TODO code review
 // todo convert json files to objects instead of arrays ?
 // todo sometimes submit doesnt refresh
@@ -86,7 +86,7 @@ export const StateContext = ({ children }) => {
       }
     });
   }, [])
-
+  
   const saveFileToApi = function saveFileToApi(data) {
     window.api.send("saveFile", data);
   }
