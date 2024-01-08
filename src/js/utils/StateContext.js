@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+// TODO highlight row on mouse over
 // TODO move calculate formula functions to utils and use only in statecontext
 // TODO code review
 // todo convert json files to objects instead of arrays ?
@@ -8,7 +9,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const Context = createContext();
 
-export const StateContext = ({ children }) => {
+export const StateContext = ({ children }) => {  
 
   const inventoryDataFilePath = "inventoryData.json";
   const productDataFilePath = "productData.json";
@@ -17,6 +18,7 @@ export const StateContext = ({ children }) => {
   const settingsFilePath = "settings.json";
 
   const [settings, setSettings] = useState({});
+  const [loaded, setLoaded] = useState([0,0,0,0,0]);
 
   const [inventoryData, setInventoryData] = useState([]);
   const [productData, setProductData] = useState([]);
@@ -49,15 +51,19 @@ export const StateContext = ({ children }) => {
       switch (data[0]) {
         case inventoryDataFilePath:
           setInventoryData(JSON.parse(data[1]));
+          setLoaded(prev => { prev[0] = 1; return prev; });
           break;
         case productDataFilePath:
           setProductData(JSON.parse(data[1]));
+          setLoaded(prev => { prev[1] = 1; return prev; });
           break;
         case equipmentDataFilePath:
           setEquipmentData(JSON.parse(data[1]));
+          setLoaded(prev => { prev[2] = 1; return prev; });
           break;
         case transactionDataFilePath:
           setTransactionData(JSON.parse(data[1]));
+          setLoaded(prev => { prev[3] = 1; return prev; });
           break;
         case settingsFilePath:
           setSettings(JSON.parse(data[1]));
@@ -76,6 +82,8 @@ export const StateContext = ({ children }) => {
           setProductDataFieldsOrder(JSON.parse(data[1]).product.order);
           setEquipmentDataFieldsOrder(JSON.parse(data[1]).equipment.order);
           setTransactionDataFieldsOrder(JSON.parse(data[1]).transaction.order);
+          
+          setLoaded(prev => { prev[4] = 1; return prev; });
           break;
         case "error":
           console.log("error: file not found ", data[1]);
@@ -234,6 +242,16 @@ export const StateContext = ({ children }) => {
     }
   }
 
+  const isLoaded = function isLoaded() {
+    return (
+      loaded[0] === 1 &&
+      loaded[1] === 1 &&
+      loaded[2] === 1 &&
+      loaded[3] === 1 &&
+      loaded[4] === 1
+    )
+  }
+
   return (
     <Context.Provider
         value={{
@@ -267,7 +285,8 @@ export const StateContext = ({ children }) => {
           toggleShownField,
           toggleOrder,
           saveFileToApi,
-          saveChartData
+          saveChartData,
+          isLoaded
         }}
     >
       { children }

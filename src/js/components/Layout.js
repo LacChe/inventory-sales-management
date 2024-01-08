@@ -6,7 +6,7 @@ import { useStateContext } from '../utils/StateContext';
 
 const Layout = () => {
 
-  const { inventoryData, productData, transactionData } = useStateContext();
+  const { inventoryData, productData, transactionData, isLoaded } = useStateContext();
 
   const navigate = useNavigate();
 
@@ -57,6 +57,14 @@ const Layout = () => {
       }
     });
   }, [inventoryData])
+
+  if(!isLoaded) {
+    return (
+      <>
+        Loading...
+      </>
+    )
+  }
   
   return (
     <>
