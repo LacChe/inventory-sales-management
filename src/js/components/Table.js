@@ -14,6 +14,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTerm, setFilterTerm] = useState('');
 
+  const [hoverId, setHoverId] = useState('');
+
   sortedData.sort((a, b) => {
 
     // if empty, get data from inventory
@@ -127,8 +129,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
                 let innerHtml = row[col.name];
                 if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
                 if(col.type === 'boolean') innerHtml = (innerHtml === 'true' ? '#' : '');
-                return <div style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
-                  .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
+                return <div onMouseOver={()=>setHoverId(row.id)} style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
+                  .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '') + (hoverId===row.id ? ' hover' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
               })}
             </div>
           )

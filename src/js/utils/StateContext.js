@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
-// TODO highlight row on mouse over
-// TODO move calculate formula functions to utils and use only in statecontext
-// TODO code review
+// TODO fix formula values disappear when canceling edit record popup
+// TODO set num input to 0 when deselecting inv item for product
+// TODO sometimes submit doesnt refresh
+
 // todo convert json files to objects instead of arrays ?
-// todo sometimes submit doesnt refresh
-// todo set num input to 0 when deselecting inv item for product
 
 const Context = createContext();
 
