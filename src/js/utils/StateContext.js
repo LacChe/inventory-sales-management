@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
-// TODO set num input to 0 when deselecting inv item for product
 // TODO sometimes submit doesnt refresh
-
 // todo convert json files to objects instead of arrays ?
 
 const Context = createContext();
