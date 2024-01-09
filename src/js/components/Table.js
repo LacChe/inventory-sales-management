@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
@@ -8,12 +8,18 @@ import { AiFillEdit, AiFillDelete, AiFillCaretUp, AiFillCaretDown  } from "react
 
 const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
-  const { toggleShownField, toggleOrder, productDataFilePath, inventoryData } = useStateContext();
+  const { toggleShownField, toggleOrder, productDataFilePath, inventoryData, saveSearchTerm, saveFilterTerm, settings } = useStateContext();
 
   let sortedData = data;
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterTerm, setFilterTerm] = useState('');
+
+  useEffect(() => {
+    setSearchTerm(settings.search);
+    setFilterTerm(settings.filter);
+  }, [settings])
+  
 
   const [hoverId, setHoverId] = useState('');
 
@@ -92,10 +98,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             <button className='export-button clickable-button' onClick={() => exportSpreadSheet()}>Export Spreadsheet</button>
           </div>
           <div className='filter-bar-wrapper'>
-            <input className='filter-bar' placeholder='Filter...' onChange={(e) => setFilterTerm(e.target.value)} />
+            <input className='filter-bar' placeholder='Filter...' onBlur={(e) => saveFilterTerm(e.target.value)} onChange={(e) => setFilterTerm(e.target.value)} defaultValue={filterTerm}/>
           </div>
           <div className='search-bar-wrapper'>
-            <input className='search-bar' placeholder='Search...' onChange={(e) => setSearchTerm(e.target.value)} />
+            <input className='search-bar' placeholder='Search...' onBlur={(e) => saveSearchTerm(e.target.value)} onChange={(e) => setSearchTerm(e.target.value)} value={searchTerm}/>
           </div>
         </div>
         <div>

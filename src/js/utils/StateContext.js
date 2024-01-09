@@ -4,7 +4,6 @@ import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 const Context = createContext();
 
 // TODO dont white page on refresh
-// TODO saleschart not loading
 
 export const StateContext = ({ children }) => {  
 
@@ -45,7 +44,6 @@ export const StateContext = ({ children }) => {
       let amount = 0
       // get products that use this inventory item
       const prodArr = productData.filter(filterItem => {
-        if(filterItem.id === 'ggmt8h')console.log(1, JSON.stringify(filterItem))
         if(filterItem.inventory_items[mapItem.id] !== undefined) return filterItem;
       });
       // get transactions that use this product
@@ -64,7 +62,7 @@ export const StateContext = ({ children }) => {
         amount: amount*=-1
       }
     }))
-  }, [productData, transactionData])
+  }, [productData, transactionData, loaded])
 
   // calculate transaction names
   useEffect(() => {
@@ -85,7 +83,7 @@ export const StateContext = ({ children }) => {
         name_cn: names?.name_cn + size
       }
     }));
-  }, [productData])
+  }, [productData, loaded])
   
   // ask main for files
   useEffect(() => {
@@ -280,6 +278,20 @@ export const StateContext = ({ children }) => {
     }
   }
 
+  const saveSearchTerm = function saveSearchTerm(term) {
+    setSettings(prev => {
+      window.api.send("saveFile", { filePath: settingsFilePath, data: {...prev, 'search': term}});
+      return {...prev, 'search': term}
+    });
+  }
+
+  const saveFilterTerm = function saveFilterTerm(term) {
+    setSettings(prev => {
+      window.api.send("saveFile", { filePath: settingsFilePath, data: {...prev, 'filter': term}});
+      return {...prev, 'filter': term}
+    });
+  }
+
   const saveChartData = function saveChartData(data) {
     if(settings.chartData) {
       setSettings(prev => {
@@ -333,7 +345,9 @@ export const StateContext = ({ children }) => {
           toggleOrder,
           saveFileToApi,
           saveChartData,
-          isLoaded
+          isLoaded,
+          saveSearchTerm,
+          saveFilterTerm
         }}
     >
       { children }

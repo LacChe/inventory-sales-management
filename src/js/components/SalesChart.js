@@ -13,7 +13,6 @@ const SalesChart = () => {
   const [precision, setPrecision] = useState(settings.chartData?.precision ? JSON.parse(settings.chartData.precision) : 'day');
   const [transactions, setTransactions] = useState(settings.chartData?.transactions ? JSON.parse(settings.chartData.transactions) : []);
   const [parameter, setParameter] = useState(settings.chartData?.parameter ? JSON.parse(settings.chartData.parameter) : 'amount');
-  const filePath = productDataFilePath;
 
   useEffect(() => {
     // get transactions containing product ids within date range, excluding not_a_sale
