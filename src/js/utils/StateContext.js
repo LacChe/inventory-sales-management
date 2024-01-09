@@ -3,7 +3,9 @@ import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 const Context = createContext();
 
-// TODO products not sorting by size
+// TODO filled in data for products shouldnt replace original item
+// TODO filtered array shouldnt replace array used for saving
+// TODO dont white page on refresh
 
 export const StateContext = ({ children }) => {  
 
@@ -73,8 +75,8 @@ export const StateContext = ({ children }) => {
         // find product
         if(filterItem.id === transactionRecord.product_id) return filterItem;
       }).map(prodRecord => {
-        prodRecord = fillProdValFromInv(prodRecord, productDataFields, inventoryData);
-        return { name_en: prodRecord.name_en, name_cn: prodRecord.name_cn, size: prodRecord.size }
+        let filledRecord = fillProdValFromInv(prodRecord, productDataFields, inventoryData);
+        return { name_en: filledRecord.name_en, name_cn: filledRecord.name_cn, size: filledRecord.size }
       })[0];
       let size = ' ' + (names?.size ? names.size : '');
       return {

@@ -7,11 +7,12 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
   const { saveFileToApi, productDataFilePath, inventoryData } = useStateContext();
 
   // fill in blank product fields
-  if(filePath===productDataFilePath) item = fillProdValFromInv(item, fields, inventoryData);
+  let filledRecord = {...item};
+  if(filePath===productDataFilePath) filledRecord = fillProdValFromInv(filledRecord, fields, inventoryData);
 
   function saveData() {
     // remove from allItems
-    let newAllItems = allItems.filter(filterItem => filterItem.id !== item.id);
+    let newAllItems = allItems.filter(filterItem => filterItem.id !== filledRecord.id);
     // send to main for saving
     saveFileToApi({ filePath, data: newAllItems });
     // event.preventDefault();
@@ -23,7 +24,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
         {fields.map(key => 
           <Fragment key={key.name}>
             <label htmlFor={key.name+'input'} className='popup-grid-cell'>{key.name.replaceAll('_', ' ')}</label>
-            <input id={key.name+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(item[key.name])} readOnly></input>
+            <input id={key.name+'input'} className='popup-grid-cell' defaultValue={JSON.stringify(filledRecord[key.name])} readOnly></input>
           </Fragment>
         )}
         <button type='submit' className='clickable-button popup-delete-button'>Delete</button>

@@ -67,11 +67,11 @@ const SalesChart = () => {
 
   const productIdDropdown = function productIdDropdown() {
     let sortedData = productData.map(mapItem => { 
-      mapItem = fillProdValFromInv(mapItem, productDataFields, inventoryData);
-        let en = mapItem.name_en;
-        let cn = mapItem.name_cn;
-        let size = mapItem.size ? mapItem.size : '';
-        return {id: mapItem.id, name_en: en ? (en + ' ' + size) : '', name_cn: cn ? (cn + ' ' + size) : '', price: mapItem.price}
+        let filledRecord = fillProdValFromInv(mapItem, productDataFields, inventoryData);
+        let en = filledRecord.name_en;
+        let cn = filledRecord.name_cn;
+        let size = filledRecord.size ? filledRecord.size : '';
+        return {id: filledRecord.id, name_en: en ? (en + ' ' + size) : '', name_cn: cn ? (cn + ' ' + size) : '', price: filledRecord.price}
       }).sort((a, b) => {
         // sort
         if(JSON.stringify(a.name_en)?.toString().toLowerCase() > JSON.stringify(b.name_en)?.toString().toLowerCase()){

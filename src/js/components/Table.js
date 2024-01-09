@@ -20,15 +20,15 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   sortedData.sort((a, b) => {
 
     // if empty, get data from inventory
-    a = fillProdValFromInv(a, fields, inventoryData);
-    b = fillProdValFromInv(b, fields, inventoryData);
+    let filledA = fillProdValFromInv(a, fields, inventoryData);
+    let filledB = fillProdValFromInv(b, fields, inventoryData);
 
     // sort by number string accordingly
     if(fieldOrder.field === 'amount' || fieldOrder.field === 'revenue' || fieldOrder.field === 'price') {
       return ((parseInt(a[fieldOrder.field]) || 0) - (parseInt(b[fieldOrder.field]) || 0)) * (fieldOrder.asc ? 1 : -1);
-    } else if(JSON.stringify(a[fieldOrder.field])?.toString().toLowerCase() > JSON.stringify(b[fieldOrder.field])?.toString().toLowerCase()){
+    } else if(JSON.stringify(filledA[fieldOrder.field])?.toString().toLowerCase() > JSON.stringify(filledB[fieldOrder.field])?.toString().toLowerCase()){
       return 1 * (fieldOrder.asc ? 1 : -1);
-    } else if(JSON.stringify(a[fieldOrder.field])?.toLowerCase() < JSON.stringify(b[fieldOrder.field])?.toString().toLowerCase()){
+    } else if(JSON.stringify(filledA[fieldOrder.field])?.toLowerCase() < JSON.stringify(filledB[fieldOrder.field])?.toString().toLowerCase()){
       return -1 * (fieldOrder.asc ? 1 : -1);
     } else {
       return 0;
@@ -40,7 +40,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     let found = false;
     showFields.forEach(field => {
       let testData = filterItem[field];
-      if(filePath===productDataFilePath) testData = fillProdValFromInv(testData, fields, inventoryData);
+      if(filePath===productDataFilePath) testData = fillProdValFromInv(filterItem, fields, inventoryData)[field];
       if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
         found = true;
         return;
@@ -58,10 +58,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
 
     // add records
     sortedData.forEach(record => {
-      if(filePath === productDataFilePath) record = fillProdValFromInv(record, fields, inventoryData);
+      let saveRecord = {...record};
+      if(filePath === productDataFilePath) saveRecord = fillProdValFromInv(saveRecord, fields, inventoryData);
       fields.forEach(field => {
         if(showFields.includes(field.name)) {
-          exportData += (JSON.stringify(record[field.name])?.replaceAll(',', '-') + ',')
+          exportData += (JSON.stringify(saveRecord[field.name])?.replaceAll(',', '-') + ',')
         }
       });
       exportData = exportData.slice(0, -1) + '\n';
@@ -84,7 +85,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         <div>
           <div className='add-button-wrapper'>
             <Popup modal nested trigger={<button className='add-button clickable-button'>Add Record</button>}>
-              <Record fields={fields} filePath={filePath} allItems={sortedData} />
+              <Record fields={fields} filePath={filePath} allItems={data} />
             </Popup>
           </div>
           <div className='export-button-wrapper'>
@@ -128,13 +129,14 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               </div>
               {/* render each row for every field */}
               {sortedData.map(row => {
+                let displayRow = {...row};
                 // if prod, fill in blanks from inventory
-                if(filePath===productDataFilePath) row = fillProdValFromInv(row, fields, inventoryData);
-                let innerHtml = row[col.name];
+                if(filePath===productDataFilePath) displayRow = fillProdValFromInv(displayRow, fields, inventoryData);
+                let innerHtml = displayRow[col.name];
                 if(col.type === 'dropdown') innerHtml = JSON.stringify(innerHtml);
                 if(col.type === 'boolean') innerHtml = (innerHtml === 'true' ? '#' : '');
-                return <div onMouseOver={()=>setHoverId(row.id)} style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
-                  .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '') + (hoverId===row.id ? ' hover' : '')} key={row[fields[0].name]+col.name}>{innerHtml}</div>
+                return <div onMouseOver={()=>setHoverId(displayRow.id)} style={{textDecoration: `${(searchTerm !== '' && JSON.stringify(innerHtml)?.toLowerCase().includes(searchTerm?.toLowerCase())) ? `underline 2px ${getComputedStyle(document.body)
+                  .getPropertyValue('--color-highlight')}` : `underline 2px #00000000`}`}} className={'cell' + (col.name==='notes' ? ' notes' : '') + (hoverId===displayRow.id ? ' hover' : '')} key={displayRow[fields[0].name]+col.name}>{innerHtml}</div>
               })}
             </div>
           )
@@ -146,7 +148,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             {sortedData.map(row => {
               return (
               <Popup key={row.id} modal nested trigger={<button className='clickable-button edit-button'><AiFillEdit /></button>}>
-                <Record fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
+                <Record fields={fields} item={row} filePath={filePath} allItems={data}/>
               </Popup>
             )})}
           </div>
@@ -158,7 +160,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             {sortedData.map(row => {
               return (
               <Popup key={row.id} modal trigger={<button className='clickable-button delete-button'><AiFillDelete /></button>}>
-                <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
+                <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={data}/>
               </Popup>
             )})}
           </div>
