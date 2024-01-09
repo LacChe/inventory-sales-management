@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
-// TODO sometimes submit doesnt refresh
-// todo convert json files to objects instead of arrays ?
-
 const Context = createContext();
 
 export const StateContext = ({ children }) => {  
