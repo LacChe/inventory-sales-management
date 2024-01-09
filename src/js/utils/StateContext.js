@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
-// TODO fix formula values disappear when canceling edit record popup
 // TODO set num input to 0 when deselecting inv item for product
 // TODO sometimes submit doesnt refresh
 
