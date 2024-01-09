@@ -34,11 +34,12 @@ export function getContrastingHexColor(hexColor) {
 
 export function fillProdValFromInv(prod, fields, inventoryData) {
   if(!prod || !prod.inventory_items || !inventoryData) return prod;
+  let newProd = {...prod};
   fields.forEach((field) => {
-    if((!prod[field.name] || prod[field.name] === '') && (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
-      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(prod.inventory_items)[0])[0];
-      prod[field.name] = dataFromInventory ? dataFromInventory[field.name] : prod[field.name];
+    if((!newProd[field.name] || newProd[field.name] === '') && (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
+      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(newProd.inventory_items)[0])[0];
+      newProd[field.name] = dataFromInventory ? dataFromInventory[field.name] : newProd[field.name];
     }
   })
-  return prod;
+  return newProd;
 }

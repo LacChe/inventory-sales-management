@@ -3,9 +3,8 @@ import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 const Context = createContext();
 
-// TODO filled in data for products shouldnt replace original item
-// TODO filtered array shouldnt replace array used for saving
 // TODO dont white page on refresh
+// TODO saleschart not loading
 
 export const StateContext = ({ children }) => {  
 
@@ -46,6 +45,7 @@ export const StateContext = ({ children }) => {
       let amount = 0
       // get products that use this inventory item
       const prodArr = productData.filter(filterItem => {
+        if(filterItem.id === 'ggmt8h')console.log(1, JSON.stringify(filterItem))
         if(filterItem.inventory_items[mapItem.id] !== undefined) return filterItem;
       });
       // get transactions that use this product

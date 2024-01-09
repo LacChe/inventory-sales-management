@@ -34,9 +34,6 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
         newItem[fieldsNoFormula[i].name] = event.target[i].value;
       }
     }
-    //event.preventDefault();
-    //console.log(JSON.stringify(newItem))
-    //return;
     // add or change in allItems
     let newAllItems = allItems;
     if(newAllItems.filter(filterItem => filterItem.id === newItem.id).length === 0){
