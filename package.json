@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "inventory and sales management",
   "main": "main.js",
+  "icon": "icon",
   "scripts": {
     "start": "electron-forge start",
     "watch": "webpack --config webpack.common.js --watch",
