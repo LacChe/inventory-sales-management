@@ -4,10 +4,11 @@ import Record from './Record.js';
 import DeleteConfirmation from './DeleteConfirmation.js';
 import { useStateContext } from '../utils/StateContext';
 import { fillProdValFromInv } from '../utils/HelperFunctions.js';
+import { AiFillEdit, AiFillDelete, AiFillCaretUp, AiFillCaretDown  } from "react-icons/ai";
 
 const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   
-  const { toggleShownField, toggleOrder, productDataFilePath, inventoryDataFilePath, transactionDataFilePath, inventoryData, productData, transactionData } = useStateContext();
+  const { toggleShownField, toggleOrder, productDataFilePath, inventoryData } = useStateContext();
 
   let sortedData = data;
 
@@ -121,7 +122,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
           return (
             <div key={col.name} className='column'>
               {/* render header */}
-              <div className='column-header' onClick={() => toggleOrder(filePath, col.name)}>{col.name.replaceAll('_', ' ')}</div>
+              <div className='column-header' onClick={() => toggleOrder(filePath, col.name)}>
+                <div className='header-sort-caret'>{fieldOrder.field === col.name && (fieldOrder.asc ? <AiFillCaretUp /> : <AiFillCaretDown />) }</div>
+                <div>{col.name.replaceAll('_', ' ')}</div>
+              </div>
               {/* render each row for every field */}
               {sortedData.map(row => {
                 // if prod, fill in blanks from inventory
@@ -138,10 +142,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         {/* edit button column */}
         {showFields.includes('edit') &&
           <div className='edit-button-column'>
-            <div className='column-header'>Edit</div>
+            <div className='column-header'><AiFillEdit /></div>
             {sortedData.map(row => {
               return (
-              <Popup key={row.id} modal nested trigger={<button className='clickable-button edit-button'>Edit</button>}>
+              <Popup key={row.id} modal nested trigger={<button className='clickable-button edit-button'><AiFillEdit /></button>}>
                 <Record fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}
@@ -150,10 +154,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         {/* delete button column */}
         {showFields.includes('delete') &&
           <div className='delete-button-column'>
-            <div className='column-header'>Delete</div>
+            <div className='column-header'><AiFillDelete /></div>
             {sortedData.map(row => {
               return (
-              <Popup key={row.id} modal trigger={<button className='clickable-button delete-button'>Delete</button>}>
+              <Popup key={row.id} modal trigger={<button className='clickable-button delete-button'><AiFillDelete /></button>}>
                 <DeleteConfirmation fields={fields} item={row} filePath={filePath} allItems={sortedData}/>
               </Popup>
             )})}

@@ -3,6 +3,8 @@ import { fillProdValFromInv } from '../utils/HelperFunctions.js';
 
 const Context = createContext();
 
+// TODO products not sorting by size
+
 export const StateContext = ({ children }) => {  
 
   const inventoryDataFilePath = "inventoryData.json";

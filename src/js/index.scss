@@ -156,6 +156,10 @@ input {
   transition: all var(--trasition-all-time);
 }
 
+.header-sort-caret {
+  margin-top: 1px;
+}
+
 .edit-button , .delete-button {
   height: 16px;
   font-size: 0.7rem;
@@ -180,6 +184,7 @@ input {
 }
 
 .column-header {
+  display: flex;
   text-transform: capitalize;
   background-color: var(--color-b);
   cursor: pointer;
@@ -191,6 +196,11 @@ input {
 .edit-button-column, .delete-button-column {
   display: flex;
   flex-direction: column;
+}
+
+.edit-button-column .column-header, .delete-button-column .column-header {
+  padding-left: 5px;
+  cursor: auto;
 }
 
 .notes {
