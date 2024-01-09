@@ -16,8 +16,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   const [filterTerm, setFilterTerm] = useState('');
 
   useEffect(() => {
-    setSearchTerm(settings.search);
-    setFilterTerm(settings.filter);
+    if(settings.search) setSearchTerm(settings.search);
+    if(settings.filter) setFilterTerm(settings.filter);
   }, [settings])
   
 

@@ -20,6 +20,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   })
+  win.setBackgroundColor('#263A29');
   win.loadFile('index.html')
 }
 
