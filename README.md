@@ -1,6 +1,6 @@
 # inventory-sales-management
 
-Keep track of inventory and sales.
+Electron app to keep track of inventory and sales.
 
 <img src="./pics/table.jpg" width="240" />
 
