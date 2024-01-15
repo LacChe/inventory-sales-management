@@ -47,9 +47,36 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     showFields.forEach(field => {
       let testData = filterItem[field];
       if(filePath===productDataFilePath) testData = fillProdValFromInv(filterItem, fields, inventoryData)[field];
-      if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
-        found = true;
-        return;
+      // if using filter formula
+      if(filterTerm[0] === ',') {
+        let filtersObj = filterTerm.split(',').slice(1).reduce((filters, val) => {
+          console.log(1, val)
+          if(!filters || ((val[0] === '-' || val[0] === '+') && val.slice(1) === '')) return filters;
+          if(val[0] === '-') {
+            filters.exclude.push(val.slice(1));
+          } else {
+            filters.include.push(val[0] === '+' ? val.slice(1) : val);
+          }
+          return filters;
+        },{include: [], exclude: []});
+        console.log(filtersObj)
+        filtersObj?.include.forEach(val => {
+          if(JSON.stringify(testData)?.toLowerCase().includes(val?.toLowerCase())) {
+            found = true;
+            return;
+          }
+        });
+        filtersObj?.exclude.forEach(val => {
+          if(JSON.stringify(testData)?.toLowerCase().includes(val?.toLowerCase())) {
+            found = false;
+            return;
+          }
+        });
+      } else {
+        if(JSON.stringify(testData)?.toLowerCase().includes(filterTerm?.toLowerCase())) {
+          found = true;
+          return;
+        }
       }
     });
     if(found) return filterItem; 
