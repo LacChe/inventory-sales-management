@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useStateContext } from '../utils/StateContext';
-import { fillProdValFromInv } from '../utils/HelperFunctions.js';
+import { fillEmptyProdFieldsUsingInvFields } from '../utils/HelperFunctions.js';
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 
@@ -8,7 +8,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
 
   // fill in blank product fields
   let filledRecord = {...item};
-  if(filePath===productDataFilePath) filledRecord = fillProdValFromInv(filledRecord, fields, inventoryData);
+  if(filePath===productDataFilePath) filledRecord = fillEmptyProdFieldsUsingInvFields(filledRecord, fields, inventoryData);
 
   function saveData() {
     // remove from allItems

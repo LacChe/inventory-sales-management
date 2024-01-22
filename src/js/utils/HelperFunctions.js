@@ -1,3 +1,7 @@
+/*
+  miscellaneous helper functions used by various files
+*/
+
 export function generateUID() {
   var firstPart = (Math.random() * 46656) | 0;
   var secondPart = (Math.random() * 46656) | 0;
@@ -6,18 +10,14 @@ export function generateUID() {
   return firstPart + secondPart;
 }
 
-function djb2(str) {
+export function generateRandomHexColor(seed) {
   let hash = 5381;
   for (let i = 0; i < str.length; i++) {
-      hash = (hash * 33) ^ str.charCodeAt(i);
+    hash = (hash * 33) ^ str.charCodeAt(i);
   }
-  return hash >>> 0;
-}
-
-export function generateRandomHexColor(seed) {
-    const hash = djb2(seed);
-    const hexColor = '#' + (hash & 0xFFFFFF).toString(16).padStart(6, '0');
-    return hexColor;
+  hash = hash >>> 0;
+  const hexColor = "#" + (hash & 0xffffff).toString(16).padStart(6, "0");
+  return hexColor;
 }
 
 export function getContrastingHexColor(hexColor) {
@@ -28,18 +28,29 @@ export function getContrastingHexColor(hexColor) {
   // Calculate luminance
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   // Decide on contrasting color
-  const contrastingColor = luminance > 0.5 ? '#000000' : '#FFFFFF';
+  const contrastingColor = luminance > 0.5 ? "#000000" : "#FFFFFF";
   return contrastingColor;
 }
 
-export function fillProdValFromInv(prod, fields, inventoryData) {
-  if(!prod || !prod.inventory_items || !inventoryData) return prod;
-  let newProd = {...prod};
+// returns a new product object with the names and size of the inventory object used if those fields are empty
+export function fillEmptyProdFieldsUsingInvFields(prod, fields, inventoryData) {
+  if (!prod || !prod.inventory_items || !inventoryData) return prod;
+  let newProd = { ...prod };
   fields.forEach((field) => {
-    if((!newProd[field.name] || newProd[field.name] === '') && (field.name === 'name_en' || field.name === 'name_cn' || field.name === 'size')) {
-      const dataFromInventory = inventoryData.filter(filterItem => filterItem.id === Object.keys(newProd.inventory_items)[0])[0];
-      newProd[field.name] = dataFromInventory ? dataFromInventory[field.name] : newProd[field.name];
+    if (
+      (!newProd[field.name] || newProd[field.name] === "") &&
+      (field.name === "name_en" ||
+        field.name === "name_cn" ||
+        field.name === "size")
+    ) {
+      const dataFromInventory = inventoryData.filter(
+        (filterItem) =>
+          filterItem.id === Object.keys(newProd.inventory_items)[0]
+      )[0];
+      newProd[field.name] = dataFromInventory
+        ? dataFromInventory[field.name]
+        : newProd[field.name];
     }
-  })
+  });
   return newProd;
 }
