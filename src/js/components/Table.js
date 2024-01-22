@@ -22,8 +22,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     settings,
   } = useStateContext();
 
-  let sortedData = data;
-
   const [searchTerm, setSearchTerm] = useState("");
   const [filterTerm, setFilterTerm] = useState("");
 
@@ -32,14 +30,15 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
     if (settings.filter) setFilterTerm(settings.filter);
   }, [settings]);
 
+  // id of the record that mouse is hovering over
   const [hoverId, setHoverId] = useState("");
 
-  sortedData.sort((a, b) => {
-    // if empty, get data from inventory
+  let sortedData = data.sort((a, b) => {
+    // if empty, get field data from inventory
     let filledA = fillEmptyProdFieldsUsingInvFields(a, fields, inventoryData);
     let filledB = fillEmptyProdFieldsUsingInvFields(b, fields, inventoryData);
 
-    // sort by number string accordingly
+    // sort as number or string accordingly
     if (
       fieldOrder.field === "amount" ||
       fieldOrder.field === "revenue" ||
@@ -66,24 +65,27 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
   });
 
   // filter by filterTerm
-  sortedData = sortedData.filter((filterItem) => {
+  sortedData = sortedData.filter((data) => {
     let found = false;
     showFields.forEach((field) => {
-      let testData = filterItem[field];
+      let testData = data[field];
       if (filePath === productDataFilePath)
         testData = fillEmptyProdFieldsUsingInvFields(
-          filterItem,
+          data,
           fields,
           inventoryData
         )[field];
-      // if using filter formula
       if (filterTerm[0] === ",") {
+        // if using filter formula
+        // format: start with ','
+        // prepending '-' means exclude
+        // prepending '+' or no prepend means include
+        // separate with ','
         let filtersObj = filterTerm
           .split(",")
           .slice(1)
           .reduce(
             (filters, val) => {
-              console.log(1, val);
               if (
                 !filters ||
                 ((val[0] === "-" || val[0] === "+") && val.slice(1) === "")
@@ -98,7 +100,6 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             },
             { include: [], exclude: [] }
           );
-        console.log(filtersObj);
         filtersObj?.include.forEach((val) => {
           if (
             JSON.stringify(testData)?.toLowerCase().includes(val?.toLowerCase())
@@ -116,6 +117,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
           }
         });
       } else {
+        // not using filter formula
         if (
           JSON.stringify(testData)
             ?.toLowerCase()
@@ -126,9 +128,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         }
       }
     });
-    if (found) return filterItem;
+    if (found) return data;
   });
 
+  // move to helpers.js if other files need export functionality, e.g. charts.js
+  // exports as .csv
   const exportSpreadSheet = function exportSpreadSheet() {
     let exportData = "";
 
@@ -158,6 +162,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       exportData = exportData.slice(0, -1) + "\n";
     });
 
+    // download data
     const url = window.URL.createObjectURL(new Blob([exportData]));
     const link = document.createElement("a");
     link.href = url;
@@ -170,9 +175,9 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
 
   return (
     <div className="table-wrapper">
-      {/* toggles for displaying fields */}
       <div className="field-toggle-buttons">
         <div>
+          {/* function buttons */}
           <div className="add-button-wrapper">
             <Popup
               modal
@@ -194,6 +199,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
               Export Spreadsheet
             </button>
           </div>
+
+          {/* ui input params */}
           <div className="filter-bar-wrapper">
             <input
               className="filter-bar"
@@ -213,6 +220,8 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
             />
           </div>
         </div>
+
+        {/* toggles for displaying fields */}
         <div>
           <p>Show Columns: </p>
           {fields.map((item) => {
@@ -250,24 +259,24 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
       <div className="table">
         {/* render columns of fields that are shown */}
         {fields
-          .filter((filterItem) => showFields.includes(filterItem.name))
-          .map((col) => {
+          .filter((field) => showFields.includes(field.name)) // remove unshown fields
+          .map((column) => {
             return (
-              <div key={col.name} className="column">
+              <div key={column.name} className="column">
                 {/* render header */}
                 <div
                   className="column-header"
-                  onClick={() => toggleOrder(filePath, col.name)}
+                  onClick={() => toggleOrder(filePath, column.name)}
                 >
                   <div className="header-sort-caret">
-                    {fieldOrder.field === col.name &&
+                    {fieldOrder.field === column.name &&
                       (fieldOrder.asc ? (
                         <AiFillCaretUp />
                       ) : (
                         <AiFillCaretDown />
                       ))}
                   </div>
-                  <div>{col.name.replaceAll("_", " ")}</div>
+                  <div>{column.name.replaceAll("_", " ")}</div>
                 </div>
                 {/* render each row for every field */}
                 {sortedData.map((row) => {
@@ -279,11 +288,11 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
                       fields,
                       inventoryData
                     );
-                  let innerHtml = displayRow[col.name];
-                  if (col.type === "dropdown")
+                  let innerHtml = displayRow[column.name];
+                  if (column.type === "dropdown")
                     innerHtml = JSON.stringify(innerHtml);
-                  if (col.type === "boolean")
-                    innerHtml = innerHtml === "true" ? "#" : "";
+                  if (column.type === "boolean")
+                    innerHtml = ((innerHtml === "true") ? "#" : "");
                   return (
                     <div
                       onMouseOver={() => setHoverId(displayRow.id)}
@@ -301,10 +310,10 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
                       }}
                       className={
                         "cell" +
-                        (col.name === "notes" ? " notes" : "") +
+                        (column.name === "notes" ? " notes" : "") +
                         (hoverId === displayRow.id ? " hover" : "")
                       }
-                      key={displayRow[fields[0].name] + col.name}
+                      key={displayRow[fields[0].name] + column.name}
                     >
                       {innerHtml}
                     </div>

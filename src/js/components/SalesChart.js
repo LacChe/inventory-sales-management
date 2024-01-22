@@ -26,6 +26,7 @@ const SalesChart = () => {
       ? JSON.parse(settings.chartData.dateRange)
       : ["", ""]
   );
+  // day month or year
   const [precision, setPrecision] = useState(
     settings.chartData?.precision
       ? JSON.parse(settings.chartData.precision)
@@ -36,37 +37,39 @@ const SalesChart = () => {
       ? JSON.parse(settings.chartData.transactions)
       : []
   );
+  // amount or revenue
   const [parameter, setParameter] = useState(
     settings.chartData?.parameter
       ? JSON.parse(settings.chartData.parameter)
       : "amount"
   );
 
+  // get transactions containing selected product_ids within date range, excluding not_a_sale
   useEffect(() => {
-    // get transactions containing product ids within date range, excluding not_a_sale
     setTransactions(() => {
-      const filteredTransactions = transactionData.filter((filterItem) => {
+      const filteredTransactions = transactionData.filter((transaction) => {
         if (
-          records.map((r) => r.id).includes(filterItem.product_id) &&
-          !(filterItem.not_a_sale === "true")
+          records.map((r) => r.id).includes(transaction.product_id) &&
+          !(transaction.not_a_sale === "true")
         ) {
           if (
             dateRange[0] !== "" &&
-            Date.parse(filterItem.date) < Date.parse(dateRange[0])
+            Date.parse(transaction.date) < Date.parse(dateRange[0])
           )
             return;
           if (
             dateRange[1] !== "" &&
-            Date.parse(filterItem.date) > Date.parse(dateRange[1])
+            Date.parse(transaction.date) > Date.parse(dateRange[1])
           )
             return;
-          return filterItem;
+          return transaction;
         }
       });
       return filteredTransactions;
     });
   }, [records, dateRange]);
 
+  // save the chart data if ui parameters change
   useEffect(() => {
     saveChartData({
       records: JSON.stringify(records),
@@ -77,7 +80,8 @@ const SalesChart = () => {
     });
   }, [records, dateRange, precision, transactions, parameter]);
 
-  const setRecordsState = function setRecordsState(record) {
+  // wrapper function to toggle values in setRecords usestate
+  function setRecordsState(record) {
     setRecords((prev) => {
       if (prev.map((r) => r.id).includes(record.id)) {
         return prev.filter((filterItem) => filterItem.id !== record.id);
@@ -85,24 +89,26 @@ const SalesChart = () => {
         return [...prev, record];
       }
     });
-  };
+  }
 
-  const toggleAllRecords = function toggleAllRecords() {
+  function toggleAllRecords() {
     setRecords((prev) => {
       if (prev.length > 0) return [];
       else return productData;
     });
-  };
+  }
 
-  const setDateRangeState = function setDateRangeState(dates) {
+  // dates = [startedate, enddate]
+  function setDateRangeState(dates) {
     if (dates[0] && dates[1] && Date.parse(dates[0]) > Date.parse(dates[1]))
       return;
     setDateRange(dates);
-  };
+  }
 
-  const productIdDropdown = function productIdDropdown() {
+  function productIdDropdown() {
     let sortedData = productData
       .map((mapItem) => {
+        // create object of ids, names and prices
         let filledRecord = fillEmptyProdFieldsUsingInvFields(
           mapItem,
           productDataFields,
@@ -119,7 +125,6 @@ const SalesChart = () => {
         };
       })
       .sort((a, b) => {
-        // sort
         if (
           JSON.stringify(a.name_en)?.toString().toLowerCase() >
           JSON.stringify(b.name_en)?.toString().toLowerCase()
@@ -138,46 +143,32 @@ const SalesChart = () => {
       <div className="dropdown grid-col-3">
         {sortedData.map((data) => (
           <Fragment key={data.id}>
-            <button
-              className={
-                records.map((r) => r.id).includes(data.id) ? "selected" : ""
-              }
-              onClick={() => {
-                setRecordsState(data);
-              }}
-            >
-              {data.id}
-            </button>
-            <button
-              className={
-                records.map((r) => r.id).includes(data.id) ? "selected" : ""
-              }
-              onClick={() => {
-                setRecordsState(data);
-              }}
-            >
-              {data.name_en}
-            </button>
-            <button
-              className={
-                records.map((r) => r.id).includes(data.id) ? "selected" : ""
-              }
-              onClick={() => {
-                setRecordsState(data);
-              }}
-            >
-              {data.name_cn}
-            </button>
+            {Object.keys(data).map((key) => {
+              // dont include price in dropdown
+              if (key !== "price")
+                return (
+                  <button
+                    key={key}
+                    className={
+                      records.map((r) => r.id).includes(data.id)
+                        ? "selected"
+                        : ""
+                    }
+                    onClick={() => {
+                      setRecordsState(data);
+                    }}
+                  >
+                    {data[key]}
+                  </button>
+                );
+            })}
           </Fragment>
         ))}
       </div>
     );
-  };
+  }
 
-  const renderChart = function renderChart() {
-    let max = -1,
-      min = -1;
-
+  function renderChart() {
     // group by precision
     let groupedTransactions = transactions.reduce((grouped, transaction) => {
       let date = transaction.date;
@@ -187,7 +178,7 @@ const SalesChart = () => {
       return grouped;
     }, {});
 
-    // group by products
+    // then group by products
     Object.keys(groupedTransactions).forEach((dateGroup) => {
       groupedTransactions[dateGroup] = groupedTransactions[dateGroup].reduce(
         (grouped, transaction) => {
@@ -215,19 +206,22 @@ const SalesChart = () => {
     });
 
     // find min max
+    // used for scaling bar widths
+    let max = -1,
+      min = -1;
     Object.keys(groupedTransactions).forEach((dateGroup) => {
       Object.keys(groupedTransactions[dateGroup]).forEach((prodId) => {
-        if (max === -1) max = groupedTransactions[dateGroup][prodId][parameter];
-        if (max < groupedTransactions[dateGroup][prodId][parameter])
-          max = groupedTransactions[dateGroup][prodId][parameter];
-        if (min === -1) min = groupedTransactions[dateGroup][prodId][parameter];
-        if (min > groupedTransactions[dateGroup][prodId][parameter])
-          min = groupedTransactions[dateGroup][prodId][parameter];
+        let checkVal = groupedTransactions[dateGroup][prodId][parameter];
+        if (max === -1) max = checkVal;
+        if (max < checkVal) max = checkVal;
+        if (min === -1) min = checkVal;
+        if (min > checkVal) min = checkVal;
       });
     });
 
     return (
       <div className="chart">
+        {/* left hand side of chart: labels */}
         <div className="chart-section">
           {Object.keys(groupedTransactions).map((precision) => {
             return (
@@ -255,6 +249,7 @@ const SalesChart = () => {
             );
           })}
         </div>
+        {/* right hand side of chart: bars */}
         <div className="chart-section">
           {Object.keys(groupedTransactions).map((precision) => {
             return (
@@ -284,7 +279,6 @@ const SalesChart = () => {
                         generateRandomHexColor(prodId)
                       ),
                     }}
-                    //style={{width: `${(groupedTransactions[precision][prodId][parameter] / max - min / max) * 600 + 20}px`, backgroundColor: generateRandomHexColor(prodId)}}
                   >
                     {groupedTransactions[precision][prodId][parameter]}
                   </div>
@@ -295,10 +289,10 @@ const SalesChart = () => {
         </div>
       </div>
     );
-  };
+  }
 
-  return (
-    <>
+  function renderChartParameterInputs() {
+    return (
       <div className="chart-parameters">
         <div>
           <button
@@ -371,6 +365,12 @@ const SalesChart = () => {
           </button>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <>
+      {renderChartParameterInputs()}
       {renderChart()}
     </>
   );
