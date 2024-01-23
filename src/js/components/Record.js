@@ -63,8 +63,8 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
       });
     }
 
-    // send to main for saving
     // remove formula fields from saving
+    // send to main for saving
     newAllItems.forEach((record) => {
       fields.forEach((field) => {
         if (field.type === "formula") delete record[field.name];
@@ -234,7 +234,6 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
 
   function inventoryIdAmountDropdown() {
     let sortedData = inventoryData.sort((a, b) => {
-      // sort
       if (
         JSON.stringify(a.name_en)?.toString().toLowerCase() >
         JSON.stringify(b.name_en)?.toString().toLowerCase()

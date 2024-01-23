@@ -18,6 +18,7 @@ const SalesChart = () => {
   } = useStateContext();
 
   const [selectedRecord, setSelectedRecord] = useState("");
+  // selected product records to find transactions with
   const [records, setRecords] = useState(
     settings.chartData?.records ? JSON.parse(settings.chartData.records) : []
   );
@@ -44,7 +45,7 @@ const SalesChart = () => {
       : "amount"
   );
 
-  // get transactions containing selected product_ids within date range, excluding not_a_sale
+  // get transactions containing product ids within date range, excluding not_a_sale
   useEffect(() => {
     setTransactions(() => {
       const filteredTransactions = transactionData.filter((transaction) => {
@@ -168,6 +169,35 @@ const SalesChart = () => {
     );
   }
 
+  function barCSS(groupedTransactions, precision, prodId, max) {
+    return {
+      outline: `${
+        selectedRecord === prodId
+          ? `2px solid ${getComputedStyle(document.body).getPropertyValue(
+              "--color-highlight"
+            )}`
+          : ""
+      }`,
+      width: `${
+        (groupedTransactions[precision][prodId][parameter] / max) * 600 + 20
+      }px`,
+      backgroundColor: generateRandomHexColor(prodId),
+      color: getContrastingHexColor(generateRandomHexColor(prodId)),
+    };
+  }
+
+  function labelCSS(prodId) {
+    return {
+      textDecoration: `${
+        selectedRecord === prodId
+          ? `underline 2px ${getComputedStyle(document.body).getPropertyValue(
+              "--color-highlight"
+            )}`
+          : `underline 2px #00000000`
+      }`,
+    };
+  }
+
   function renderChart() {
     // group by precision
     let groupedTransactions = transactions.reduce((grouped, transaction) => {
@@ -229,15 +259,7 @@ const SalesChart = () => {
                 <div className="chart-group-header">{precision}</div>
                 {Object.keys(groupedTransactions[precision]).map((prodId) => (
                   <div
-                    style={{
-                      textDecoration: `${
-                        selectedRecord === prodId
-                          ? `underline 2px ${getComputedStyle(
-                              document.body
-                            ).getPropertyValue("--color-highlight")}`
-                          : `underline 2px #00000000`
-                      }`,
-                    }}
+                    style={labelCSS(prodId)}
                     className="chart-bar-label"
                     onClick={() => setSelectedRecord(prodId)}
                     key={prodId}
@@ -260,25 +282,7 @@ const SalesChart = () => {
                     onClick={() => setSelectedRecord(prodId)}
                     key={prodId}
                     className="chart-bar"
-                    style={{
-                      outline: `${
-                        selectedRecord === prodId
-                          ? `2px solid ${getComputedStyle(
-                              document.body
-                            ).getPropertyValue("--color-highlight")}`
-                          : ""
-                      }`,
-                      width: `${
-                        (groupedTransactions[precision][prodId][parameter] /
-                          max) *
-                          600 +
-                        20
-                      }px`,
-                      backgroundColor: generateRandomHexColor(prodId),
-                      color: getContrastingHexColor(
-                        generateRandomHexColor(prodId)
-                      ),
-                    }}
+                    style={barCSS(groupedTransactions, precision, prodId, max)}
                   >
                     {groupedTransactions[precision][prodId][parameter]}
                   </div>

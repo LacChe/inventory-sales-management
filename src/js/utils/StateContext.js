@@ -489,6 +489,7 @@ export const StateContext = ({ children }) => {
         isLoaded,
         saveSearchTerm,
         saveFilterTerm,
+        loaded
       }}
     >
       {children}

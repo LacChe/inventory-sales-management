@@ -12,8 +12,8 @@ export function generateUID() {
 
 export function generateRandomHexColor(seed) {
   let hash = 5381;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash * 33) ^ str.charCodeAt(i);
+  for (let i = 0; i < seed.length; i++) {
+    hash = (hash * 33) ^ seed.charCodeAt(i);
   }
   hash = hash >>> 0;
   const hexColor = "#" + (hash & 0xffffff).toString(16).padStart(6, "0");

@@ -11,9 +11,7 @@ const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
   if(filePath===productDataFilePath) filledRecord = fillEmptyProdFieldsUsingInvFields(filledRecord, fields, inventoryData);
 
   function saveData() {
-    // remove from allItems
     let newAllItems = allItems.filter(filterItem => filterItem.id !== filledRecord.id);
-    // send to main for saving
     saveFileToApi({ filePath, data: newAllItems });
     // event.preventDefault();
   }
