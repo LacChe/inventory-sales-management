@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fillEmptyProdFieldsUsingInvFields } from "../utils/HelperFunctions.js";
 
+// TODO
+// chart doesnt display in dev
+// chart labels sometimes dont show unless refreshed
+// do setting fields need individual usestates?
+
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
@@ -57,13 +62,14 @@ export const StateContext = ({ children }) => {
         let amount = 0;
         // get products that use this inventory item
         const prodArr = productData.filter((product) => {
-          if (product.inventory_items[mapItem.id] !== undefined)
-            return product;
+          if (product.inventory_items[mapItem.id] !== undefined) return product;
         });
         // get transactions that use this product
         const transArr = transactionData.filter((transaction) => {
           if (
-            prodArr.map((mapItem) => mapItem.id).includes(transaction.product_id)
+            prodArr
+              .map((mapItem) => mapItem.id)
+              .includes(transaction.product_id)
           )
             return transaction;
         });
@@ -94,8 +100,7 @@ export const StateContext = ({ children }) => {
         const names = productData
           .filter((product) => {
             // find product
-            if (product.id === transactionRecord.product_id)
-              return product;
+            if (product.id === transactionRecord.product_id) return product;
           })
           .map((product) => {
             let filledRecord = fillEmptyProdFieldsUsingInvFields(
@@ -223,7 +228,7 @@ export const StateContext = ({ children }) => {
   */
 
   // adds or removes the field from the list of shown fields in settings.json
-  // for the table corresponding with the filepath 
+  // for the table corresponding with the filepath
   const toggleShownField = function toggleShownField(filePath, field) {
     switch (filePath) {
       case inventoryDataFilePath:
@@ -324,91 +329,50 @@ export const StateContext = ({ children }) => {
   };
 
   // sets the field to be used for ordering and whether it is ascending or not
-  // for the table corresponding with the filepath 
+  // for the table corresponding with the filepath
   const toggleOrder = function toggleOrder(filePath, field) {
+    function toggleFieldOrderForFile(previousSettings, file) {
+      let newPrev = {
+        field: previousSettings.field,
+        asc: previousSettings.asc,
+      };
+      if (newPrev.field === field) {
+        newPrev.asc = !newPrev.asc;
+        settings[file].order.asc = newPrev.asc;
+        window.api.send("saveFile", {
+          filePath: settingsFilePath,
+          data: settings,
+        });
+      } else {
+        newPrev.field = field;
+        settings[file].order.field = newPrev.field;
+        window.api.send("saveFile", {
+          filePath: settingsFilePath,
+          data: settings,
+        });
+      }
+      return newPrev;
+    }
+
     switch (filePath) {
       case inventoryDataFilePath:
         setInventoryDataFieldsOrder((prev) => {
-          let newPrev = { field: prev.field, asc: prev.asc };
-          if (newPrev.field === field) {
-            newPrev.asc = !newPrev.asc;
-            settings.inventory.order.asc = newPrev.asc;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          } else {
-            newPrev.field = field;
-            settings.inventory.order.field = newPrev.field;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          }
-          return newPrev;
+          return toggleFieldOrderForFile(prev, "inventory");
         });
         break;
       case productDataFilePath:
         setProductDataFieldsOrder((prev) => {
-          let newPrev = { field: prev.field, asc: prev.asc };
-          if (newPrev.field === field) {
-            newPrev.asc = !newPrev.asc;
-            settings.product.order.asc = newPrev.asc;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          } else {
-            newPrev.field = field;
-            settings.product.order.field = newPrev.field;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          }
-          return newPrev;
+          return toggleFieldOrderForFile(prev, "product");
         });
         break;
       case equipmentDataFilePath:
         setEquipmentDataFieldsOrder((prev) => {
-          let newPrev = { field: prev.field, asc: prev.asc };
-          if (newPrev.field === field) {
-            newPrev.asc = !newPrev.asc;
-            settings.equipment.order.asc = newPrev.asc;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          } else {
-            newPrev.field = field;
-            settings.equipment.order.field = newPrev.field;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          }
-          return newPrev;
+          return toggleFieldOrderForFile(prev, "equipment");
         });
         break;
       case transactionDataFilePath:
         setTransactionDataFieldsOrder((prev) => {
-          let newPrev = { field: prev.field, asc: prev.asc };
-          if (newPrev.field === field) {
-            newPrev.asc = !newPrev.asc;
-            settings.transaction.order.asc = newPrev.asc;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          } else {
-            newPrev.field = field;
-            settings.transaction.order.field = newPrev.field;
-            window.api.send("saveFile", {
-              filePath: settingsFilePath,
-              data: settings,
-            });
-          }
-          return newPrev;
+          return toggleFieldOrderForFile(prev, "transaction");
         });
         break;
       default:
@@ -489,7 +453,7 @@ export const StateContext = ({ children }) => {
         isLoaded,
         saveSearchTerm,
         saveFilterTerm,
-        loaded
+        loaded,
       }}
     >
       {children}

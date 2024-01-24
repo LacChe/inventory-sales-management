@@ -18,10 +18,10 @@ const Layout = () => {
     "charts",
   ];
 
-  const tabClick = function tabClick(tabName) {
+  function tabClick(tabName) {
     setSelectedTab(tabName);
-    navigate("/" + tabName);
-  };
+    navigate(`/${tabName}`);
+  }
 
   // generate toasts for inventory items where amount is less than reminder_amount
   useEffect(() => {

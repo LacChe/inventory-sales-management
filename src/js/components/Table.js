@@ -50,13 +50,13 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
         (fieldOrder.asc ? 1 : -1)
       );
     } else if (
-      JSON.stringify(filledA[fieldOrder.field])?.toString().toLowerCase() >
-      JSON.stringify(filledB[fieldOrder.field])?.toString().toLowerCase()
+      JSON.stringify(filledA[fieldOrder.field])?.toLowerCase() >
+      JSON.stringify(filledB[fieldOrder.field])?.toLowerCase()
     ) {
       return 1 * (fieldOrder.asc ? 1 : -1);
     } else if (
       JSON.stringify(filledA[fieldOrder.field])?.toLowerCase() <
-      JSON.stringify(filledB[fieldOrder.field])?.toString().toLowerCase()
+      JSON.stringify(filledB[fieldOrder.field])?.toLowerCase()
     ) {
       return -1 * (fieldOrder.asc ? 1 : -1);
     } else {
@@ -292,7 +292,7 @@ const Table = ({ fields, data, filePath, showFields, fieldOrder }) => {
                   if (column.type === "dropdown")
                     innerHtml = JSON.stringify(innerHtml);
                   if (column.type === "boolean")
-                    innerHtml = ((innerHtml === "true") ? "#" : "");
+                    innerHtml = innerHtml === "true" ? "#" : "";
                   return (
                     <div
                       onMouseOver={() => setHoverId(displayRow.id)}

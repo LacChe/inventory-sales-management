@@ -38,19 +38,19 @@ const Record = ({ fields, item = {}, filePath, allItems }) => {
   function saveData(event) {
     // create new item
     let newItem = {};
-    for (let i = 0; i < fieldsNoFormula.length; i++) {
-      if (event.target[i].id === "inventory_itemsinput") {
+    fieldsNoFormula.forEach((field, index) => {
+      if (event.target[index].id === "inventory_itemsinput") {
         // this is a generated json string
-        newItem[fieldsNoFormula[i].name] = JSON.parse(event.target[i].value);
-      } else if (event.target[i].id === "not_a_saleinput") {
+        newItem[field.name] = JSON.parse(event.target[index].value);
+      } else if (event.target[index].id === "not_a_saleinput") {
         // this is a checkbox
-        newItem[fieldsNoFormula[i].name] = displayItem[fieldsNoFormula[i].name];
+        newItem[field.name] = displayItem[field.name];
       } else {
-        newItem[fieldsNoFormula[i].name] = event.target[i].value;
+        newItem[field.name] = event.target[index].value;
       }
-    }
+    });
     // add or change in allItems
-    let newAllItems = allItems;
+    let newAllItems = { ...allItems };
     if (
       newAllItems.filter((filterItem) => filterItem.id === newItem.id)
         .length === 0

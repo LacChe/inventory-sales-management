@@ -3,8 +3,8 @@
 */
 
 export function generateUID() {
-  var firstPart = (Math.random() * 46656) | 0;
-  var secondPart = (Math.random() * 46656) | 0;
+  let firstPart = (Math.random() * 46656) | 0;
+  let secondPart = (Math.random() * 46656) | 0;
   firstPart = ("000" + firstPart.toString(36)).slice(-3);
   secondPart = ("000" + secondPart.toString(36)).slice(-3);
   return firstPart + secondPart;
@@ -21,6 +21,13 @@ export function generateRandomHexColor(seed) {
 }
 
 export function getContrastingHexColor(hexColor) {
+  if (
+    !hexColor ||
+    typeof hexColor !== "string" ||
+    !/^#[0-9A-Fa-f]{6}$/.test(hexColor)
+  ) {
+    throw new Error("Invalid hexColor input");
+  }
   // Convert hex to RGB
   const r = parseInt(hexColor.slice(1, 3), 16);
   const g = parseInt(hexColor.slice(3, 5), 16);

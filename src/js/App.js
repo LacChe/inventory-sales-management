@@ -7,21 +7,21 @@ import Inventory from "./pages/Inventory.js";
 import Equipment from "./pages/Equipment.js";
 import Charts from "./pages/Charts.js";
 
-export default function App() {
+const App = () => {
   return (
-    <>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/products" element={<Products />} />
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="/inventory" element={<Inventory />} />
-            <Route path="/equipment" element={<Equipment />} />
-            <Route path="/charts" element={<Charts />} />
-            <Route path="/" element={<Products />} />
-          </Route>
-        </Routes>
-      </HashRouter>
-    </>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/products" element={<Products />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/equipment" element={<Equipment />} />
+          <Route path="/charts" element={<Charts />} />
+          <Route path="/" element={<Products />} />
+        </Route>
+      </Routes>
+    </HashRouter>
   );
-}
+};
+
+export default App;
