@@ -4,8 +4,8 @@ import { useStateContext } from "../utils/StateContext.js";
 import {
   getContrastingHexColor,
   generateRandomHexColor,
-  fillEmptyProdFieldsUsingInvFields,
 } from "../utils/HelperFunctions.js";
+import { fillEmptyProdFieldsUsingInvFields } from "../utils/DataManip.js";
 
 const SalesChart = () => {
   const {

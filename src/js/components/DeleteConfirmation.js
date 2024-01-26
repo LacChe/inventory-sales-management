@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useStateContext } from "../utils/StateContext";
-import { fillEmptyProdFieldsUsingInvFields } from "../utils/HelperFunctions.js";
+import { fillEmptyProdFieldsUsingInvFields } from "../utils/DataManip.js";
 
 const DeleteConfirmation = ({ fields, item, filePath, allItems }) => {
   const { saveFileToApi, productDataFilePath, inventoryData } =

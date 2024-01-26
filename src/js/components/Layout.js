@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { useStateContext } from "../utils/StateContext";
 
 const Layout = () => {
@@ -22,29 +22,6 @@ const Layout = () => {
     setSelectedTab(tabName);
     navigate(`/${tabName}`);
   }
-
-  // generate toasts for inventory items where amount is less than reminder_amount
-  useEffect(() => {
-    inventoryData.forEach((data) => {
-      if (data.reminder_amount && data.reminder_amount > data.amount) {
-        toast.custom(
-          (t) => (
-            <div
-              className={`toast-low-stock ${t.visible} ? 'animate-enter' : 'animate-leave'`}
-              onClick={() => toast.dismiss(data.id)}
-            >
-              <span>Low Stock!</span> ID: {data.id} Name: {data.name_en}
-            </div>
-          ),
-          {
-            id: data.id,
-            duration: Infinity,
-            position: "bottom-left",
-          }
-        );
-      }
-    });
-  }, [inventoryData]);
 
   if (!isLoaded) {
     return <>Loading...</>;

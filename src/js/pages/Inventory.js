@@ -1,6 +1,6 @@
 import React from "react";
 import { useStateContext } from "../utils/StateContext";
-import Table from "../components/Table.js";
+import Table from "../components/Table/Table.js";
 
 const Inventory = () => {
   const {

@@ -1,7 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { fillEmptyProdFieldsUsingInvFields } from "../utils/HelperFunctions.js";
+import { generateToasts } from "../utils/HelperFunctions.js";
+import {
+  calculateTransFormulaFields,
+  calculateInvFormulaFields,
+} from "../utils/DataManip.js";
 
 // TODO
+// !!! records not saving
 // chart doesnt display in dev
 // chart labels sometimes dont show unless refreshed
 // do setting fields need individual usestates?
@@ -52,41 +57,17 @@ export const StateContext = ({ children }) => {
     asc: true,
   });
 
+  // generate toasts for inventory items where amount is less than reminder_amount
+  useEffect(() => {
+    generateToasts(inventoryData);
+  }, [inventoryData]);
+
   // when all files are loaded and product and transaction data is present
   // calculate inventory amount
   useEffect(() => {
-    // add amount
     if (!isLoaded) return;
     setInventoryData((prev) =>
-      prev.map((mapItem) => {
-        let amount = 0;
-        // get products that use this inventory item
-        const prodArr = productData.filter((product) => {
-          if (product.inventory_items[mapItem.id] !== undefined) return product;
-        });
-        // get transactions that use this product
-        const transArr = transactionData.filter((transaction) => {
-          if (
-            prodArr
-              .map((mapItem) => mapItem.id)
-              .includes(transaction.product_id)
-          )
-            return transaction;
-        });
-        // sum total inventory items
-        prodArr.forEach((product) => {
-          for (let i = 0; i < product.inventory_items[mapItem.id]; i++) {
-            transArr.forEach(
-              (transaction) => (amount += parseInt(transaction.amount))
-            );
-          }
-        });
-        // add amount field to sortedItems
-        return {
-          ...mapItem,
-          amount: (amount *= -1),
-        };
-      })
+      calculateInvFormulaFields(prev, productData, transactionData)
     );
   }, [productData, transactionData, loaded]);
 
@@ -96,31 +77,12 @@ export const StateContext = ({ children }) => {
     if (!isLoaded) return;
     // add name_en name_cn appended with size
     setTransactionData((prev) =>
-      prev.map((transactionRecord) => {
-        const names = productData
-          .filter((product) => {
-            // find product
-            if (product.id === transactionRecord.product_id) return product;
-          })
-          .map((product) => {
-            let filledRecord = fillEmptyProdFieldsUsingInvFields(
-              product,
-              productDataFields,
-              inventoryData
-            );
-            return {
-              name_en: filledRecord.name_en,
-              name_cn: filledRecord.name_cn,
-              size: filledRecord.size,
-            };
-          })[0];
-        let size = " " + (names?.size ? names.size : "");
-        return {
-          ...transactionRecord,
-          name_en: names?.name_en + size,
-          name_cn: names?.name_cn + size,
-        };
-      })
+      calculateTransFormulaFields(
+        prev,
+        productData,
+        inventoryData,
+        productDataFields
+      )
     );
   }, [productData, loaded]);
 
@@ -208,6 +170,8 @@ export const StateContext = ({ children }) => {
     });
   }, []);
 
+  // TODO this function shouldn't be exported (delete and records pages)
+  // centralize calls to main instead
   const saveFileToApi = function saveFileToApi(data) {
     window.api.send("saveFile", data);
   };

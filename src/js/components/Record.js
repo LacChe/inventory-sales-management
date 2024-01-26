@@ -4,7 +4,7 @@ import { useStateContext } from "../utils/StateContext";
 import {
   generateUID,
   fillEmptyProdFieldsUsingInvFields,
-} from "../utils/HelperFunctions.js";
+} from "../utils/DataManip.js";
 
 const Record = ({ fields, item = {}, filePath, allItems }) => {
   const [productId, setProductId] = useState(

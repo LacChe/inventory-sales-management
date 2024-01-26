@@ -2,6 +2,11 @@
   miscellaneous helper functions used by various files
 */
 
+import React from "react";
+import toast from "react-hot-toast";
+import { fillEmptyProdFieldsUsingInvFields } from "./DataManip.js";
+import { useStateContext } from "./StateContext.js";
+
 export function generateUID() {
   let firstPart = (Math.random() * 46656) | 0;
   let secondPart = (Math.random() * 46656) | 0;
@@ -39,25 +44,24 @@ export function getContrastingHexColor(hexColor) {
   return contrastingColor;
 }
 
-// returns a new product object with the names and size of the inventory object used if those fields are empty
-export function fillEmptyProdFieldsUsingInvFields(prod, fields, inventoryData) {
-  if (!prod || !prod.inventory_items || !inventoryData) return prod;
-  let newProd = { ...prod };
-  fields.forEach((field) => {
-    if (
-      (!newProd[field.name] || newProd[field.name] === "") &&
-      (field.name === "name_en" ||
-        field.name === "name_cn" ||
-        field.name === "size")
-    ) {
-      const dataFromInventory = inventoryData.filter(
-        (filterItem) =>
-          filterItem.id === Object.keys(newProd.inventory_items)[0]
-      )[0];
-      newProd[field.name] = dataFromInventory
-        ? dataFromInventory[field.name]
-        : newProd[field.name];
+export function generateToasts(inventoryData) {
+  inventoryData.forEach((data) => {
+    if (data.reminder_amount && data.reminder_amount > data.amount) {
+      toast.custom(
+        (t) => (
+          <div
+            className={`toast-low-stock ${t.visible} ? 'animate-enter' : 'animate-leave'`}
+            onClick={() => toast.dismiss(data.id)}
+          >
+            <span>Low Stock!</span> ID: {data.id} Name: {data.name_en}
+          </div>
+        ),
+        {
+          id: data.id,
+          duration: Infinity,
+          position: "bottom-left",
+        }
+      );
     }
   });
-  return newProd;
 }
