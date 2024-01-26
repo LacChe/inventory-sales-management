@@ -1,7 +1,7 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import { AiFillDelete } from "react-icons/ai";
-import DeleteConfirmation from "../DeleteConfirmation.js";
+import DeleteConfirmation from "./DeleteConfirmation.js";
 
 const DeleteColumn = ({ data, filePath, fields }) => {
   return (
