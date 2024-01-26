@@ -6,9 +6,9 @@ import {
 } from "../utils/DataManip.js";
 
 // TODO
-// !!! chart product dropdown closes after one click
+// remove unnecessary saving of formula fields
 // chart doesnt display in dev
-// chart labels sometimes dont show unless refreshed
+// chart labels sometimes dont show unless refreshed, especially on first run
 // do setting fields need individual usestates?
 
 const Context = createContext();

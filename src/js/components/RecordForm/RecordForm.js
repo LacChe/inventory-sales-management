@@ -14,13 +14,12 @@ const RecordForm = ({ fields, item = {}, filePath, allItems }) => {
   let fieldsNoFormula = fields.filter((field) => {
     if (field.type === "formula") {
       if (displayItem) delete displayItem[field.name];
-      return;
+    } else {
+      return field;
     }
-    return field;
   });
 
   function saveData(event) {
-    console.log(1, allItems);
     // create new item
     let newItem = {};
     fieldsNoFormula.forEach((field, index) => {
