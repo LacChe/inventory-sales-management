@@ -6,7 +6,6 @@ import {
 } from "../utils/DataManip.js";
 
 // TODO
-// !!! records not saving
 // !!! chart product dropdown closes after one click
 // chart doesnt display in dev
 // chart labels sometimes dont show unless refreshed

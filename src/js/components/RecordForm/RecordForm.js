@@ -20,6 +20,7 @@ const RecordForm = ({ fields, item = {}, filePath, allItems }) => {
   });
 
   function saveData(event) {
+    console.log(1, allItems);
     // create new item
     let newItem = {};
     fieldsNoFormula.forEach((field, index) => {
@@ -34,7 +35,7 @@ const RecordForm = ({ fields, item = {}, filePath, allItems }) => {
       }
     });
     // add or change in allItems
-    let newAllItems = { ...allItems };
+    let newAllItems = [...allItems];
     if (
       newAllItems.filter((filterItem) => filterItem.id === newItem.id)
         .length === 0
