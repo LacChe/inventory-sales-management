@@ -1,6 +1,6 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import Record from "../Record.js";
+import Record from "../RecordForm/RecordForm.js";
 import { useStateContext } from "../../utils/StateContext.js";
 
 const FunctionBar = ({

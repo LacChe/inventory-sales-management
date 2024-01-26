@@ -1,5 +1,5 @@
 import React from "react";
-import Record from "../Record.js";
+import Record from "../RecordForm/RecordForm.js";
 import { AiFillEdit } from "react-icons/ai";
 import Popup from "reactjs-popup";
 

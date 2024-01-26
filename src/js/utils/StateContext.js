@@ -7,6 +7,7 @@ import {
 
 // TODO
 // !!! records not saving
+// !!! chart product dropdown closes after one click
 // chart doesnt display in dev
 // chart labels sometimes dont show unless refreshed
 // do setting fields need individual usestates?

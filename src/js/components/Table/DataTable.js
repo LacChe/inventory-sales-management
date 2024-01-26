@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { filterRecordsByTerm, sortRecords } from "../../utils/DataManip.js";
 import EditColumn from "./EditColumn.js";
 import DeleteColumn from "./DeleteColumn.js";
@@ -16,6 +16,7 @@ const DataTable = ({
   // id of the record that mouse is hovering over
 
   let sortedData = sortRecords(data, fieldOrder, fields);
+  const [hoverId, setHoverId] = useState("");
 
   // filter by filterTerm
   sortedData = filterRecordsByTerm(
@@ -41,6 +42,8 @@ const DataTable = ({
                 filePath={filePath}
                 fields={fields}
                 searchTerm={searchTerm}
+                hoverId={hoverId}
+                setHoverId={setHoverId}
               />
             </Fragment>
           );

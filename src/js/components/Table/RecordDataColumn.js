@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 import { fillEmptyProdFieldsUsingInvFields } from "../../utils/DataManip.js";
 import { useStateContext } from "../../utils/StateContext.js";
@@ -10,9 +10,10 @@ const RecordDataColumn = ({
   filePath,
   fields,
   searchTerm,
+  hoverId,
+  setHoverId,
 }) => {
   const { toggleOrder, productDataFilePath, inventoryData } = useStateContext();
-  const [hoverId, setHoverId] = useState("");
 
   return (
     <div key={column.name} className="column">

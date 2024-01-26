@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SalesChart from "../components/SalesChart.js";
+import SalesChart from "../components/SalesChart/SalesChart.js";
 
 const Charts = () => {
   const [selectedChart, setSelectedChart] = useState("sales");
