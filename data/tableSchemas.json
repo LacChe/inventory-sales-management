@@ -1,0 +1,146 @@
+{
+  "inventory": [
+    {
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "name": "amount",
+      "type": "formula"
+    },
+    {
+      "name": "name_en",
+      "type": "string"
+    },
+    {
+      "name": "name_cn",
+      "type": "string"
+    },
+    {
+      "name": "size",
+      "type": "number"
+    },
+    {
+      "name": "unit",
+      "type": "string"
+    },
+    {
+      "name": "manufacturer",
+      "type": "string"
+    },
+    {
+      "name": "country",
+      "type": "string"
+    },
+    {
+      "name": "reminder_amount",
+      "type": "number"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ],
+  "products": [
+    {
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "name": "name_en",
+      "type": "string"
+    },
+    {
+      "name": "name_cn",
+      "type": "string"
+    },
+    {
+      "name": "size",
+      "type": "number"
+    },
+    {
+      "name": "unit",
+      "type": "string"
+    },
+    {
+      "name": "inventory_items",
+      "type": "array"
+    },
+    {
+      "name": "price",
+      "type": "number"
+    },
+    {
+      "name": "sale_price",
+      "type": "string"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ],
+  "transactions": [
+    {
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "name_en",
+      "type": "formula"
+    },
+    {
+      "name": "name_cn",
+      "type": "formula"
+    },
+    {
+      "name": "products",
+      "type": "array"
+    },
+    {
+      "name": "amount",
+      "type": "number"
+    },
+    {
+      "name": "revenue",
+      "type": "number"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    },
+    {
+      "name": "not_a_sale",
+      "type": "boolean"
+    }
+  ],
+  "equipment": [
+    {
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "name": "name_en",
+      "type": "string"
+    },
+    {
+      "name": "name_cn",
+      "type": "string"
+    },
+    {
+      "name": "date_bought",
+      "type": "date"
+    },
+    {
+      "name": "manufacturer",
+      "type": "string"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ]
+}

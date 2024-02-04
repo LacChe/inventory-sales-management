@@ -1,0 +1,40 @@
+{
+  "tableSettings": {
+    "inventory": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [],
+      "filterExclude": [],
+      "scrollPosition": { "x": 0, "y": 0 }
+    },
+    "products": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [],
+      "filterExclude": [],
+      "scrollPosition": { "x": 0, "y": 0 }
+    },
+    "transactions": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [],
+      "filterExclude": [],
+      "scrollPosition": { "x": 0, "y": 0 }
+    },
+    "equipment": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [],
+      "filterExclude": [],
+      "scrollPosition": { "x": 0, "y": 0 }
+    }
+  }
+}
