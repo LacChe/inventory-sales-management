@@ -1,7 +1,7 @@
 const { ipcRenderer, contextBridge } = require("electron");
 
 // whitelisted channels used to communicate between electron and react code
-const validChannels = new Set(["event"]);
+const validChannels = new Set(["event", "file", "error"]);
 
 contextBridge.exposeInMainWorld("api", {
   send: (channel, data) => {

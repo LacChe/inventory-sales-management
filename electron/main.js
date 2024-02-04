@@ -2,9 +2,6 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const isDev = !app.isPackaged;
 
-// init event listeners
-require("./eventHandler")();
-
 if (isDev) {
   require("electron-reload")(path.join(__dirname, "../"), {
     electron: path.join(__dirname, "../node_modules", ".bin", "electron"),
@@ -28,6 +25,9 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
+
+  // init event listeners
+  require("./eventHandler")(mainWindow);
 }
 
 app.whenReady().then(createWindow);
