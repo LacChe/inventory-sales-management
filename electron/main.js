@@ -27,7 +27,7 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
 
   // init event listeners
-  require("./eventHandler")(mainWindow);
+  require("./eventHandler")();
 }
 
 app.whenReady().then(createWindow);

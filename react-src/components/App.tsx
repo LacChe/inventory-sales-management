@@ -1,5 +1,6 @@
 import React from "react";
 import { useStateContext } from "../utils/StateContext";
+import { readFile } from "../utils/eventHandler";
 
 const App = () => {
   // START test useStateContext
@@ -8,18 +9,14 @@ const App = () => {
   // END test useStateContext
 
   // START event and file io testing
-  window.api.send("file", "tableSchemas");
-  window.api.receive("file", (data: Array<string>) => {
-    console.log(`received: ${JSON.stringify(data[0])}`);
-    console.log("payload: ", JSON.parse(data[1]));
-  });
-  window.api.receive("error", (data: Array<string>) => {
-    console.log(`received: ${JSON.stringify(data[0])}`);
-    console.log("error: ", JSON.parse(data[1]));
-  });
+  readFileTest();
   // END event and file io testing
 
   return <h1>Hello Electron TypeScript React App!</h1>;
 };
+
+async function readFileTest() {
+  console.log(await readFile("tableSchemas"));
+}
 
 export default App;

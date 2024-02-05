@@ -1,25 +1,22 @@
 const { ipcMain } = require("electron");
 const { readFile } = require("./fileIO");
 
-function initEventListeners(window) {
-  // test event
-  ipcMain.on("event", (event, args) => {
-    console.log(
-      `event received: : ${JSON.stringify(event)}, args: ${JSON.stringify(
-        args
-      )}`
-    );
-  });
+function initEventListeners() {
+  initTestEvent();
+  initFileIOEvent();
+}
 
-  // file io
-  ipcMain.on("file", (event, args) => {
-    readFile(args).then(({ error, data }) => {
-      if (error) {
-        window.webContents.send("error", ["fileIO", error]);
-      } else {
-        window.webContents.send("file", [args, data]);
-      }
-    });
+function initTestEvent() {
+  ipcMain.handle("event", (event, args) => {
+    return `event received: : ${JSON.stringify(event)}, args: ${JSON.stringify(
+      args
+    )}`;
+  });
+}
+
+function initFileIOEvent() {
+  ipcMain.handle("readFile", (event, fileName) => {
+    return readFile(fileName);
   });
 }
 
