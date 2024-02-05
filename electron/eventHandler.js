@@ -23,8 +23,4 @@ function initEventListeners(window) {
   });
 }
 
-/*
-
-    
-    */
 module.exports = initEventListeners;
