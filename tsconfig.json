@@ -11,9 +11,8 @@
   },
   "include": [
     "react-src/**/*.ts",
-    "react-src/**/*.tsx"
-, "react-src/utils/eventHandler.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "react-src/**/*.tsx",
+    "react-src/utils/eventHandler.ts"
+  ],
+  "exclude": ["node_modules"]
 }
