@@ -2,7 +2,7 @@
   "inventory": [
     {
       "name": "id",
-      "type": "id"
+      "type": "key"
     },
     {
       "name": "amount",
@@ -44,23 +44,22 @@
   "products": [
     {
       "name": "id",
-      "type": "id"
+      "type": "key"
     },
     {
       "name": "name_en",
-      "type": "string"
+      "type": "string",
+      "fill_blank_from_inventory": ["name_en"]
     },
     {
       "name": "name_cn",
-      "type": "string"
+      "type": "string",
+      "fill_blank_from_inventory": ["name_cn"]
     },
     {
       "name": "size",
-      "type": "number"
-    },
-    {
-      "name": "unit",
-      "type": "string"
+      "type": "string",
+      "fill_blank_from_inventory": ["size", "unit"]
     },
     {
       "name": "inventory_items",
@@ -82,7 +81,7 @@
   "transactions": [
     {
       "name": "id",
-      "type": "id"
+      "type": "key"
     },
     {
       "name": "date",
@@ -120,7 +119,7 @@
   "equipment": [
     {
       "name": "id",
-      "type": "id"
+      "type": "key"
     },
     {
       "name": "name_en",
