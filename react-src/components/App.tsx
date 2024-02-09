@@ -4,8 +4,10 @@ import { readFile } from "../utils/eventHandler";
 
 const App = () => {
   // START test useStateContext
-  const { tempField } = useStateContext();
-  console.log(tempField);
+  const state = useStateContext();
+  console.log("state 0", state);
+  console.log("state 1", state?.fileData);
+  console.log("state 2", state?.fileData?.inventory);
   // END test useStateContext
 
   // START event and file io testing
@@ -16,7 +18,7 @@ const App = () => {
 };
 
 async function readFileTest() {
-  console.log(await readFile("tableSchemas"));
+  // console.log(await readFile("tableSchemas"));
 }
 
 export default App;
