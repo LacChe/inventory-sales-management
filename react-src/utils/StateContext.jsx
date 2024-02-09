@@ -1,44 +1,38 @@
-import React, {
-  createContext,
-  useContext,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { readFile } from "./eventHandler";
 
 const Context = createContext(null);
 
 export const StateContext = ({ children }) => {
-  const [fileData, setFileData] = useState();
-  useEffect(() => {
-    let promises = new Map();
-    promises.set("inventory", readFile("inventory"));
-    promises.set("products", readFile("products"));
-    promises.set("equipment", readFile("equipment"));
-    promises.set("transactions", readFile("transactions"));
-    promises.set("tableSchemas", readFile("tableSchemas"));
-    promises.set("userSettings", readFile("userSettings"));
+  const [fileData, setFileData] = useState({});
 
-    Promise.all(promises).then((values) => {
-      setFileData((prev) => {
-        let newFileData = {};
-        // index 0 of promiseArr is the file name
-        // index 1 of promiseArr is the promise
-        values.forEach((promiseArr) => {
-          promiseArr[1].then((data) => {
-            newFileData[promiseArr[0]] = JSON.parse(data);
-          });
-        });
-        return newFileData;
-      });
+  useEffect(async () => {
+    // TODO check data for errors
+    const inventoryData = JSON.parse(await readFile("inventory"));
+    const productsData = JSON.parse(await readFile("products"));
+    const equipmentData = JSON.parse(await readFile("equipment"));
+    const transactionsData = JSON.parse(await readFile("transactions"));
+    const tableSchemasData = JSON.parse(await readFile("tableSchemas"));
+    const userSettingsData = JSON.parse(await readFile("userSettings"));
+    setFileData({
+      inventoryData,
+      productsData,
+      equipmentData,
+      transactionsData,
+      tableSchemasData,
+      userSettingsData,
     });
   }, []);
 
   return (
     <Context.Provider
       value={{
-        fileData,
+        inventory: fileData.inventoryData,
+        products: fileData.productsData,
+        equipment: fileData.equipmentData,
+        transactions: fileData.transactionsData,
+        tableSchemas: fileData.tableSchemasData,
+        userSettings: fileData.userSettingsData,
       }}
     >
       {children}

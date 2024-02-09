@@ -5,9 +5,7 @@ import { readFile } from "../utils/eventHandler";
 const App = () => {
   // START test useStateContext
   const state = useStateContext();
-  console.log("state 0", state);
-  console.log("state 1", state?.fileData);
-  console.log("state 2", state?.fileData?.inventory);
+  console.log("state", state);
   // END test useStateContext
 
   // START event and file io testing
