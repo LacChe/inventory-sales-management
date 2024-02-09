@@ -14,7 +14,7 @@ const App = () => {
   readFileTest();
   // END event and file io testing
 
-  return <h1>Hello Electron TypeScript React App!</h1>;
+  return <h1>Hello Electron React App!</h1>;
 };
 
 async function readFileTest() {
