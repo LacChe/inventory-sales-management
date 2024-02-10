@@ -5,14 +5,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import Table from "./tables/Table";
 
 const App = () => {
-  const {
-    tableSchemas,
-    inventory,
-    products,
-    equipment,
-    transactions,
-    userSettings,
-  } = useStateContext();
+  const { tableSchemas } = useStateContext();
 
   // TODO get from userSettings
   const lastTab = "products";
@@ -30,7 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           {tabNames.map((name) => (
-            <Route path={`/${name}`} element={tableElements[name]} />
+            <Route key={name} path={`/${name}`} element={tableElements[name]} />
           ))}
           <Route path="/" element={tableElements[lastTab]} />
         </Route>

@@ -14,7 +14,11 @@ const TableContent = ({ schema, records, userSettings }) => {
           {schema.map((field) => {
             if (userSettings?.hiddenFields.includes(field.name)) return;
             if (field.name === "unit") return;
-            return <th scope="col">{field.name.replaceAll("_", " ")}</th>;
+            return (
+              <th key={field.name} scope="col">
+                {field.name.replaceAll("_", " ")}
+              </th>
+            );
           })}
         </tr>
       </thead>
@@ -37,7 +41,7 @@ const TableContent = ({ schema, records, userSettings }) => {
           break;
       }
       return (
-        <td className={field.name}>
+        <td key={`${id}-${field.name}`} className={field.name}>
           <div>{value}</div>
         </td>
       );
@@ -47,10 +51,10 @@ const TableContent = ({ schema, records, userSettings }) => {
     // display object type by listing key then values
     if (field.type === "object")
       return (
-        <td className={field.name}>
+        <td key={`${id}-${field.name}`} className={field.name}>
           {Object.keys(record[field.name]).map((key) => {
             return (
-              <div>
+              <div key={field.name}>
                 {record[field.name][key]} {key}
               </div>
             );
@@ -61,20 +65,24 @@ const TableContent = ({ schema, records, userSettings }) => {
     // combine size and unit
     if (field.name === "size")
       return (
-        <td className={field.name}>
+        <td key={`${id}-${field.name}`} className={field.name}>
           <div>{`${record[field.name]} ${record.unit || ""}`}</div>
         </td>
       );
 
     // other field types
-    return <td className={field.name}>{record[field.name]}</td>;
+    return (
+      <td key={`${id}-${field.name}`} className={field.name}>
+        {record[field.name]}
+      </td>
+    );
   }
 
   function tableRow(recordId) {
     let displayRecord = { ...records[recordId] };
     displayRecord = fillBlankFromInventory(displayRecord, schema);
     return (
-      <tr>
+      <tr key={recordId}>
         <th scope="row" className="recordId">
           {recordId}
         </th>
