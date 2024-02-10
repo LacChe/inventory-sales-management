@@ -6,6 +6,7 @@ import {
 
 const TableContent = ({ schema, records, userSettings }) => {
   // TODO sort
+  // TODO add columns or delete and edit
   function tableHeader() {
     return (
       <thead>
