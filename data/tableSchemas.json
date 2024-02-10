@@ -63,7 +63,7 @@
     },
     {
       "name": "inventory_items",
-      "type": "array"
+      "type": "object"
     },
     {
       "name": "price",
@@ -88,20 +88,8 @@
       "type": "date"
     },
     {
-      "name": "name_en",
-      "type": "formula"
-    },
-    {
-      "name": "name_cn",
-      "type": "formula"
-    },
-    {
       "name": "products",
-      "type": "array"
-    },
-    {
-      "name": "amount",
-      "type": "number"
+      "type": "object"
     },
     {
       "name": "revenue",
