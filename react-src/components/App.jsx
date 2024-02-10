@@ -19,22 +19,10 @@ const App = () => {
 
   const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
 
-  const recordData = {
-    inventory,
-    products,
-    equipment,
-    transactions,
-  };
   let tableElements = {};
   // tableSchemas may be undefined, so empty object is provided
   Object.keys(tableSchemas || {}).forEach((tableName) => {
-    tableElements[tableName] = (
-      <Table
-        schema={tableSchemas[tableName]}
-        records={recordData[tableName]}
-        userSettings={userSettings?.tableSettings[tableName]}
-      />
-    );
+    tableElements[tableName] = <Table tableName={tableName} />;
   });
 
   return (
