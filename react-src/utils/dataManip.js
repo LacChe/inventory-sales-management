@@ -19,3 +19,26 @@ export function fillBlankFromInventory(record, schema) {
   });
   return newRecord;
 }
+
+export function calculateCurrentStockAmount(recordId) {
+  const { products, transactions } = useStateContext();
+
+  let amount = 0;
+
+  let productsWithItem = [];
+  Object.keys(products).forEach((key) => {
+    if (Object.keys(products[key].inventory_items).includes(recordId))
+      productsWithItem = [...productsWithItem, key];
+  });
+
+  let transactionsWithItem = [];
+  productsWithItem.forEach((productId) => {
+    let itemCountInProduct = products[productId].inventory_items[recordId];
+    Object.keys(transactions).forEach((key) => {
+      if (Object.keys(transactions[key].products).includes(productId))
+        amount += itemCountInProduct * transactions[key].products[productId];
+    });
+  });
+
+  return amount * -1;
+}

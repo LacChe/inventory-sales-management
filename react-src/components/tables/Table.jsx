@@ -1,5 +1,8 @@
 import React from "react";
-import { fillBlankFromInventory } from "../../utils/dataManip";
+import {
+  fillBlankFromInventory,
+  calculateCurrentStockAmount,
+} from "../../utils/dataManip";
 
 const Table = ({ schema, records, userSettings }) => {
   // TODO split into components and export to default and specialized files
@@ -10,6 +13,7 @@ const Table = ({ schema, records, userSettings }) => {
         <tr>
           {schema.map((field) => {
             if (userSettings.hiddenFields.includes(field.name)) return;
+            if (field.name === "unit") return;
             return <th scope="col">{field.name.replaceAll("_", " ")}</th>;
           })}
         </tr>
@@ -17,9 +21,27 @@ const Table = ({ schema, records, userSettings }) => {
     );
   }
 
-  function tableData(record, field) {
+  function tableData(id, record, field) {
     if (field.name === "id") return;
+    if (field.name === "unit") return;
     if (userSettings.hiddenFields.includes(field.name)) return;
+
+    // calculate formula type with appropriate functions
+    if (field.type === "formula") {
+      let value;
+      switch (field.name) {
+        case "amount":
+          value = calculateCurrentStockAmount(id);
+          break;
+        default:
+          break;
+      }
+      return (
+        <td className={field.name}>
+          <div>{value}</div>
+        </td>
+      );
+    }
 
     // TODO display record names instead of ids
     // display object type by listing key then values
@@ -36,26 +58,38 @@ const Table = ({ schema, records, userSettings }) => {
         </td>
       );
 
+    // combine size and unit
+    if (field.name === "size")
+      return (
+        <td className={field.name}>
+          <div>{`${record[field.name]} ${record.unit || ""}`}</div>
+        </td>
+      );
+
     // other field types
     return <td className={field.name}>{record[field.name]}</td>;
+  }
+
+  function tableRow(recordId) {
+    let displayRecord = { ...records[recordId] };
+    displayRecord = fillBlankFromInventory(displayRecord, schema);
+    return (
+      <tr>
+        <th scope="row" className="recordId">
+          {recordId}
+        </th>
+        {schema.map((field) => {
+          return tableData(recordId, displayRecord, field);
+        })}
+      </tr>
+    );
   }
 
   function tableBody() {
     return (
       <tbody>
         {Object.keys(records).map((recordId) => {
-          let displayRecord = { ...records[recordId] };
-          displayRecord = fillBlankFromInventory(displayRecord, schema);
-          return (
-            <tr>
-              <th scope="row" className="recordId">
-                {recordId}
-              </th>
-              {schema.map((field) => {
-                return tableData(displayRecord, field);
-              })}
-            </tr>
-          );
+          return tableRow(recordId);
         })}
       </tbody>
     );
