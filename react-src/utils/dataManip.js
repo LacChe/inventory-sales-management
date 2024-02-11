@@ -1,10 +1,7 @@
 // filtering, sorting, filling in blank fields
-import { useStateContext } from "../utils/StateContext";
 
-export function fillBlankFromInventory(record, schema) {
-  const { inventory } = useStateContext();
+export function fillBlankFields(record, schema, inventory) {
   if (Object.keys(record.inventory_items || {}).length <= 0) return record;
-  if (!inventory) return record;
 
   let newRecord = { ...record };
 
@@ -20,9 +17,7 @@ export function fillBlankFromInventory(record, schema) {
   return newRecord;
 }
 
-export function calculateCurrentStockAmount(recordId) {
-  const { products, transactions } = useStateContext();
-
+export function calculateCurrentStockAmount(recordId, products, transactions) {
   let amount = 0;
 
   let productsWithItem = [];
@@ -31,7 +26,6 @@ export function calculateCurrentStockAmount(recordId) {
       productsWithItem = [...productsWithItem, key];
   });
 
-  let transactionsWithItem = [];
   productsWithItem.forEach((productId) => {
     let itemCountInProduct = products[productId].inventory_items[recordId];
     Object.keys(transactions).forEach((key) => {

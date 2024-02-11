@@ -1,12 +1,14 @@
 import React from "react";
 import {
-  fillBlankFromInventory,
+  fillBlankFields,
   calculateCurrentStockAmount,
 } from "../../utils/dataManip";
-
+import { useStateContext } from "../../utils/StateContext";
 const TableContent = ({ schema, records, tableSettings }) => {
   // TODO sort
   // TODO add columns or delete and edit
+  const { inventory, products, transactions } = useStateContext();
+
   function tableHeader() {
     return (
       <thead>
@@ -35,7 +37,7 @@ const TableContent = ({ schema, records, tableSettings }) => {
       let value;
       switch (field.name) {
         case "amount":
-          value = calculateCurrentStockAmount(id);
+          value = calculateCurrentStockAmount(id, products, transactions);
           break;
         default:
           break;
@@ -80,7 +82,7 @@ const TableContent = ({ schema, records, tableSettings }) => {
 
   function tableRow(recordId) {
     let displayRecord = { ...records[recordId] };
-    displayRecord = fillBlankFromInventory(displayRecord, schema);
+    displayRecord = fillBlankFields(displayRecord, schema, inventory);
     return (
       <tr key={recordId}>
         <th scope="row" className="recordId">

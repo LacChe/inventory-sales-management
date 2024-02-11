@@ -7,10 +7,12 @@ import Table from "./tables/Table";
 const App = () => {
   const { tableSchemas } = useStateContext();
 
+  if (!tableSchemas) return <>Loading...</>;
+
   // TODO get from userSettings
   const lastTab = "products";
 
-  const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
+  const tabNames = Object.keys(tableSchemas);
 
   let tableElements = {};
   // tableSchemas may be undefined, so empty object is provided
