@@ -6,7 +6,6 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
   // TODO
   // add record
   // export to csv
-  // filter and search
   const { setUserTableSettings } = useStateContext();
 
   function toggleHiddenField(field) {
@@ -20,6 +19,30 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
     setUserTableSettings(tableName, tableSettings);
   }
 
+  function filterIncludeOnChangeHandler(term) {
+    let termArr = term
+      .split(",")
+      .map((term) => term.trim())
+      .filter((term) => term !== "");
+    tableSettings.filterInclude = termArr;
+    setUserTableSettings(tableName, tableSettings);
+  }
+
+  function filterExcludeOnChangeHandler(term) {
+    let termArr = term
+      .split(",")
+      .map((term) => term.trim())
+      .filter((term) => term !== "");
+    tableSettings.filterExclude = termArr;
+    setUserTableSettings(tableName, tableSettings);
+  }
+
+  function searchOnChangeHandler(term) {
+    tableSettings.searchTerm = term;
+    setUserTableSettings(tableName, tableSettings);
+  }
+
+  console.table(tableSettings);
   return (
     <div>
       <div>
@@ -44,8 +67,18 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
         </Popup>
       </div>
       <div>
-        <input placeholder="Filter..." />
-        <input placeholder="Search..." />
+        <input
+          placeholder="Include..."
+          onChange={(e) => filterIncludeOnChangeHandler(e.target.value)}
+        />
+        <input
+          placeholder="Exclude..."
+          onChange={(e) => filterExcludeOnChangeHandler(e.target.value)}
+        />
+        <input
+          placeholder="Search..."
+          onChange={(e) => searchOnChangeHandler(e.target.value)}
+        />
       </div>
     </div>
   );
