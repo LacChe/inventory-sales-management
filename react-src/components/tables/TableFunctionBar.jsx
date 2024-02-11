@@ -1,9 +1,30 @@
 import React from "react";
 import Popup from "reactjs-popup";
 import { useStateContext } from "../../utils/StateContext";
+import { exportSpreadSheet } from "../../utils/fileIO";
 
-const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
+const TableFunctionBar = ({
+  tableName,
+  displayRecords,
+  schema,
+  tableSettings,
+}) => {
   const { setUserTableSettings } = useStateContext();
+
+  function downloadData() {
+    // only export shown fields
+    let fields = schema
+      .filter((field) => {
+        return !tableSettings.hiddenFields.includes(field.name);
+      })
+      .map((field) => field.name);
+
+    // only export units along with size
+    if (!fields.includes("size"))
+      fields = fields.filter((field) => field !== "unit");
+
+    exportSpreadSheet(tableName, fields, displayRecords);
+  }
 
   function toggleHiddenField(field) {
     if (tableSettings.hiddenFields.includes(field)) {
@@ -37,7 +58,7 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
     <div>
       <div>
         <button>Add</button>
-        <button>Export</button>
+        <button onClick={downloadData}>Export</button>
         <Popup position="bottom left" trigger={<button>Toggle Columns</button>}>
           <div>
             {schema.map((field) => {

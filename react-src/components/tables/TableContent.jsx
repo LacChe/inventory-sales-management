@@ -1,32 +1,7 @@
 import React from "react";
-import {
-  fillBlankFields,
-  calculateFormula,
-  sortData,
-  filterData,
-} from "../../utils/dataManip";
 import { useStateContext } from "../../utils/StateContext";
-const TableContent = ({ tableName, schema, records, tableSettings }) => {
+const TableContent = ({ tableName, schema, displayRecords, tableSettings }) => {
   const { setUserTableSettings } = useStateContext();
-  let displayRecords = { ...records };
-
-  Object.keys(displayRecords).forEach((id) => {
-    displayRecords[id] = fillBlankFields(displayRecords[id], schema);
-  });
-
-  displayRecords = filterData(
-    displayRecords,
-    tableSettings.filterInclude,
-    tableSettings.filterExclude,
-    tableSettings.hiddenFields
-  );
-
-  displayRecords = sortData(
-    displayRecords,
-    schema.filter((field) => field.name === tableSettings.sortingByField)[0],
-    tableSettings.sortingAscending,
-    schema
-  );
 
   function toggleSort(field) {
     if (tableSettings.sortingByField === field) {
@@ -73,15 +48,6 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
     if (field.name === "id") return;
     if (field.name === "unit") return;
     if (tableSettings?.hiddenFields?.includes(field.name)) return;
-
-    // calculate formula type with appropriate functions
-    if (field.type === "formula") {
-      return (
-        <td key={`${id}-${field.name}`} className={field.name}>
-          <div>{calculateFormula(field, id)}</div>
-        </td>
-      );
-    }
 
     // display object type by listing key then values
     if (field.type === "object")

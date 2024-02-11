@@ -52,14 +52,14 @@ export function calculateCurrentStockAmount(recordId) {
         amount += itemCountInProduct * transactions[key].products[productId];
     });
   });
-
-  return amount * -1;
+  amount *= -1;
+  if (amount === -0) amount = 0;
+  return amount;
 }
 
 // return sorted data
 // sorts sizes first by unit then by size
 // sorts objects as strings
-// calculates formulas before sorting
 export function sortData(data, field, asc, schema) {
   if (!field || field === "") return data;
 
@@ -71,10 +71,7 @@ export function sortData(data, field, asc, schema) {
     return returnObj;
   });
   dataArr.sort((a, b) => {
-    if (field.type === "formula") {
-      a = calculateFormula(field, a.id);
-      b = calculateFormula(field, b.id);
-    } else if (field.name === "size") {
+    if (field.name === "size") {
       if (a.unit < b.unit) return asc ? -1 : 1;
       if (a.unit > b.unit) return asc ? 1 : -1;
       if (a.size < b.size) return asc ? -1 : 1;
@@ -142,4 +139,34 @@ export function filterData(data, include, exlude, hiddenFields) {
     }
   });
   return data;
+}
+
+export function generateDisplayData(displayRecords, schema, tableSettings) {
+  Object.keys(displayRecords).forEach((id) => {
+    displayRecords[id] = fillBlankFields(displayRecords[id], schema);
+  });
+
+  Object.keys(displayRecords).forEach((id) => {
+    schema.forEach((field) => {
+      if (field.type === "formula") {
+        displayRecords[id][field.name] = calculateFormula(field, id);
+      }
+    });
+  });
+
+  displayRecords = filterData(
+    displayRecords,
+    tableSettings.filterInclude,
+    tableSettings.filterExclude,
+    tableSettings.hiddenFields
+  );
+
+  displayRecords = sortData(
+    displayRecords,
+    schema.filter((field) => field.name === tableSettings.sortingByField)[0],
+    tableSettings.sortingAscending,
+    schema
+  );
+
+  return displayRecords;
 }
