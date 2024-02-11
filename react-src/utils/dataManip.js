@@ -183,30 +183,31 @@ export function filterData(data, include, exlude, hiddenFields) {
  * @return {Object} The filtered and sorted records for display
  */
 export function generateDisplayData(records, schema, tableSettings) {
-  Object.keys(records).forEach((id) => {
-    records[id] = fillBlankFields(records[id], schema);
+  let displayRecords = { ...records };
+  Object.keys(displayRecords).forEach((id) => {
+    displayRecords[id] = fillBlankFields(displayRecords[id], schema);
   });
 
-  Object.keys(records).forEach((id) => {
+  Object.keys(displayRecords).forEach((id) => {
     schema.forEach((field) => {
       if (field.type === "formula") {
-        records[id][field.name] = calculateFormula(field, id);
+        displayRecords[id][field.name] = calculateFormula(field, id);
       }
     });
   });
 
-  records = filterData(
-    records,
+  displayRecords = filterData(
+    displayRecords,
     tableSettings.filterInclude,
     tableSettings.filterExclude,
     tableSettings.hiddenFields
   );
 
-  records = sortData(
-    records,
+  displayRecords = sortData(
+    displayRecords,
     schema.filter((field) => field.name === tableSettings.sortingByField)[0],
     tableSettings.sortingAscending
   );
 
-  return records;
+  return displayRecords;
 }

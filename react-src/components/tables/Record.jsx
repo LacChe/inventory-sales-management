@@ -3,7 +3,12 @@ import { generateUID } from "../../utils/helpers";
 import { useStateContext } from "../../utils/StateContext";
 
 const Record = ({ tableName, schema, id, record }) => {
+  const { saveRecord, deleteRecord } = useStateContext();
+
   let formRecord = { ...record };
+  schema.forEach((field) => {
+    if (field.type === "formula") delete formRecord[field.name];
+  });
   if (!id) id = generateUID();
 
   /**
@@ -17,7 +22,13 @@ const Record = ({ tableName, schema, id, record }) => {
       return (
         <Fragment key={field.name}>
           <label htmlFor={field.name}>{field.name.replaceAll("_", " ")}</label>
-          <textarea id={field.name} defaultValue={formRecord[field.name]} />
+          <textarea
+            id={field.name}
+            defaultValue={formRecord[field.name]}
+            onChange={(e) => {
+              formRecord[field.name] = e.target.value;
+            }}
+          />
         </Fragment>
       );
     }
@@ -30,6 +41,7 @@ const Record = ({ tableName, schema, id, record }) => {
           </Fragment>
         );
       case "formula":
+        // dont display formula fields
         return <Fragment key={field.name}></Fragment>;
       case "number":
         return (
@@ -40,7 +52,10 @@ const Record = ({ tableName, schema, id, record }) => {
             <input
               type="number"
               id={field.name}
-              defaultValue={formRecord[field.name]}
+              defaultValue={Number.parseFloat(formRecord[field.name])}
+              onChange={(e) => {
+                formRecord[field.name] = Number.parseFloat(e.target.value);
+              }}
             />
           </Fragment>
         );
@@ -50,7 +65,13 @@ const Record = ({ tableName, schema, id, record }) => {
             <label htmlFor={field.name}>
               {field.name.replaceAll("_", " ")}
             </label>
-            <input id={field.name} defaultValue={formRecord[field.name]} />
+            <input
+              id={field.name}
+              defaultValue={formRecord[field.name]}
+              onChange={(e) => {
+                formRecord[field.name] = e.target.value;
+              }}
+            />
           </Fragment>
         );
       case "date":
@@ -63,6 +84,9 @@ const Record = ({ tableName, schema, id, record }) => {
               type="date"
               id={field.name}
               defaultValue={formRecord[field.name]}
+              onChange={(e) => {
+                formRecord[field.name] = e.target.value;
+              }}
             />
           </Fragment>
         );
@@ -76,6 +100,9 @@ const Record = ({ tableName, schema, id, record }) => {
               type="checkbox"
               id={field.name}
               defaultChecked={formRecord[field.name]}
+              onChange={(e) => {
+                formRecord[field.name] = e.target.checked;
+              }}
             />
           </Fragment>
         );
@@ -91,23 +118,24 @@ const Record = ({ tableName, schema, id, record }) => {
     }
   }
 
-  function deleteRecord() {
-    console.log("delete ", formRecord);
+  function handleDelete(e) {
+    deleteRecord(tableName, id);
   }
 
-  function saveRecord() {
-    console.log("save ", formRecord);
+  function handleSave() {
+    // TODO check input validity
+    saveRecord(tableName, id, formRecord);
   }
 
   function recordForm() {
     return (
-      <form>
+      <div>
         {schema.map((field) => fieldInput(field))}
         <div>
-          <button onClick={deleteRecord}>Delete</button>
-          <button onClick={saveRecord}>Save</button>
+          <button onClick={handleDelete}>Delete</button>
+          <button onClick={handleSave}>Save</button>
         </div>
-      </form>
+      </div>
     );
   }
 

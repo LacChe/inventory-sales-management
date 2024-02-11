@@ -5,9 +5,7 @@ const Context = createContext(null);
 
 // TODO
 // highlight search term
-// add record
-// edit record
-// delete record
+// object dropdowns
 // save scroll pos
 // styling
 // toasts for inventory below threshold and data added deleted edited
@@ -27,19 +25,19 @@ export const StateContext = ({ children }) => {
 
   useEffect(async () => {
     // TODO check data for errors
-    const inventoryData = JSON.parse(await readFile("inventory"));
-    const productsData = JSON.parse(await readFile("products"));
-    const equipmentData = JSON.parse(await readFile("equipment"));
-    const transactionsData = JSON.parse(await readFile("transactions"));
-    const tableSchemasData = JSON.parse(await readFile("tableSchemas"));
-    const userSettingsData = JSON.parse(await readFile("userSettings"));
+    const inventory = JSON.parse(await readFile("inventory"));
+    const products = JSON.parse(await readFile("products"));
+    const equipment = JSON.parse(await readFile("equipment"));
+    const transactions = JSON.parse(await readFile("transactions"));
+    const tableSchemas = JSON.parse(await readFile("tableSchemas"));
+    const userSettings = JSON.parse(await readFile("userSettings"));
     setFileData({
-      inventoryData,
-      productsData,
-      equipmentData,
-      transactionsData,
-      tableSchemasData,
-      userSettingsData,
+      inventory,
+      products,
+      equipment,
+      transactions,
+      tableSchemas,
+      userSettings,
     });
   }, []);
 
@@ -59,6 +57,37 @@ export const StateContext = ({ children }) => {
   }
 
   /**
+   * Adds a record to the specified table and saves the file.
+   *
+   * @param {string} table - the table to save the record to
+   * @param {string} id - the id of the record
+   * @param {object} record - the record data to be saved
+   */
+  function saveRecord(table, id, record) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      newFileData[table] = { ...newFileData[table], [id]: record };
+      saveFileHandler(table, newFileData[table]);
+      return newFileData;
+    });
+  }
+
+  /**
+   * Removes a record from the specified table and saves the file.
+   *
+   * @param {string} table - the table to remove the record from
+   * @param {string} id - the id of the record
+   */
+  function deleteRecord(table, id) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      delete newFileData[table][id];
+      saveFileHandler(table, newFileData[table]);
+      return newFileData;
+    });
+  }
+
+  /**
    * An asynchronous function that handles the saving of a file.
    *
    * @param {string} fileName - the name of the file to be saved
@@ -71,14 +100,16 @@ export const StateContext = ({ children }) => {
   return (
     <Context.Provider
       value={{
-        inventory: fileData.inventoryData,
-        products: fileData.productsData,
-        equipment: fileData.equipmentData,
-        transactions: fileData.transactionsData,
-        tableSchemas: fileData.tableSchemasData,
-        userSettings: fileData.userSettingsData,
+        inventory: fileData.inventory,
+        products: fileData.products,
+        equipment: fileData.equipment,
+        transactions: fileData.transactions,
+        tableSchemas: fileData.tableSchemas,
+        userSettings: fileData.userSettings,
 
         setUserTableSettings,
+        saveRecord,
+        deleteRecord,
       }}
     >
       {children}

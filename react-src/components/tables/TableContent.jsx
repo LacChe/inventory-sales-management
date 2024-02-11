@@ -64,6 +64,13 @@ const TableContent = ({ props }) => {
     if (field.name === "unit") return;
     if (tableSettings?.hiddenFields?.includes(field.name)) return;
 
+    if (!record[field.name])
+      return (
+        <td key={`${field.name}`} className={field.name}>
+          <div></div>
+        </td>
+      );
+
     // display object type by listing key then values
     if (field.type === "object")
       return (
@@ -82,7 +89,7 @@ const TableContent = ({ props }) => {
     if (field.name === "size")
       return (
         <td key={`${field.name}`} className={field.name}>
-          <div>{`${record[field.name]} ${record.unit || ""}`}</div>
+          <div>{`${record[field.name] || ""} ${record.unit || ""}`}</div>
         </td>
       );
 
