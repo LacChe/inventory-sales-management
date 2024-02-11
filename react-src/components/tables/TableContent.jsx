@@ -4,7 +4,7 @@ import {
   calculateCurrentStockAmount,
 } from "../../utils/dataManip";
 
-const TableContent = ({ schema, records, userSettings }) => {
+const TableContent = ({ schema, records, tableSettings }) => {
   // TODO sort
   // TODO add columns or delete and edit
   function tableHeader() {
@@ -12,7 +12,7 @@ const TableContent = ({ schema, records, userSettings }) => {
       <thead>
         <tr>
           {schema.map((field) => {
-            if (userSettings?.hiddenFields.includes(field.name)) return;
+            if (tableSettings?.hiddenFields?.includes(field.name)) return;
             if (field.name === "unit") return;
             return (
               <th key={field.name} scope="col">
@@ -28,7 +28,7 @@ const TableContent = ({ schema, records, userSettings }) => {
   function tableData(id, record, field) {
     if (field.name === "id") return;
     if (field.name === "unit") return;
-    if (userSettings?.hiddenFields.includes(field.name)) return;
+    if (tableSettings?.hiddenFields?.includes(field.name)) return;
 
     // calculate formula type with appropriate functions
     if (field.type === "formula") {

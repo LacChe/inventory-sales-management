@@ -24,6 +24,14 @@ export const StateContext = ({ children }) => {
     });
   }, []);
 
+  function setUserTableSettings(tableName, newSettings) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      newFileData.userSettingsData.tableSettings[tableName] = newSettings;
+      return newFileData;
+    });
+  }
+
   return (
     <Context.Provider
       value={{
@@ -33,6 +41,8 @@ export const StateContext = ({ children }) => {
         transactions: fileData.transactionsData,
         tableSchemas: fileData.tableSchemasData,
         userSettings: fileData.userSettingsData,
+
+        setUserTableSettings,
       }}
     >
       {children}

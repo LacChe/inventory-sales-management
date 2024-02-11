@@ -23,13 +23,14 @@ const Table = ({ tableName }) => {
   return (
     <div>
       <TableFunctionBar
+        tableName={tableName}
         schema={tableSchemas[tableName]}
-        userSettings={userSettings[tableName]}
+        tableSettings={userSettings.tableSettings[tableName]}
       />
       <TableContent
         schema={tableSchemas[tableName]}
         records={recordData[tableName]}
-        userSettings={userSettings[tableName]}
+        tableSettings={userSettings.tableSettings[tableName]}
       />
     </div>
   );
