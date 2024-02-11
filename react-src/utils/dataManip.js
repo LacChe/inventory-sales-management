@@ -122,14 +122,14 @@ export function filterData(data, include, exlude, hiddenFields) {
 
     if (include && include.length > 0) {
       include.forEach((term) => {
-        if (testString.indexOf(term) === -1) {
+        if (testString.indexOf(term.toLowerCase()) === -1) {
           deleteBool = true;
         }
       });
     }
     if (exlude && exlude.length > 0) {
       exlude.forEach((term) => {
-        if (testString.indexOf(term) !== -1) {
+        if (testString.indexOf(term.toLowerCase()) !== -1) {
           deleteBool = true;
         }
       });
