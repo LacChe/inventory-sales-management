@@ -28,14 +28,15 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
         <Popup position="bottom left" trigger={<button>Toggle Columns</button>}>
           <div>
             {schema.map((field) => {
-              return (
-                <button
-                  key={field.name}
-                  onClick={() => toggleHiddenField(field.name)}
-                >
-                  {field.name}
-                </button>
-              );
+              if (field.name !== "unit")
+                return (
+                  <button
+                    key={field.name}
+                    onClick={() => toggleHiddenField(field.name)}
+                  >
+                    {field.name.replaceAll("_", " ")}
+                  </button>
+                );
             })}
             <button onClick={() => toggleHiddenField("edit")}>Edit</button>
             <button onClick={() => toggleHiddenField("delete")}>Delete</button>
