@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { readFile } from "./eventHandler";
+import { readFile, saveFile } from "./eventHandler";
 
 const Context = createContext(null);
 
@@ -28,8 +28,13 @@ export const StateContext = ({ children }) => {
     setFileData((prev) => {
       let newFileData = { ...prev };
       newFileData.userSettingsData.tableSettings[tableName] = newSettings;
+      saveFileHandler("userSettings", newFileData.userSettingsData);
       return newFileData;
     });
+  }
+
+  async function saveFileHandler(fileName, data) {
+    const msg = await saveFile(fileName, data);
   }
 
   return (

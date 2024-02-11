@@ -1,5 +1,5 @@
 const { ipcMain } = require("electron");
-const { readFile } = require("./fileIO");
+const { readFile, saveFile } = require("./fileIO");
 
 function initEventListeners() {
   initTestEvent();
@@ -17,6 +17,9 @@ function initTestEvent() {
 function initFileIOEvent() {
   ipcMain.handle("readFile", (event, fileName) => {
     return readFile(fileName);
+  });
+  ipcMain.handle("saveFile", (event, fileName, data) => {
+    return saveFile(fileName, data);
   });
 }
 

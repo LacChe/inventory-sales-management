@@ -4,6 +4,7 @@ const isDev = !app.isPackaged;
 
 if (isDev) {
   require("electron-reload")(path.join(__dirname, "../"), {
+    ignored: path.join(__dirname, "../data"),
     electron: path.join(__dirname, "../node_modules", ".bin", "electron"),
   });
 }

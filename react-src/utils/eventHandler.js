@@ -9,3 +9,15 @@ export async function readFile(fileName) {
   });
   return fileData;
 }
+
+export async function saveFile(fileName, fileData) {
+  let returnMsg;
+  await window.api.saveFile(fileName, fileData).then(({ error, data }) => {
+    if (error) {
+      console.log("read file error", error);
+    } else {
+      returnMsg = data;
+    }
+  });
+  return returnMsg;
+}

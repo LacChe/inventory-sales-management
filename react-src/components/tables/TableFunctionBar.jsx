@@ -20,19 +20,13 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
   }
 
   function filterIncludeOnChangeHandler(term) {
-    let termArr = term
-      .split(",")
-      .map((term) => term.trim())
-      .filter((term) => term !== "");
+    let termArr = term.split(",");
     tableSettings.filterInclude = termArr;
     setUserTableSettings(tableName, tableSettings);
   }
 
   function filterExcludeOnChangeHandler(term) {
-    let termArr = term
-      .split(",")
-      .map((term) => term.trim())
-      .filter((term) => term !== "");
+    let termArr = term.split(",");
     tableSettings.filterExclude = termArr;
     setUserTableSettings(tableName, tableSettings);
   }
@@ -68,10 +62,12 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
       <div>
         <input
           placeholder="Include..."
+          value={tableSettings.filterInclude.join(",")}
           onChange={(e) => filterIncludeOnChangeHandler(e.target.value)}
         />
         <input
           placeholder="Exclude..."
+          value={tableSettings.filterExclude.join(",")}
           onChange={(e) => filterExcludeOnChangeHandler(e.target.value)}
         />
         <input

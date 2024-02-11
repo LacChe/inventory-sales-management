@@ -10,4 +10,13 @@ function readFile(path) {
   });
 }
 
-module.exports = { readFile };
+function saveFile(path, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(`./data/${path}.json`, JSON.stringify(data), (error) => {
+      let data = error ? null : "saved";
+      resolve({ data, error });
+    });
+  });
+}
+
+module.exports = { readFile, saveFile };
