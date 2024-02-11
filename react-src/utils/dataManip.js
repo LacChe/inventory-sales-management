@@ -72,6 +72,7 @@ export function calculateCurrentStockAmount(recordId) {
   return amount;
 }
 
+// TODO sort date and boolean
 /**
  * Sorts the given data based on the specified field in either ascending or descending order.
  * sorts sizes first by unit then by size

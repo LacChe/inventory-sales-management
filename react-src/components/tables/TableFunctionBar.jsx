@@ -1,5 +1,6 @@
 import React from "react";
 import Popup from "reactjs-popup";
+import Record from "./Record";
 import { useStateContext } from "../../utils/StateContext";
 import { exportSpreadSheet } from "../../utils/fileIO";
 
@@ -87,7 +88,9 @@ const TableFunctionBar = ({ props }) => {
   return (
     <div>
       <div>
-        <button>Add</button>
+        <Popup modal trigger={<button>Add</button>}>
+          <Record tableName={tableName} schema={schema} />
+        </Popup>
         <button onClick={downloadData}>Export</button>
         <Popup position="bottom left" trigger={<button>Toggle Columns</button>}>
           <div>
@@ -103,7 +106,6 @@ const TableFunctionBar = ({ props }) => {
                 );
             })}
             <button onClick={() => toggleHiddenField("edit")}>Edit</button>
-            <button onClick={() => toggleHiddenField("delete")}>Delete</button>
           </div>
         </Popup>
       </div>

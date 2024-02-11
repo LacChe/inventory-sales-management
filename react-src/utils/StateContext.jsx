@@ -5,7 +5,6 @@ const Context = createContext(null);
 
 // TODO
 // highlight search term
-// export to csv
 // add record
 // edit record
 // delete record

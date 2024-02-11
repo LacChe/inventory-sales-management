@@ -1,5 +1,7 @@
 import React from "react";
 import { useStateContext } from "../../utils/StateContext";
+import Popup from "reactjs-popup";
+import Record from "./Record";
 const TableContent = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
   let { tableName, displayRecords, schema, tableSettings } = props;
@@ -43,11 +45,6 @@ const TableContent = ({ props }) => {
           {!tableSettings?.hiddenFields?.includes("edit") && (
             <th scope="col">
               <button>Edit</button>
-            </th>
-          )}
-          {!tableSettings?.hiddenFields?.includes("delete") && (
-            <th scope="col">
-              <button>Delete</button>
             </th>
           )}
         </tr>
@@ -117,12 +114,14 @@ const TableContent = ({ props }) => {
         })}
         {!tableSettings?.hiddenFields?.includes("edit") && (
           <td>
-            <button>Edit</button>
-          </td>
-        )}
-        {!tableSettings?.hiddenFields?.includes("delete") && (
-          <td>
-            <button>Delete</button>
+            <Popup modal trigger={<button>Edit</button>}>
+              <Record
+                tableName={tableName}
+                schema={schema}
+                id={recordId}
+                record={displayRecord}
+              />
+            </Popup>
           </td>
         )}
       </tr>
