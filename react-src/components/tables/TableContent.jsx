@@ -6,7 +6,7 @@ import {
 import { useStateContext } from "../../utils/StateContext";
 const TableContent = ({ schema, records, tableSettings }) => {
   // TODO sort
-  // TODO add columns or delete and edit
+  // TODO edit and delete buttons handling
   const { inventory, products, transactions } = useStateContext();
 
   function tableHeader() {
@@ -22,6 +22,16 @@ const TableContent = ({ schema, records, tableSettings }) => {
               </th>
             );
           })}
+          {!tableSettings?.hiddenFields?.includes("edit") && (
+            <th scope="col">
+              <button>Edit</button>
+            </th>
+          )}
+          {!tableSettings?.hiddenFields?.includes("delete") && (
+            <th scope="col">
+              <button>Delete</button>
+            </th>
+          )}
         </tr>
       </thead>
     );
@@ -91,6 +101,16 @@ const TableContent = ({ schema, records, tableSettings }) => {
         {schema.map((field) => {
           return tableData(recordId, displayRecord, field);
         })}
+        {!tableSettings?.hiddenFields?.includes("edit") && (
+          <td>
+            <button>Edit</button>
+          </td>
+        )}
+        {!tableSettings?.hiddenFields?.includes("delete") && (
+          <td>
+            <button>Delete</button>
+          </td>
+        )}
       </tr>
     );
   }

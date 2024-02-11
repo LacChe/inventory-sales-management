@@ -7,7 +7,6 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
   // add record
   // export to csv
   // filter and search
-  // toggle hidden columns including delete and edit
   const { setUserTableSettings } = useStateContext();
 
   function toggleHiddenField(field) {
@@ -41,8 +40,8 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
                 </button>
               );
             })}
-            <button onClick={() => toggleHiddenField("edit")}>Edit</button>;
-            <button onClick={() => toggleHiddenField("delete")}>Delete</button>;
+            <button onClick={() => toggleHiddenField("edit")}>Edit</button>
+            <button onClick={() => toggleHiddenField("delete")}>Delete</button>
           </div>
         </Popup>
       </div>
