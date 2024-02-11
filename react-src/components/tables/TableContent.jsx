@@ -83,9 +83,11 @@ const TableContent = ({ tableName, schema, displayRecords, tableSettings }) => {
     let displayRecord = { ...displayRecords[recordId] };
     return (
       <tr key={recordId}>
-        <th scope="row" className="recordId">
-          {recordId}
-        </th>
+        {!tableSettings?.hiddenFields?.includes("id") && (
+          <th scope="row" className="recordId">
+            {recordId}
+          </th>
+        )}
         {schema.map((field) => {
           return tableData(recordId, displayRecord, field);
         })}
