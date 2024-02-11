@@ -3,10 +3,20 @@ import Popup from "reactjs-popup";
 import { useStateContext } from "../../utils/StateContext";
 import { exportSpreadSheet } from "../../utils/fileIO";
 
+/**
+ * Generate the table function bar component.
+ *
+ * @param {object} props - formatted as { tableName, displayRecords, schema, tableSettings }
+ * @return {JSX} the table function bar component
+ */
 const TableFunctionBar = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
   let { tableName, displayRecords, schema, tableSettings } = props;
 
+  /**
+   * Format shown data then download
+   *
+   */
   function downloadData() {
     // only export shown fields
     let fields = schema
@@ -22,6 +32,11 @@ const TableFunctionBar = ({ props }) => {
     exportSpreadSheet(tableName, fields, displayRecords);
   }
 
+  /**
+   * Toggles the visibility of the specified field in the table settings.
+   *
+   * @param {string} field - The field to toggle the visibility for
+   */
   function toggleHiddenField(field) {
     if (tableSettings.hiddenFields.includes(field)) {
       tableSettings.hiddenFields = tableSettings.hiddenFields.filter((item) => {
@@ -33,18 +48,37 @@ const TableFunctionBar = ({ props }) => {
     setUserTableSettings(tableName, tableSettings);
   }
 
+  /**
+   * A function that handles the onChange event for the filter inclusion input,
+   * splits the provided term into an array, assigns it to tableSettings.filterInclude,
+   * and sets the user table settings.
+   *
+   * @param {string} term - The term to be processed for filtering.
+   */
   function filterIncludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterInclude = termArr;
     setUserTableSettings(tableName, tableSettings);
   }
 
+  /**
+   * A function that handles the onChange event for the filter exclusion input,
+   * splits the provided term into an array, assigns it to tableSettings.filterExclude,
+   * and sets the user table settings.
+   *
+   * @param {string} term - the term to be processed
+   */
   function filterExcludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterExclude = termArr;
     setUserTableSettings(tableName, tableSettings);
   }
 
+  /**
+   * Handles the onChange event for the search input and updates the table settings accordingly.
+   *
+   * @param {string} term - the search term entered by the user
+   */
   function searchOnChangeHandler(term) {
     tableSettings.searchTerm = term;
     setUserTableSettings(tableName, tableSettings);

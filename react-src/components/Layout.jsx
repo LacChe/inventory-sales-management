@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useStateContext } from "../utils/StateContext";
 
+/**
+ * Layout to be used in HashRouter, routes are wrapped as Outlet
+ *
+ * @return {JSX.Element} the rendered navigation bar and outlet
+ */
 const Layout = () => {
   const navigate = useNavigate();
   const { tableSchemas } = useStateContext();
@@ -9,11 +14,21 @@ const Layout = () => {
   const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
   const [selectedTab, setSelectedTab] = useState("products");
 
+  /**
+   * Navigate to the selected tab and set tab as selected
+   *
+   * @param {string} tabName - the name of the tab that was clicked
+   */
   function tabClickHandler(tabName) {
     setSelectedTab(tabName);
     navigate(`/${tabName}`);
   }
 
+  /**
+   * Function to render the navigation bar with selection buttons for tabs.
+   *
+   * @return {JSX.Element} The navigation bar JSX element
+   */
   function navBar() {
     return (
       <nav>

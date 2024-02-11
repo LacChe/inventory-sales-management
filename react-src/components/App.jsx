@@ -4,6 +4,11 @@ import Layout from "./Layout";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Table from "./tables/Table";
 
+/**
+ * Function component for rendering the main application.
+ *
+ * @return {JSX.Element} The JSX for the main application
+ */
 const App = () => {
   const { tableSchemas } = useStateContext();
 

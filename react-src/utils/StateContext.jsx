@@ -17,6 +17,12 @@ const Context = createContext(null);
 // check user inputs
 // check for errors
 
+/**
+ * Creates a context provider for managing state data.
+ *
+ * @param {Object} children - The child components to be wrapped by the context provider.
+ * @return {JSX.Element} The context provider component.
+ */
 export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
 
@@ -38,6 +44,12 @@ export const StateContext = ({ children }) => {
     });
   }, []);
 
+  /**
+   * Sets and saves the table settings for a specified table in the user settings data.
+   *
+   * @param {string} tableName - The name of the table
+   * @param {object} newSettings - The new settings to be applied to the table
+   */
   function setUserTableSettings(tableName, newSettings) {
     setFileData((prev) => {
       let newFileData = { ...prev };
@@ -47,8 +59,14 @@ export const StateContext = ({ children }) => {
     });
   }
 
+  /**
+   * An asynchronous function that handles the saving of a file.
+   *
+   * @param {string} fileName - the name of the file to be saved
+   * @param {any} data - the data to be saved in the file
+   */
   async function saveFileHandler(fileName, data) {
-    const msg = await saveFile(fileName, data);
+    await saveFile(fileName, data);
   }
 
   return (

@@ -4,7 +4,13 @@ import TableFunctionBar from "./TableFunctionBar";
 import { useStateContext } from "../../utils/StateContext";
 import { generateDisplayData } from "../../utils/dataManip";
 
-// pass approriate data to TableFunctionBar and TableContent based on tableName
+/**
+ * Renders a table component with the provided table name.
+ * passes approriate data to TableFunctionBar and TableContent based on tableName
+ *
+ * @param {string} tableName - The name of the table to render
+ * @return {JSX.Element} The table component
+ */
 const Table = ({ tableName }) => {
   const {
     tableSchemas,

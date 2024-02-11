@@ -1,6 +1,10 @@
-// handles formatting and importing/exporting files from/to device
-
-// exports as .csv
+/**
+ * Export data to a CSV file with specified file name, fields, and records.
+ *
+ * @param {string} tableName - the name of the file
+ * @param {Array} fields - an array of field names
+ * @param {Object} records - an object containing records
+ */
 export function exportSpreadSheet(tableName, fields, records) {
   let exportData = "";
 

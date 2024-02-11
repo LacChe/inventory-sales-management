@@ -1,8 +1,12 @@
-// filtering, sorting, filling in blank fields
-
 import { useStateContext } from "./StateContext";
 
-// calculate formula type with appropriate functions
+/**
+ * Apply the correct formula based on the field and id.
+ *
+ * @param {Object} field - the field to calculate
+ * @param {string} id - the record id
+ * @return {any} the calculated value based on the field and id
+ */
 export function calculateFormula(field, id) {
   let value;
   switch (field.name) {
@@ -15,7 +19,13 @@ export function calculateFormula(field, id) {
   return value;
 }
 
-// fills in tagged blank fields in record from inventory
+/**
+ * Fill in blank fields of the record using the provided schema and inventory data.
+ *
+ * @param {object} record - The record to be filled
+ * @param {array} schema - The schema indicates which fields are tagged to be filled
+ * @return {object} The updated record with filled blank fields
+ */
 export function fillBlankFields(record, schema) {
   const { inventory } = useStateContext();
   if (Object.keys(record.inventory_items || {}).length <= 0) return record;
@@ -34,7 +44,12 @@ export function fillBlankFields(record, schema) {
   return newRecord;
 }
 
-// sums all items that appear in transactions
+/**
+ * Calculate the current stock amount based on the given record ID.
+ *
+ * @param {number} recordId - The ID of the record to calculate stock amount for
+ * @return {number} The calculated current stock amount
+ */
 export function calculateCurrentStockAmount(recordId) {
   const { products, transactions } = useStateContext();
   let amount = 0;
@@ -57,10 +72,17 @@ export function calculateCurrentStockAmount(recordId) {
   return amount;
 }
 
-// return sorted data
-// sorts sizes first by unit then by size
-// sorts objects as strings
-export function sortData(data, field, asc, schema) {
+/**
+ * Sorts the given data based on the specified field in either ascending or descending order.
+ * sorts sizes first by unit then by size
+ * sorts objects as strings
+ *
+ * @param {object} data - The data to be sorted
+ * @param {string} field - The field by which the data should be sorted
+ * @param {boolean} asc - Flag to indicate whether sorting should be in ascending order
+ * @return {object} The sorted data
+ */
+export function sortData(data, field, asc) {
   if (!field || field === "") return data;
 
   let dataArr = Object.keys(data).map((id) => {
@@ -105,9 +127,15 @@ export function sortData(data, field, asc, schema) {
   return sortedData;
 }
 
-// return filtered data, ignoring hidden fields
-// only keep if all include terms appear in record
-// remove if any exclude terms appear in record
+/**
+ * Filters the given data based on include, exlude, and hiddenFields array.
+ *
+ * @param {Object} data - The data object to be filtered
+ * @param {Array} include - The array of terms that should be included, keep record if all include terms appear
+ * @param {Array} exlude - The array of terms that should be excluded, remove record if any exclude terms appear
+ * @param {Array} hiddenFields - The array of fields that should be excluded from processing
+ * @return {Object} The filtered data object
+ */
 export function filterData(data, include, exlude, hiddenFields) {
   Object.keys(data).forEach((id) => {
     let deleteBool = false;
@@ -141,32 +169,43 @@ export function filterData(data, include, exlude, hiddenFields) {
   return data;
 }
 
-export function generateDisplayData(displayRecords, schema, tableSettings) {
-  Object.keys(displayRecords).forEach((id) => {
-    displayRecords[id] = fillBlankFields(displayRecords[id], schema);
+/**
+ * Generates display data based on the provided records, schema, and table settings.
+ * calculates formula fields
+ * fills in tagged blank fields
+ * filters by tableSettings.filterInclude and tableSettings.filterExclude
+ * sorts by tableSettings.sortingByField and tableSettings.sortingAscending
+ *
+ * @param {Object} records - The object of records to be processed
+ * @param {Array} schema - The schema defining the structure of the records
+ * @param {Object} tableSettings - The settings for displaying the table
+ * @return {Object} The filtered and sorted records for display
+ */
+export function generateDisplayData(records, schema, tableSettings) {
+  Object.keys(records).forEach((id) => {
+    records[id] = fillBlankFields(records[id], schema);
   });
 
-  Object.keys(displayRecords).forEach((id) => {
+  Object.keys(records).forEach((id) => {
     schema.forEach((field) => {
       if (field.type === "formula") {
-        displayRecords[id][field.name] = calculateFormula(field, id);
+        records[id][field.name] = calculateFormula(field, id);
       }
     });
   });
 
-  displayRecords = filterData(
-    displayRecords,
+  records = filterData(
+    records,
     tableSettings.filterInclude,
     tableSettings.filterExclude,
     tableSettings.hiddenFields
   );
 
-  displayRecords = sortData(
-    displayRecords,
+  records = sortData(
+    records,
     schema.filter((field) => field.name === tableSettings.sortingByField)[0],
-    tableSettings.sortingAscending,
-    schema
+    tableSettings.sortingAscending
   );
 
-  return displayRecords;
+  return records;
 }
