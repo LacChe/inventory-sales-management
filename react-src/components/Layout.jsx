@@ -19,7 +19,6 @@ const Layout = () => {
       <nav>
         {/* render selection buttons for tabs */}
         {tabNames.map((name) => {
-          // TODO style selected tab
           return (
             <button key={name} onClick={() => tabClickHandler(name)}>
               {name}

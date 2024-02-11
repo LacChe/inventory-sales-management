@@ -3,8 +3,8 @@
     "inventory": {
       "sortingByField": "",
       "sortingAscending": true,
-      "hiddenFields": [],
-      "searchTerm": "",
+      "hiddenFields": ["amount"],
+      "searchTerm": "qweasd",
       "filterInclude": [],
       "filterExclude": [],
       "scrollPosition": { "x": 0, "y": 0 }
@@ -14,8 +14,8 @@
       "sortingAscending": true,
       "hiddenFields": [],
       "searchTerm": "",
-      "filterInclude": ["shot", " rum"],
-      "filterExclude": ["banana", " spic", " "],
+      "filterInclude": [""],
+      "filterExclude": [""],
       "scrollPosition": { "x": 0, "y": 0 }
     },
     "transactions": {

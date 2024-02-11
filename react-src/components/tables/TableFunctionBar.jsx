@@ -3,9 +3,6 @@ import Popup from "reactjs-popup";
 import { useStateContext } from "../../utils/StateContext";
 
 const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
-  // TODO
-  // add record
-  // export to csv
   const { setUserTableSettings } = useStateContext();
 
   function toggleHiddenField(field) {

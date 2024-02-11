@@ -3,6 +3,19 @@ import { readFile, saveFile } from "./eventHandler";
 
 const Context = createContext(null);
 
+// TODO
+// highlight search term
+// export to csv
+// add record
+// edit record
+// delete record
+// save scroll pos
+// styling
+// display record names instead of ids
+// first load very slow
+// check user inputs
+// check for errors
+
 export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
 

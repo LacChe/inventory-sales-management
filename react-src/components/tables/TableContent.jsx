@@ -7,16 +7,12 @@ import {
 } from "../../utils/dataManip";
 import { useStateContext } from "../../utils/StateContext";
 const TableContent = ({ tableName, schema, records, tableSettings }) => {
-  // TODO edit and delete buttons handling
-
   const { setUserTableSettings } = useStateContext();
   let displayRecords = { ...records };
 
   Object.keys(displayRecords).forEach((id) => {
     displayRecords[id] = fillBlankFields(displayRecords[id], schema);
   });
-
-  // TODO display record names instead of ids
 
   displayRecords = filterData(
     displayRecords,
