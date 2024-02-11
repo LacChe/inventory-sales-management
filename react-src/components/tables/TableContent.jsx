@@ -1,14 +1,22 @@
 import React from "react";
 import {
   fillBlankFields,
-  calculateCurrentStockAmount,
+  calculateFormula,
+  sortData,
 } from "../../utils/dataManip";
 import { useStateContext } from "../../utils/StateContext";
 const TableContent = ({ tableName, schema, records, tableSettings }) => {
   // TODO sort
   // TODO edit and delete buttons handling
-  const { inventory, products, transactions, setUserTableSettings } =
-    useStateContext();
+
+  const { setUserTableSettings } = useStateContext();
+
+  records = sortData(
+    records,
+    schema.filter((field) => field.name === tableSettings.sortingByField)[0],
+    tableSettings.sortingAscending,
+    schema
+  );
 
   function toggleSort(field) {
     if (tableSettings.sortingByField === field) {
@@ -58,17 +66,9 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
 
     // calculate formula type with appropriate functions
     if (field.type === "formula") {
-      let value;
-      switch (field.name) {
-        case "amount":
-          value = calculateCurrentStockAmount(id, products, transactions);
-          break;
-        default:
-          break;
-      }
       return (
         <td key={`${id}-${field.name}`} className={field.name}>
-          <div>{value}</div>
+          <div>{calculateFormula(field, id)}</div>
         </td>
       );
     }
@@ -106,7 +106,7 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
 
   function tableRow(recordId) {
     let displayRecord = { ...records[recordId] };
-    displayRecord = fillBlankFields(displayRecord, schema, inventory);
+    displayRecord = fillBlankFields(displayRecord, schema);
     return (
       <tr key={recordId}>
         <th scope="row" className="recordId">
