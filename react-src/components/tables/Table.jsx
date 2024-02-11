@@ -28,6 +28,7 @@ const Table = ({ tableName }) => {
         tableSettings={userSettings.tableSettings[tableName]}
       />
       <TableContent
+        tableName={tableName}
         schema={tableSchemas[tableName]}
         records={recordData[tableName]}
         tableSettings={userSettings.tableSettings[tableName]}

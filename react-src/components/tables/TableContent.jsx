@@ -4,10 +4,22 @@ import {
   calculateCurrentStockAmount,
 } from "../../utils/dataManip";
 import { useStateContext } from "../../utils/StateContext";
-const TableContent = ({ schema, records, tableSettings }) => {
+const TableContent = ({ tableName, schema, records, tableSettings }) => {
   // TODO sort
   // TODO edit and delete buttons handling
-  const { inventory, products, transactions } = useStateContext();
+  const { inventory, products, transactions, setUserTableSettings } =
+    useStateContext();
+
+  function toggleSort(field) {
+    if (tableSettings.sortingByField === field) {
+      tableSettings.sortingAscending = !tableSettings.sortingAscending;
+    } else {
+      tableSettings.sortingByField = field;
+      tableSettings.sortingAscending = true;
+    }
+
+    setUserTableSettings(tableName, tableSettings);
+  }
 
   function tableHeader() {
     return (
@@ -18,7 +30,9 @@ const TableContent = ({ schema, records, tableSettings }) => {
             if (field.name === "unit") return;
             return (
               <th key={field.name} scope="col">
-                {field.name.replaceAll("_", " ")}
+                <button onClick={() => toggleSort(field.name)}>
+                  {field.name.replaceAll("_", " ")}
+                </button>
               </th>
             );
           })}

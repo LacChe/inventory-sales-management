@@ -10,16 +10,13 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
   const { setUserTableSettings } = useStateContext();
 
   function toggleHiddenField(field) {
-    let hiddenFields = tableSettings?.hiddenFields;
-
-    if (hiddenFields.includes(field)) {
-      hiddenFields = hiddenFields?.filter((item) => {
+    if (tableSettings.hiddenFields.includes(field)) {
+      tableSettings.hiddenFields = tableSettings.hiddenFields.filter((item) => {
         return item !== field;
       });
     } else {
-      hiddenFields.push(field);
+      tableSettings.hiddenFields.push(field);
     }
-    tableSettings = { ...tableSettings, hiddenFields };
     setUserTableSettings(tableName, tableSettings);
   }
 
