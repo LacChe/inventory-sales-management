@@ -3,13 +3,9 @@ import Popup from "reactjs-popup";
 import { useStateContext } from "../../utils/StateContext";
 import { exportSpreadSheet } from "../../utils/fileIO";
 
-const TableFunctionBar = ({
-  tableName,
-  displayRecords,
-  schema,
-  tableSettings,
-}) => {
+const TableFunctionBar = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
+  let { tableName, displayRecords, schema, tableSettings } = props;
 
   function downloadData() {
     // only export shown fields

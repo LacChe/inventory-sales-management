@@ -1,7 +1,8 @@
 import React from "react";
 import { useStateContext } from "../../utils/StateContext";
-const TableContent = ({ tableName, schema, displayRecords, tableSettings }) => {
+const TableContent = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
+  let { tableName, displayRecords, schema, tableSettings } = props;
 
   function toggleSort(field) {
     if (tableSettings.sortingByField === field) {

@@ -21,28 +21,22 @@ const Table = ({ tableName }) => {
     equipment,
     transactions,
   };
+
+  const props = {
+    tableName,
+    schema: tableSchemas[tableName],
+    displayRecords: generateDisplayData(
+      { ...recordData[tableName] },
+      tableSchemas[tableName],
+      userSettings.tableSettings[tableName]
+    ),
+    tableSettings: userSettings.tableSettings[tableName],
+  };
+
   return (
     <div>
-      <TableFunctionBar
-        tableName={tableName}
-        schema={tableSchemas[tableName]}
-        displayRecords={generateDisplayData(
-          { ...recordData[tableName] },
-          tableSchemas[tableName],
-          userSettings.tableSettings[tableName]
-        )}
-        tableSettings={userSettings.tableSettings[tableName]}
-      />
-      <TableContent
-        tableName={tableName}
-        schema={tableSchemas[tableName]}
-        displayRecords={generateDisplayData(
-          { ...recordData[tableName] },
-          tableSchemas[tableName],
-          userSettings.tableSettings[tableName]
-        )}
-        tableSettings={userSettings.tableSettings[tableName]}
-      />
+      <TableFunctionBar props={props} />
+      <TableContent props={props} />
     </div>
   );
 };
