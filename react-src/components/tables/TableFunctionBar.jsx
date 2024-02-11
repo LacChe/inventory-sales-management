@@ -42,7 +42,6 @@ const TableFunctionBar = ({ tableName, schema, tableSettings }) => {
     setUserTableSettings(tableName, tableSettings);
   }
 
-  console.table(tableSettings);
   return (
     <div>
       <div>

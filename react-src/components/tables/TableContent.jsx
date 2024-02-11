@@ -3,16 +3,30 @@ import {
   fillBlankFields,
   calculateFormula,
   sortData,
+  filterData,
 } from "../../utils/dataManip";
 import { useStateContext } from "../../utils/StateContext";
 const TableContent = ({ tableName, schema, records, tableSettings }) => {
-  // TODO sort
   // TODO edit and delete buttons handling
 
   const { setUserTableSettings } = useStateContext();
+  let displayRecords = { ...records };
 
-  records = sortData(
-    records,
+  Object.keys(displayRecords).forEach((id) => {
+    displayRecords[id] = fillBlankFields(displayRecords[id], schema);
+  });
+
+  // TODO display record names instead of ids
+
+  displayRecords = filterData(
+    displayRecords,
+    tableSettings.filterInclude,
+    tableSettings.filterExclude,
+    tableSettings.hiddenFields
+  );
+
+  displayRecords = sortData(
+    displayRecords,
     schema.filter((field) => field.name === tableSettings.sortingByField)[0],
     tableSettings.sortingAscending,
     schema
@@ -73,7 +87,6 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
       );
     }
 
-    // TODO display record names instead of ids
     // display object type by listing key then values
     if (field.type === "object")
       return (
@@ -105,8 +118,7 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
   }
 
   function tableRow(recordId) {
-    let displayRecord = { ...records[recordId] };
-    displayRecord = fillBlankFields(displayRecord, schema);
+    let displayRecord = { ...displayRecords[recordId] };
     return (
       <tr key={recordId}>
         <th scope="row" className="recordId">
@@ -132,7 +144,7 @@ const TableContent = ({ tableName, schema, records, tableSettings }) => {
   function tableBody() {
     return (
       <tbody>
-        {Object.keys(records).map((recordId) => {
+        {Object.keys(displayRecords).map((recordId) => {
           return tableRow(recordId);
         })}
       </tbody>

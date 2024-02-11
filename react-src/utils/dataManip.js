@@ -56,7 +56,7 @@ export function calculateCurrentStockAmount(recordId) {
   return amount * -1;
 }
 
-// sorts data
+// return sorted data
 // sorts sizes first by unit then by size
 // sorts objects as strings
 // calculates formulas before sorting
@@ -71,9 +71,6 @@ export function sortData(data, field, asc, schema) {
     return returnObj;
   });
   dataArr.sort((a, b) => {
-    a = fillBlankFields(a, schema);
-    b = fillBlankFields(b, schema);
-
     if (field.type === "formula") {
       a = calculateFormula(field, a.id);
       b = calculateFormula(field, b.id);
@@ -109,4 +106,38 @@ export function sortData(data, field, asc, schema) {
   });
 
   return sortedData;
+}
+
+// return filtered data, ignoring hidden fields
+// only keep if all include terms appear in record
+// remove if any exclude terms appear in record
+export function filterData(data, include, exlude, hiddenFields) {
+  Object.keys(data).forEach((id) => {
+    let deleteBool = false;
+    const valueArray = Object.keys(data[id]).map((field) => {
+      if (hiddenFields.includes(field)) return "";
+      return JSON.stringify(data[id][field]);
+    });
+    const testString = `${id} ${valueArray.join(" ")}`.toLowerCase();
+
+    if (include && include.length > 0) {
+      include.forEach((term) => {
+        if (testString.indexOf(term) === -1) {
+          deleteBool = true;
+        }
+      });
+    }
+    if (exlude && exlude.length > 0) {
+      exlude.forEach((term) => {
+        if (testString.indexOf(term) !== -1) {
+          deleteBool = true;
+        }
+      });
+    }
+
+    if (deleteBool === true) {
+      delete data[id];
+    }
+  });
+  return data;
 }
