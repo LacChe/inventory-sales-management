@@ -33,7 +33,7 @@ export function fillBlankFields(record, schema) {
   let newRecord = { ...record };
 
   schema.forEach((field) => {
-    if (field.fill_blank_from_inventory) {
+    if (newRecord[field.name] === "" && field.fill_blank_from_inventory) {
       newRecord[field.name] = field.fill_blank_from_inventory
         .map((invField) => {
           return inventory[Object.keys(newRecord.inventory_items)[0]][invField];
@@ -56,7 +56,10 @@ export function calculateCurrentStockAmount(recordId) {
 
   let productsWithItem = [];
   Object.keys(products).forEach((key) => {
-    if (Object.keys(products[key].inventory_items).includes(recordId))
+    if (
+      products[key].inventory_items &&
+      Object.keys(products[key].inventory_items).includes(recordId)
+    )
       productsWithItem = [...productsWithItem, key];
   });
 
@@ -182,8 +185,27 @@ export function filterData(data, include, exlude, hiddenFields) {
  * @param {Object} tableSettings - The settings for displaying the table
  * @return {Object} The filtered and sorted records for display
  */
-export function generateDisplayData(records, schema, tableSettings) {
-  let displayRecords = { ...records };
+export function generateDisplayData(tableName) {
+  const {
+    tableSchemas,
+    inventory,
+    products,
+    equipment,
+    transactions,
+    userSettings,
+  } = useStateContext();
+
+  const recordData = {
+    inventory,
+    products,
+    equipment,
+    transactions,
+  };
+
+  const schema = tableSchemas[tableName];
+  const tableSettings = userSettings.tableSettings[tableName];
+
+  let displayRecords = { ...recordData[tableName] };
   Object.keys(displayRecords).forEach((id) => {
     displayRecords[id] = fillBlankFields(displayRecords[id], schema);
   });

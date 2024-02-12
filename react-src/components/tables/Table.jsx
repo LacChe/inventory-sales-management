@@ -12,30 +12,12 @@ import { generateDisplayData } from "../../utils/dataManip";
  * @return {JSX.Element} The table component
  */
 const Table = ({ tableName }) => {
-  const {
-    tableSchemas,
-    inventory,
-    products,
-    equipment,
-    transactions,
-    userSettings,
-  } = useStateContext();
-
-  const recordData = {
-    inventory,
-    products,
-    equipment,
-    transactions,
-  };
+  const { tableSchemas, userSettings } = useStateContext();
 
   const props = {
     tableName,
     schema: tableSchemas[tableName],
-    displayRecords: generateDisplayData(
-      { ...recordData[tableName] },
-      tableSchemas[tableName],
-      userSettings.tableSettings[tableName]
-    ),
+    displayRecords: generateDisplayData(tableName),
     tableSettings: userSettings.tableSettings[tableName],
   };
 

@@ -88,7 +88,7 @@ const TableFunctionBar = ({ props }) => {
   return (
     <div>
       <div>
-        <Popup modal trigger={<button>Add</button>}>
+        <Popup modal nested trigger={<button>Add</button>}>
           <Record tableName={tableName} schema={schema} />
         </Popup>
         <button onClick={downloadData}>Export</button>

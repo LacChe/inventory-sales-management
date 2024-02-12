@@ -4,8 +4,10 @@ import { readFile, saveFile } from "./eventHandler";
 const Context = createContext(null);
 
 // TODO
+// fix sorting null error
 // highlight search term
-// object dropdowns
+// record edit object dropdowns
+// NaN error in input
 // save scroll pos
 // styling
 // toasts for inventory below threshold and data added deleted edited
@@ -13,6 +15,7 @@ const Context = createContext(null);
 // first load very slow
 // check user inputs
 // check for errors
+// dynamic object selection for any amount of object field tpes
 
 /**
  * Creates a context provider for managing state data.

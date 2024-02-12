@@ -8,7 +8,7 @@ export async function readFile(fileName) {
   let fileData;
   await window.api.readFile(fileName).then(({ error, data }) => {
     if (error) {
-      console.log("read file error", error);
+      console.error("read file error", error);
     } else {
       fileData = data;
     }
@@ -25,7 +25,7 @@ export async function readFile(fileName) {
 export async function saveFile(fileName, fileData) {
   await window.api.saveFile(fileName, fileData).then(({ error, data }) => {
     if (error) {
-      console.log("read file error", error);
+      console.error("read file error", error);
     }
   });
 }

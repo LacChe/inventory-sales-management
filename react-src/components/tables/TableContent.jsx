@@ -77,7 +77,7 @@ const TableContent = ({ props }) => {
         <td key={`${field.name}`} className={field.name}>
           {Object.keys(record[field.name]).map((key) => {
             return (
-              <div key={field.name}>
+              <div key={key}>
                 {record[field.name][key]} {key}
               </div>
             );
@@ -121,7 +121,7 @@ const TableContent = ({ props }) => {
         })}
         {!tableSettings?.hiddenFields?.includes("edit") && (
           <td>
-            <Popup modal trigger={<button>Edit</button>}>
+            <Popup modal nested trigger={<button>Edit</button>}>
               <Record
                 tableName={tableName}
                 schema={schema}

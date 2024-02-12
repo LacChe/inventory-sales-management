@@ -1,15 +1,37 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { generateUID } from "../../utils/helpers";
 import { useStateContext } from "../../utils/StateContext";
+import Popup from "reactjs-popup";
+import RecordSelectionDropdown from "./RecordSelectionDropdown";
 
 const Record = ({ tableName, schema, id, record }) => {
   const { saveRecord, deleteRecord } = useStateContext();
 
-  let formRecord = { ...record };
+  let defaultSelectedRecords = {};
   schema.forEach((field) => {
-    if (field.type === "formula") delete formRecord[field.name];
+    if (record && field.type === "object") {
+      defaultSelectedRecords = record[field.name] || {};
+    }
   });
-  if (!id) id = generateUID();
+  const [selectedRecords, setSelectedRecords] = useState(
+    defaultSelectedRecords
+  );
+  const [formRecord, setFormRecord] = useState({ ...record });
+  const [recordId, setRecordId] = useState(id);
+
+  function setRecordSelection(id, amount) {
+    setSelectedRecords((prev) => {
+      let newSelectedRecords = { ...prev };
+      if (newSelectedRecords[id] !== undefined && amount === undefined) {
+        delete newSelectedRecords[id];
+      } else {
+        newSelectedRecords[id] = amount || 0;
+      }
+      formRecord[schema.filter((field) => field.type === "object")[0].name] =
+        newSelectedRecords;
+      return newSelectedRecords;
+    });
+  }
 
   /**
    * Generate the input field based on the field type.
@@ -37,7 +59,7 @@ const Record = ({ tableName, schema, id, record }) => {
         return (
           <Fragment key={field.name}>
             <div>{field.name.replaceAll("_", " ")}</div>
-            <div id={field.name}>{id}</div>
+            <div id={field.name}>{recordId || "New Record"}</div>
           </Fragment>
         );
       case "formula":
@@ -110,7 +132,23 @@ const Record = ({ tableName, schema, id, record }) => {
         return (
           <Fragment key={field.name}>
             <div>{field.name.replaceAll("_", " ")}</div>
-            <div>{JSON.stringify(formRecord[field.name])}</div>
+            <Popup
+              nested
+              position="bottom center"
+              trigger={
+                <div>
+                  {Object.keys(selectedRecords).length === 0
+                    ? "Add..."
+                    : JSON.stringify(selectedRecords)}
+                </div>
+              }
+            >
+              <RecordSelectionDropdown
+                tableName={tableName}
+                selectedRecords={selectedRecords}
+                setRecordSelection={setRecordSelection}
+              />
+            </Popup>
           </Fragment>
         );
       default:
@@ -119,23 +157,37 @@ const Record = ({ tableName, schema, id, record }) => {
   }
 
   function handleDelete(e) {
-    deleteRecord(tableName, id);
+    if (recordId) deleteRecord(tableName, recordId);
   }
 
   function handleSave() {
     // TODO check input validity
-    saveRecord(tableName, id, formRecord);
+    let newId = generateUID();
+    if (!recordId) {
+      setRecordId(newId);
+    }
+    setFormRecord((prev) => {
+      schema.forEach((field) => {
+        if (field.type === "formula") delete prev[field.name];
+      });
+      return prev;
+    });
+    saveRecord(tableName, recordId ? recordId : newId, formRecord);
   }
 
   function recordForm() {
     return (
-      <div>
-        {schema.map((field) => fieldInput(field))}
-        <div>
-          <button onClick={handleDelete}>Delete</button>
-          <button onClick={handleSave}>Save</button>
+      <form onSubmit={handleSave} className="record-popup">
+        <div className="record-popup-inputs">
+          {schema.map((field) => fieldInput(field))}
         </div>
-      </div>
+        <div>
+          <button type="button" onClick={handleDelete}>
+            Delete
+          </button>
+          <button type="submit">Save</button>
+        </div>
+      </form>
     );
   }
 
