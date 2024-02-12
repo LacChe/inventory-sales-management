@@ -1,6 +1,6 @@
 import React from "react";
 import Popup from "reactjs-popup";
-import Record from "./Record";
+import Record from "../records/Record";
 import { useStateContext } from "../../utils/StateContext";
 import { exportSpreadSheet } from "../../utils/fileIO";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
-import Record from "./Record";
+import Record from "../records/Record";
 const TableContent = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
   let { tableName, displayRecords, schema, tableSettings } = props;

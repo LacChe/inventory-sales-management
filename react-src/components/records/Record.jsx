@@ -13,14 +13,14 @@ const Record = ({ tableName, schema, id, record }) => {
       defaultSelectedRecords = record[field.name] || {};
     }
   });
-  const [selectedRecords, setSelectedRecords] = useState(
+  const [selectedSubRecords, setSelectedSubRecords] = useState(
     defaultSelectedRecords
   );
   const [formRecord, setFormRecord] = useState({ ...record });
   const [recordId, setRecordId] = useState(id);
 
-  function setRecordSelection(id, amount) {
-    setSelectedRecords((prev) => {
+  function setSubRecordSelection(id, amount) {
+    setSelectedSubRecords((prev) => {
       let newSelectedRecords = { ...prev };
       if (newSelectedRecords[id] !== undefined && amount === undefined) {
         delete newSelectedRecords[id];
@@ -137,16 +137,16 @@ const Record = ({ tableName, schema, id, record }) => {
               position="bottom center"
               trigger={
                 <div>
-                  {Object.keys(selectedRecords).length === 0
+                  {Object.keys(selectedSubRecords).length === 0
                     ? "Add..."
-                    : JSON.stringify(selectedRecords)}
+                    : JSON.stringify(selectedSubRecords)}
                 </div>
               }
             >
               <RecordSelectionDropdown
                 tableName={tableName}
-                selectedRecords={selectedRecords}
-                setRecordSelection={setRecordSelection}
+                selectedRecords={selectedSubRecords}
+                setRecordSelection={setSubRecordSelection}
               />
             </Popup>
           </Fragment>
