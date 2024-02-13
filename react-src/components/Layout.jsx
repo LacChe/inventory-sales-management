@@ -9,10 +9,9 @@ import { useStateContext } from "../utils/StateContext";
  */
 const Layout = () => {
   const navigate = useNavigate();
-  const { tableSchemas } = useStateContext();
+  const { tableSchemas, setCurrentTab } = useStateContext();
 
   const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
-  const [selectedTab, setSelectedTab] = useState("products");
 
   /**
    * Navigate to the selected tab and set tab as selected
@@ -20,7 +19,7 @@ const Layout = () => {
    * @param {string} tabName - the name of the tab that was clicked
    */
   function tabClickHandler(tabName) {
-    setSelectedTab(tabName);
+    setCurrentTab(tabName);
     navigate(`/${tabName}`);
   }
 

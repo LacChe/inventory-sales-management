@@ -4,9 +4,9 @@ import { readFile, saveFile } from "./eventHandler";
 const Context = createContext(null);
 
 // TODO
+// search term filter term not showing correctly
 // highlight search term
 // record edit object dropdowns
-// NaN error in input
 // save scroll pos
 // styling
 // toasts for inventory below threshold and data added deleted edited
@@ -24,6 +24,7 @@ const Context = createContext(null);
  */
 export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
+  const [currentTab, setCurrentTab] = useState("products");
 
   useEffect(async () => {
     // TODO check data for errors
@@ -46,13 +47,13 @@ export const StateContext = ({ children }) => {
   /**
    * Sets and saves the table settings for a specified table in the user settings data.
    *
-   * @param {string} tableName - The name of the table
+   * @param {string} tabName - The name of the tab
    * @param {object} newSettings - The new settings to be applied to the table
    */
-  function setUserTableSettings(tableName, newSettings) {
+  function setUserTableSettings(tabName, newSettings) {
     setFileData((prev) => {
       let newFileData = { ...prev };
-      newFileData.userSettings.tableSettings[tableName] = newSettings;
+      newFileData.userSettings.tableSettings[tabName] = newSettings;
       saveFileHandler("userSettings", newFileData.userSettings);
       return newFileData;
     });
@@ -112,6 +113,7 @@ export const StateContext = ({ children }) => {
         setUserTableSettings,
         saveRecord,
         deleteRecord,
+        setCurrentTab,
       }}
     >
       {children}
