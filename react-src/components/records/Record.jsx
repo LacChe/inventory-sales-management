@@ -74,7 +74,10 @@ const Record = ({ tableName, schema, id, record }) => {
             <input
               type="number"
               id={field.name}
-              defaultValue={Number.parseFloat(formRecord[field.name])}
+              defaultValue={
+                !isNaN(Number.parseFloat(formRecord[field.name])) &&
+                Number.parseFloat(formRecord[field.name])
+              }
               onChange={(e) => {
                 formRecord[field.name] = Number.parseFloat(e.target.value);
               }}

@@ -64,10 +64,14 @@ export function calculateCurrentStockAmount(recordId) {
   });
 
   productsWithItem.forEach((productId) => {
-    let itemCountInProduct = products[productId].inventory_items[recordId];
+    let itemCountInProduct = Number.parseFloat(
+      products[productId].inventory_items[recordId]
+    );
     Object.keys(transactions).forEach((key) => {
       if (Object.keys(transactions[key].products).includes(productId))
-        amount += itemCountInProduct * transactions[key].products[productId];
+        amount +=
+          itemCountInProduct *
+          Number.parseFloat(transactions[key].products[productId]);
     });
   });
   amount *= -1;

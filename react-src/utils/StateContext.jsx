@@ -4,7 +4,6 @@ import { readFile, saveFile } from "./eventHandler";
 const Context = createContext(null);
 
 // TODO
-// fix sorting null error
 // highlight search term
 // record edit object dropdowns
 // NaN error in input
