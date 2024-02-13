@@ -14,6 +14,8 @@ const TableFunctionBar = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
   let { tableName, displayRecords, schema, tableSettings } = props;
 
+  console.log(tableSettings.filterInclude, tableSettings.filterExclude);
+
   /**
    * Format shown data then download
    *
@@ -112,16 +114,17 @@ const TableFunctionBar = ({ props }) => {
       <div>
         <input
           placeholder="Include..."
-          value={tableSettings.filterInclude.join(",")}
+          defaultValue={tableSettings.filterInclude.join(",")}
           onChange={(e) => filterIncludeOnChangeHandler(e.target.value)}
         />
         <input
           placeholder="Exclude..."
-          value={tableSettings.filterExclude.join(",")}
+          defaultValue={tableSettings.filterExclude.join(",")}
           onChange={(e) => filterExcludeOnChangeHandler(e.target.value)}
         />
         <input
           placeholder="Search..."
+          defaultValue={tableSettings.searchTerm}
           onChange={(e) => searchOnChangeHandler(e.target.value)}
         />
       </div>

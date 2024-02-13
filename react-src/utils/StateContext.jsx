@@ -6,8 +6,6 @@ const Context = createContext(null);
 // TODO
 // search term filter term not showing correctly
 // highlight search term
-// record edit object dropdowns
-// save scroll pos
 // styling
 // toasts for inventory below threshold and data added deleted edited
 // display record names instead of ids
