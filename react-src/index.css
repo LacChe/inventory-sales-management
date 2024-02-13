@@ -1,30 +1,337 @@
-* {
-  color: green;
+/* RESET */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* Set the sizing of an element to include it's border */
 }
 
-td,
-th {
-  border: 1px solid black;
+* {
+  margin: 0; /* Set the default margin to 0 */
+  padding: 0; /* Set the default padding to 0 */
 }
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none; /* Turn off numbered and unordered list decoration */
+}
+
+html:focus-within {
+  scroll-behavior: smooth; /* Make the scrolling inside of any scrollable element smooth */
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto; /* Makes link undelines look better */
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  max-width: 100%; /* Makes it responsive */
+  height: auto; /* Makes it responsive */
+  vertical-align: middle; /* Makes text next to inline images look better */
+  font-style: italic; /* If the images don't load it makes the alt decription look better */
+  background-repeat: no-repeat;
+  /* The background repeat and size are there if you want to load a picture first like a backroung image that is worse quality while the better quality image loads */
+  background-size: cover;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit; /* Makes these elements inherit fonts */
+}
+
+/* Turns off animation for people who don't want to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transition: none;
+  }
+}
+
+body,
+html {
+  scroll-behavior: smooth; /* Makes normal scrolling smooth */
+}
+
+/* END RESET */
+
+:root {
+  --color-a: #41644a;
+  --color-b: #263a29;
+  --color-b-80: #263a29cc;
+  --color-highlight: #e86a33;
+  --color-text: #f2e3db;
+  --row-height: 30px;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  height: 4px;
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-text);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+* {
+  color: white;
+  font-size: 0.9rem;
+}
+
+html {
+  background-color: var(--color-b);
+}
+
+button {
+  text-transform: capitalize;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.popup-overlay[data-popup="modal"] {
+  background-color: var(--color-b-80);
+}
+
+/* NAV */
+
+.nav-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  position: fixed;
+  top: calc(var(--row-height) * 0);
+  background-color: var(--color-b);
+  width: 100%;
+  height: var(--row-height);
+}
+
+.nav-wrapper button {
+  border-style: none;
+  background-color: #00000000;
+  padding: 2px 4px;
+  margin: 4px 2px 2px 2px;
+  transition: all 100ms ease-in;
+}
+
+.nav-wrapper > .selected {
+  border-radius: 5px;
+  background-color: var(--color-a);
+}
+
+/* END NAV */
+
+/* END TABLE FUNCTION BAR */
+
+.table-function-bar-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: var(--row-height);
+  position: fixed;
+  top: calc(var(--row-height) * 1);
+  background-color: var(--color-b);
+}
+
+.table-function-bar-wrapper > div {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.table-function-bar-wrapper input,
+.table-function-bar-wrapper button {
+  padding: 2px 4px;
+  margin: 2px 2px 4px 2px;
+}
+
+.table-function-bar-wrapper input,
+.table-function-bar-wrapper button {
+  background-color: var(--color-a);
+  border: none;
+  border-radius: 5px;
+}
+
+.table-function-bar-field-toggle {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px var(--color-a);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.table-function-bar-field-toggle button {
+  background-color: var(--color-b);
+  border-style: none;
+  padding: 2px 4px;
+  transition: all 100ms ease-in;
+}
+
+.table-function-bar-field-toggle .selected {
+  background-color: var(--color-a);
+}
+
+/* END TABLE FUNCTION BAR */
+
+/* TABLE CONTENT */
+
+.table-content-wrapper {
+  border-collapse: collapse;
+  margin: calc(var(--row-height) * 2) auto 0 auto;
+}
+
+.table-content-header {
+  position: sticky;
+  top: calc(var(--row-height) * 2);
+  background-color: var(--color-b);
+}
+.table-content-header:after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  border-bottom: 1px solid var(--color-a);
+}
+.table-content-header:after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  width: 100%;
+  border-top: 1px solid var(--color-a);
+}
+
+.table-content-header button {
+  background-color: #00000000;
+  border-style: none;
+  width: 100%;
+}
+
+.table-content-header th {
+  padding: 0px 2px;
+}
+
+.table-content-body tr {
+  border-bottom: 1px solid var(--color-b);
+}
+
+.table-content-body tr:hover {
+  border-bottom: 1px solid var(--color-a);
+}
+
+.table-content-body tr button {
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+  background-color: #00000000;
+}
+
+.table-content-body th,
+.table-content-body td {
+  white-space: nowrap;
+  padding: 0px 2px;
+}
+
+.table-content-body *.selected {
+  text-decoration: underline;
+  text-decoration-color: var(--color-highlight);
+  text-decoration-thickness: 2px;
+}
+
+/* END TABLE CONTENT */
+
+/* RECORD FROM */
 
 .record-popup {
-  background-color: white;
-  width: 50vh;
+  padding: 4px;
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
 }
 
 .record-popup-inputs {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, max-content);
+}
+
+.record-popup-inputs * {
+  margin: 2px;
+}
+
+.record-popup-inputs label {
+  padding: 2px 4px 0px 0px;
+  text-transform: capitalize;
+  text-align: right;
+}
+
+.record-popup-inputs *:not(label) {
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+  padding: 2px 4px;
 }
 
 .record-selection-dropdown {
-  background-color: white;
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
   display: grid;
   grid-template-columns: repeat(2, max-content) 40px;
   height: 30vh;
   overflow-y: scroll;
 }
 
-.selected {
-  background-color: yellow;
+.record-popup-buttons {
+  display: flex;
+  justify-content: space-between;
 }
+
+.record-popup-buttons button {
+  background-color: #00000000;
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+  margin: 2px;
+  padding: 2px;
+}
+
+.record-selection-dropdown {
+  padding: 4px;
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+}
+
+.record-selection-dropdown * {
+  padding: 1px 4px;
+  margin: 1px;
+}
+
+.record-selection-dropdown input {
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+}
+
+/* END RECORD FROM */

@@ -4,9 +4,8 @@ import { readFile, saveFile } from "./eventHandler";
 const Context = createContext(null);
 
 // TODO
-// search term filter term not showing correctly
+// moving between tabs doesnt update default function bar inputs
 // highlight search term
-// styling
 // toasts for inventory below threshold and data added deleted edited
 // display record names instead of ids
 // first load very slow
@@ -107,6 +106,7 @@ export const StateContext = ({ children }) => {
         transactions: fileData.transactions,
         tableSchemas: fileData.tableSchemas,
         userSettings: fileData.userSettings,
+        currentTab,
 
         setUserTableSettings,
         saveRecord,

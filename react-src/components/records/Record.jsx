@@ -58,7 +58,7 @@ const Record = ({ tableName, schema, id, record }) => {
       case "key":
         return (
           <Fragment key={field.name}>
-            <div>{field.name.replaceAll("_", " ")}</div>
+            <label>{field.name.replaceAll("_", " ")}</label>
             <div id={field.name}>{recordId || "New Record"}</div>
           </Fragment>
         );
@@ -134,7 +134,7 @@ const Record = ({ tableName, schema, id, record }) => {
       case "object":
         return (
           <Fragment key={field.name}>
-            <div>{field.name.replaceAll("_", " ")}</div>
+            <label>{field.name.replaceAll("_", " ")}</label>
             <Popup
               nested
               position="bottom center"
@@ -184,7 +184,7 @@ const Record = ({ tableName, schema, id, record }) => {
         <div className="record-popup-inputs">
           {schema.map((field) => fieldInput(field))}
         </div>
-        <div>
+        <div className="record-popup-buttons">
           <button type="button" onClick={handleDelete}>
             Delete
           </button>

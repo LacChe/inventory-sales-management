@@ -9,7 +9,7 @@ import { useStateContext } from "../utils/StateContext";
  */
 const Layout = () => {
   const navigate = useNavigate();
-  const { tableSchemas, setCurrentTab } = useStateContext();
+  const { tableSchemas, currentTab, setCurrentTab } = useStateContext();
 
   const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
 
@@ -30,11 +30,15 @@ const Layout = () => {
    */
   function navBar() {
     return (
-      <nav>
+      <nav className="nav-wrapper">
         {/* render selection buttons for tabs */}
         {tabNames.map((name) => {
           return (
-            <button key={name} onClick={() => tabClickHandler(name)}>
+            <button
+              className={currentTab === name ? "selected" : ""}
+              key={name}
+              onClick={() => tabClickHandler(name)}
+            >
               {name}
             </button>
           );

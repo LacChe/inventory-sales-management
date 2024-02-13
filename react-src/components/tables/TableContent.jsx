@@ -2,6 +2,7 @@ import React from "react";
 import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
 import Record from "../records/Record";
+
 const TableContent = ({ props }) => {
   const { setUserTableSettings } = useStateContext();
   let { tableName, displayRecords, schema, tableSettings } = props;
@@ -29,7 +30,7 @@ const TableContent = ({ props }) => {
    */
   function tableHeader() {
     return (
-      <thead>
+      <thead className="table-content-header">
         <tr>
           {schema.map((field) => {
             if (tableSettings?.hiddenFields?.includes(field.name)) return;
@@ -44,7 +45,7 @@ const TableContent = ({ props }) => {
           })}
           {!tableSettings?.hiddenFields?.includes("edit") && (
             <th scope="col">
-              <button>Edit</button>
+              <div>Edit</div>
             </th>
           )}
         </tr>
@@ -64,9 +65,20 @@ const TableContent = ({ props }) => {
     if (field.name === "unit") return;
     if (tableSettings?.hiddenFields?.includes(field.name)) return;
 
-    if (!record[field.name])
+    let searchTermFound = false;
+    if (
+      tableSettings?.searchTerm !== undefined &&
+      tableSettings?.searchTerm !== ""
+    ) {
+      searchTermFound =
+        JSON.stringify(record[field.name])
+          .toLowerCase()
+          .indexOf(tableSettings?.searchTerm.toLowerCase()) !== -1;
+    }
+
+    if (record[field.name] === undefined)
       return (
-        <td key={`${field.name}`} className={field.name}>
+        <td key={`${field.name}`}>
           <div></div>
         </td>
       );
@@ -74,10 +86,10 @@ const TableContent = ({ props }) => {
     // display object type by listing key then values
     if (field.type === "object")
       return (
-        <td key={`${field.name}`} className={field.name}>
+        <td key={`${field.name}`}>
           {Object.keys(record[field.name]).map((key) => {
             return (
-              <div key={key}>
+              <div className={searchTermFound ? "selected" : ""} key={key}>
                 {record[field.name][key]} {key}
               </div>
             );
@@ -88,14 +100,16 @@ const TableContent = ({ props }) => {
     // combine size and unit
     if (field.name === "size")
       return (
-        <td key={`${field.name}`} className={field.name}>
-          <div>{`${record[field.name] || ""} ${record.unit || ""}`}</div>
+        <td key={`${field.name}`}>
+          <div className={searchTermFound ? "selected" : ""}>{`${
+            record[field.name] || ""
+          } ${record.unit || ""}`}</div>
         </td>
       );
 
     // other field types
     return (
-      <td key={`${field.name}`} className={field.name}>
+      <td className={searchTermFound ? "selected" : ""} key={`${field.name}`}>
         {record[field.name]}
       </td>
     );
@@ -109,10 +123,22 @@ const TableContent = ({ props }) => {
    */
   function tableRow(recordId) {
     let displayRecord = { ...displayRecords[recordId] };
+
+    let searchTermFound = false;
+    if (
+      tableSettings?.searchTerm !== undefined &&
+      tableSettings?.searchTerm !== ""
+    ) {
+      searchTermFound =
+        JSON.stringify(recordId)
+          .toLowerCase()
+          .indexOf(tableSettings?.searchTerm.toLowerCase()) !== -1;
+    }
+
     return (
       <tr key={recordId}>
         {!tableSettings?.hiddenFields?.includes("id") && (
-          <th scope="row" className="recordId">
+          <th className={searchTermFound ? "selected" : ""} scope="row">
             {recordId}
           </th>
         )}
@@ -142,7 +168,7 @@ const TableContent = ({ props }) => {
    */
   function tableBody() {
     return (
-      <tbody>
+      <tbody className="table-content-body">
         {Object.keys(displayRecords).map((recordId) => {
           return tableRow(recordId);
         })}
@@ -151,7 +177,7 @@ const TableContent = ({ props }) => {
   }
 
   return (
-    <table>
+    <table className="table-content-wrapper">
       {tableHeader()}
       {tableBody()}
     </table>
