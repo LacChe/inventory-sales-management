@@ -53,8 +53,8 @@ export const StateContext = ({ children }) => {
   function setUserTableSettings(tableName, newSettings) {
     setFileData((prev) => {
       let newFileData = { ...prev };
-      newFileData.userSettingsData.tableSettings[tableName] = newSettings;
-      saveFileHandler("userSettings", newFileData.userSettingsData);
+      newFileData.userSettings.tableSettings[tableName] = newSettings;
+      saveFileHandler("userSettings", newFileData.userSettings);
       return newFileData;
     });
   }
