@@ -3,6 +3,7 @@ import { useStateContext } from "../utils/StateContext";
 import Layout from "./Layout";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Table from "./tables/Table";
+import Charts from "./charts/Charts";
 
 /**
  * Function component for rendering the main application.
@@ -32,6 +33,7 @@ const App = () => {
           {tabNames.map((name) => (
             <Route key={name} path={`/${name}`} element={tableElements[name]} />
           ))}
+          <Route path="/Charts" element={<Charts />} />
           <Route path="/" element={tableElements[lastTab]} />
         </Route>
       </Routes>

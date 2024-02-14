@@ -209,20 +209,6 @@ button {
   top: calc(var(--row-height) * 2);
   background-color: var(--color-b);
 }
-.table-content-header:after {
-  content: "";
-  position: absolute;
-  bottom: -1px;
-  width: 100%;
-  border-bottom: 1px solid var(--color-a);
-}
-.table-content-header:after {
-  content: "";
-  position: absolute;
-  top: -1px;
-  width: 100%;
-  border-top: 1px solid var(--color-a);
-}
 
 .table-content-header button {
   background-color: #00000000;
@@ -293,16 +279,6 @@ button {
   padding: 2px 4px;
 }
 
-.record-selection-dropdown {
-  background-color: var(--color-b);
-  border: 1px solid var(--color-a);
-  border-radius: 5px;
-  display: grid;
-  grid-template-columns: repeat(2, max-content) 40px;
-  height: 30vh;
-  overflow-y: scroll;
-}
-
 .record-popup-buttons {
   display: flex;
   justify-content: space-between;
@@ -317,10 +293,14 @@ button {
 }
 
 .record-selection-dropdown {
-  padding: 4px;
   background-color: var(--color-b);
   border: 1px solid var(--color-a);
   border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(2, max-content) 40px;
+  height: 30vh;
+  overflow-y: scroll;
+  padding: 4px;
 }
 
 .record-selection-dropdown * {
@@ -335,3 +315,77 @@ button {
 }
 
 /* END RECORD FROM */
+
+/* CHARTS */
+
+.charts-selection-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: var(--row-height);
+  position: fixed;
+  top: calc(var(--row-height) * 1);
+  background-color: var(--color-b);
+}
+
+.charts-selection-bar button {
+  background-color: var(--color-a);
+  border: none;
+  border-radius: 5px;
+  margin: 2px 2px 4px 2px;
+  padding: 2px 4px;
+}
+
+.chart-wrapper {
+  margin-top: calc(var(--row-height) * 2);
+}
+
+.chart-parameters {
+  padding: 0px 2px;
+}
+
+.chart-parameters,
+.chart-parameters > div {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+}
+
+.chart-parameters .label {
+  align-self: center;
+}
+
+.chart-parameters input,
+.chart-parameters button {
+  background-color: var(--color-a);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.chart-parameters button:not(.selected) {
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+}
+
+.chart-record-selection-dropdown {
+  background-color: var(--color-b);
+  border: 1px solid var(--color-a);
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  height: 30vh;
+  overflow-y: scroll;
+}
+
+.chart-record-selection-dropdown button {
+  border-style: none;
+  background-color: var(--color-b);
+  padding: 0px 2px;
+}
+
+.chart-record-selection-dropdown button.selected {
+  background-color: var(--color-a);
+}
+
+/* END CHARTS */

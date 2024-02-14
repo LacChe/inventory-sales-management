@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useStateContext } from "../utils/StateContext";
 
@@ -43,6 +43,13 @@ const Layout = () => {
             </button>
           );
         })}
+        <button
+          className={currentTab === "charts" ? "selected" : ""}
+          key={"charts"}
+          onClick={() => tabClickHandler("charts")}
+        >
+          Charts
+        </button>
       </nav>
     );
   }

@@ -5,7 +5,6 @@ const Context = createContext(null);
 
 // TODO
 // moving between tabs doesnt update default function bar inputs
-// highlight search term
 // toasts for inventory below threshold and data added deleted edited
 // display record names instead of ids
 // first load very slow
@@ -21,7 +20,10 @@ const Context = createContext(null);
  */
 export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
-  const [currentTab, setCurrentTab] = useState("products");
+
+  // TODO, save in settings
+  const [currentTab, setCurrentTab] = useState("charts");
+  const [currentChart, setCurrentChart] = useState("sales");
 
   useEffect(async () => {
     // TODO check data for errors
@@ -51,6 +53,15 @@ export const StateContext = ({ children }) => {
     setFileData((prev) => {
       let newFileData = { ...prev };
       newFileData.userSettings.tableSettings[tabName] = newSettings;
+      saveFileHandler("userSettings", newFileData.userSettings);
+      return newFileData;
+    });
+  }
+
+  function setUserChartSettings(chartName, newSettings) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      newFileData.userSettings.chartSettings[chartName] = newSettings;
       saveFileHandler("userSettings", newFileData.userSettings);
       return newFileData;
     });
@@ -107,11 +118,14 @@ export const StateContext = ({ children }) => {
         tableSchemas: fileData.tableSchemas,
         userSettings: fileData.userSettings,
         currentTab,
+        currentChart,
 
         setUserTableSettings,
+        setUserChartSettings,
         saveRecord,
         deleteRecord,
         setCurrentTab,
+        setCurrentChart,
       }}
     >
       {children}
