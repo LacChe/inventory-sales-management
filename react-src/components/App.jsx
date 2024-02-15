@@ -2,8 +2,9 @@ import React from "react";
 import { useStateContext } from "../utils/StateContext";
 import Layout from "./Layout";
 import { HashRouter, Route, Routes } from "react-router-dom";
-import Table from "./tables/Table";
 import Charts from "./charts/Charts";
+import TableFunctionBar from "./tables/TableFunctionBar";
+import TableContent from "./tables/TableContent";
 
 /**
  * Function component for rendering the main application.
@@ -20,10 +21,14 @@ const App = () => {
   let tableElements = {};
   // tableSchemas may be undefined, so empty object is provided
   Object.keys(tableSchemas || {}).forEach((tableName) => {
-    tableElements[tableName] = <Table tableName={tableName} />;
+    tableElements[tableName] = (
+      <div>
+        <TableFunctionBar />
+        <TableContent />
+      </div>
+    );
   });
 
-  // TODO make dynamic
   tableElements["charts"] = <Charts />;
 
   return (

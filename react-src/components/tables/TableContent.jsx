@@ -2,10 +2,16 @@ import React from "react";
 import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
 import Record from "../records/Record";
+import { generateDisplayData } from "../../utils/dataManip";
 
-const TableContent = ({ props }) => {
-  const { setUserTableSettings } = useStateContext();
-  let { tableName, displayRecords, schema, tableSettings } = props;
+const TableContent = () => {
+  const { setUserTableSettings, tableSchemas, userSettings, currentTab } =
+    useStateContext();
+
+  if (tableSchemas[currentTab] === undefined) return;
+  const displayRecords = generateDisplayData(currentTab);
+  const schema = tableSchemas[currentTab];
+  const tableSettings = userSettings.tableSettings[currentTab];
 
   /**
    * Toggles the sorting field and direction in the table settings.
@@ -20,7 +26,7 @@ const TableContent = ({ props }) => {
       tableSettings.sortingAscending = true;
     }
 
-    setUserTableSettings(tableName, tableSettings);
+    setUserTableSettings(currentTab, tableSettings);
   }
 
   /**
@@ -71,7 +77,7 @@ const TableContent = ({ props }) => {
       tableSettings?.searchTerm !== ""
     ) {
       searchTermFound =
-        JSON.stringify(record[field.name])
+        JSON.stringify(record[field.name] || "")
           .toLowerCase()
           .indexOf(tableSettings?.searchTerm.toLowerCase()) !== -1;
     }
@@ -149,7 +155,7 @@ const TableContent = ({ props }) => {
           <td>
             <Popup modal nested trigger={<button>Edit</button>}>
               <Record
-                tableName={tableName}
+                tableName={currentTab}
                 schema={schema}
                 id={recordId}
                 record={displayRecord}

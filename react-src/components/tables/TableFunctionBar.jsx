@@ -3,16 +3,21 @@ import Popup from "reactjs-popup";
 import Record from "../records/Record";
 import { useStateContext } from "../../utils/StateContext";
 import { exportSpreadSheet } from "../../utils/fileIO";
+import { generateDisplayData } from "../../utils/dataManip";
 
 /**
  * Generate the table function bar component.
  *
- * @param {object} props - formatted as { tableName, displayRecords, schema, tableSettings }
  * @return {JSX} the table function bar component
  */
-const TableFunctionBar = ({ props }) => {
-  const { setUserTableSettings } = useStateContext();
-  let { tableName, displayRecords, schema, tableSettings } = props;
+const TableFunctionBar = () => {
+  const { setUserTableSettings, tableSchemas, userSettings, currentTab } =
+    useStateContext();
+
+  if (tableSchemas[currentTab] === undefined) return;
+  const displayRecords = generateDisplayData(currentTab);
+  const schema = tableSchemas[currentTab];
+  const tableSettings = userSettings.tableSettings[currentTab];
 
   /**
    * Format shown data then download
@@ -30,7 +35,7 @@ const TableFunctionBar = ({ props }) => {
     if (!fields.includes("size"))
       fields = fields.filter((field) => field !== "unit");
 
-    exportSpreadSheet(tableName, fields, displayRecords);
+    exportSpreadSheet(currentTab, fields, displayRecords);
   }
 
   /**
@@ -46,7 +51,7 @@ const TableFunctionBar = ({ props }) => {
     } else {
       tableSettings.hiddenFields.push(field);
     }
-    setUserTableSettings(tableName, tableSettings);
+    setUserTableSettings(currentTab, tableSettings);
   }
 
   /**
@@ -59,7 +64,7 @@ const TableFunctionBar = ({ props }) => {
   function filterIncludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterInclude = termArr;
-    setUserTableSettings(tableName, tableSettings);
+    setUserTableSettings(currentTab, tableSettings);
   }
 
   /**
@@ -72,7 +77,7 @@ const TableFunctionBar = ({ props }) => {
   function filterExcludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterExclude = termArr;
-    setUserTableSettings(tableName, tableSettings);
+    setUserTableSettings(currentTab, tableSettings);
   }
 
   /**
@@ -82,14 +87,14 @@ const TableFunctionBar = ({ props }) => {
    */
   function searchOnChangeHandler(term) {
     tableSettings.searchTerm = term;
-    setUserTableSettings(tableName, tableSettings);
+    setUserTableSettings(currentTab, tableSettings);
   }
 
   return (
     <div className="table-function-bar-wrapper">
       <div>
         <Popup modal nested trigger={<button>Add</button>}>
-          <Record tableName={tableName} schema={schema} />
+          <Record tableName={currentTab} schema={schema} />
         </Popup>
         <button onClick={downloadData}>Export</button>
         <Popup position="bottom left" trigger={<button>Toggle Columns</button>}>

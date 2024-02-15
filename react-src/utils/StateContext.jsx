@@ -22,7 +22,7 @@ export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
 
   // TODO, save in settings
-  const [currentTab, setCurrentTab] = useState("charts");
+  const [currentTab, setCurrentTab] = useState("inventory");
   const [currentChart, setCurrentChart] = useState("sales");
 
   useEffect(async () => {
