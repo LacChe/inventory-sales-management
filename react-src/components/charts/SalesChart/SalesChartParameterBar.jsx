@@ -11,18 +11,6 @@ const SalesChartParameterBar = ({ chartSettings }) => {
     setUserChartSettings("sales", chartSettings);
   }
 
-  function filterIncludeOnChangeHandler(term) {
-    let termArr = term.split(",");
-    chartSettings.filterInclude = termArr;
-    setUserChartSettings("sales", chartSettings);
-  }
-
-  function filterExcludeOnChangeHandler(term) {
-    let termArr = term.split(",");
-    chartSettings.filterExclude = termArr;
-    setUserChartSettings("sales", chartSettings);
-  }
-
   function toggleProductId(id) {
     let newProductIds = [...chartSettings.productIds];
     if (newProductIds.includes(id)) {
@@ -99,18 +87,6 @@ const SalesChartParameterBar = ({ chartSettings }) => {
               ))}
             </div>
           </Popup>
-        </div>
-        <div>
-          <input
-            onChange={(e) => filterIncludeOnChangeHandler(e.target.value)}
-            defaultValue={chartSettings.filterInclude.join(",")}
-            placeholder="Include..."
-          />
-          <input
-            onChange={(e) => filterExcludeOnChangeHandler(e.target.value)}
-            defaultValue={chartSettings.filterExclude.join(",")}
-            placeholder="Exclude..."
-          />
         </div>
         <div>
           <div className="label">Range: </div>

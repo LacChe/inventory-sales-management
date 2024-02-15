@@ -144,7 +144,7 @@ export function sortData(data, field, asc) {
  * @param {Array} hiddenFields - The array of fields that should be excluded from processing
  * @return {Object} The filtered data object
  */
-export function filterData(data, include, exlude, hiddenFields) {
+export function filterData(data, include, exlude, hiddenFields = []) {
   Object.keys(data).forEach((id) => {
     let deleteBool = false;
     const valueArray = Object.keys(data[id]).map((field) => {
