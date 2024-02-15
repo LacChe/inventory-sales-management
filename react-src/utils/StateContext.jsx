@@ -6,7 +6,6 @@ const Context = createContext(null);
 
 // TODO
 // first load very slow
-// check user inputs
 // dynamic object selection for any amount of object field tpes
 
 /**
@@ -19,7 +18,6 @@ export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
 
   useEffect(async () => {
-    // TODO check data for errors
     const inventory = JSON.parse(await readFile("inventory"));
     const products = JSON.parse(await readFile("products"));
     const equipment = JSON.parse(await readFile("equipment"));

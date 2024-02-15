@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 /**
  * Asynchronously reads a file and returns the file data.
  *
@@ -8,7 +10,8 @@ export async function readFile(fileName) {
   let fileData;
   await window.api.readFile(fileName).then(({ error, data }) => {
     if (error) {
-      console.error("read file error", error);
+      toast.error(`Read File Error: ${error}`);
+      console.error("Read File Error", error);
     } else {
       fileData = data;
     }
@@ -25,7 +28,8 @@ export async function readFile(fileName) {
 export async function saveFile(fileName, fileData) {
   await window.api.saveFile(fileName, fileData).then(({ error, data }) => {
     if (error) {
-      console.error("read file error", error);
+      toast.error(`Save File Error: ${error}`);
+      console.error("Save File Error", error);
     }
   });
 }
