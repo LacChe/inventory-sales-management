@@ -4,7 +4,6 @@ import { readFile, saveFile } from "./eventHandler";
 const Context = createContext(null);
 
 // TODO
-// moving between tabs doesnt update default function bar inputs
 // toasts for inventory below threshold and data added deleted edited
 // display record names instead of ids
 // first load very slow

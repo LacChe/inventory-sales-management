@@ -129,17 +129,17 @@ const TableFunctionBar = () => {
       <div>
         <input
           placeholder="Include..."
-          defaultValue={tableSettings.filterInclude.join(",")}
+          value={tableSettings.filterInclude.join(",")}
           onChange={(e) => filterIncludeOnChangeHandler(e.target.value)}
         />
         <input
           placeholder="Exclude..."
-          defaultValue={tableSettings.filterExclude.join(",")}
+          value={tableSettings.filterExclude.join(",")}
           onChange={(e) => filterExcludeOnChangeHandler(e.target.value)}
         />
         <input
           placeholder="Search..."
-          defaultValue={tableSettings.searchTerm}
+          value={tableSettings.searchTerm}
           onChange={(e) => searchOnChangeHandler(e.target.value)}
         />
       </div>
