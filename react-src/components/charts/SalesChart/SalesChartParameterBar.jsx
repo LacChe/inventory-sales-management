@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
 import { useStateContext } from "../../../utils/StateContext";
 import Popup from "reactjs-popup";
-import { generateDisplayData } from "../../../utils/dataManip";
+import { fillBlankFields } from "../../../utils/dataManip";
 
-const SalesChart = ({ chartSettings }) => {
-  //setUserChartSettings
-  const { setUserChartSettings } = useStateContext();
+const SalesChartParameterBar = ({ chartSettings }) => {
+  const { setUserChartSettings, products, tableSchemas } = useStateContext();
 
   function setParameters(field, value) {
     chartSettings[field] = value;
@@ -35,7 +34,14 @@ const SalesChart = ({ chartSettings }) => {
     setUserChartSettings("sales", chartSettings);
   }
 
-  const displayProducts = generateDisplayData("products");
+  const displayProducts = {};
+  Object.keys(products).forEach(
+    (id) =>
+      (displayProducts[id] = fillBlankFields(
+        products[id],
+        tableSchemas.products
+      ))
+  );
 
   // filter group range
 
@@ -162,15 +168,7 @@ const SalesChart = ({ chartSettings }) => {
       </div>
     );
   }
-
-  return (
-    <div className="chart-wrapper">
-      {chartParameters()}
-      {chartSettings.productIds.map((id) => (
-        <div>{JSON.stringify(displayProducts[id])}</div>
-      ))}
-    </div>
-  );
+  return chartParameters();
 };
 
-export default SalesChart;
+export default SalesChartParameterBar;

@@ -1,6 +1,7 @@
 import React from "react";
 import { useStateContext } from "../../utils/StateContext";
-import SalesChart from "./SalesChart/SalesChart";
+import SalesChartParameterBar from "./SalesChart/SalesChartParameterBar";
+import SalesChartContent from "./SalesChart/SalesChartContent";
 
 const Chart = () => {
   const { currentChart, setCurrentChart, userSettings } = useStateContext();
@@ -25,7 +26,13 @@ const Chart = () => {
   function getChart() {
     switch (currentChart) {
       case "sales":
-        return <SalesChart chartSettings={userSettings.chartSettings.sales} />;
+        const chartSettings = userSettings.chartSettings.sales;
+        return (
+          <div className="chart-wrapper">
+            <SalesChartParameterBar chartSettings={chartSettings} />
+            <SalesChartContent chartSettings={chartSettings} />
+          </div>
+        );
       default:
         console.error("chart doesn't exist: ", currentChart);
         return <div className="chart-wrapper">No Chart</div>;

@@ -11,12 +11,9 @@ import Charts from "./charts/Charts";
  * @return {JSX.Element} The JSX for the main application
  */
 const App = () => {
-  const { tableSchemas } = useStateContext();
+  const { tableSchemas, currentTab } = useStateContext();
 
   if (!tableSchemas) return <>Loading...</>;
-
-  // TODO get from userSettings
-  const lastTab = "products";
 
   const tabNames = Object.keys(tableSchemas);
 
@@ -26,6 +23,9 @@ const App = () => {
     tableElements[tableName] = <Table tableName={tableName} />;
   });
 
+  // TODO make dynamic
+  tableElements["charts"] = <Charts />;
+
   return (
     <HashRouter>
       <Routes>
@@ -34,7 +34,7 @@ const App = () => {
             <Route key={name} path={`/${name}`} element={tableElements[name]} />
           ))}
           <Route path="/Charts" element={<Charts />} />
-          <Route path="/" element={tableElements[lastTab]} />
+          <Route path="/" element={tableElements[currentTab]} />
         </Route>
       </Routes>
     </HashRouter>

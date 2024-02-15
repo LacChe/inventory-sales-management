@@ -1,1 +1,83 @@
-{"chartSettings":{"sales":{"dateRange":["2024-02-08","2024-02-29"],"precision":"year","filterInclude":[""],"filterExclude":[""],"field":"revenue","productIds":["sjrc2m","a68tf3","cb6z7m","xhq0sn","40msi8","flbvnw","msk71f","qbgdsu","834a9z","babusx","hefptc","3cuum7","pyyolw","5kt1od","m6vvtc","4mn21j","nukrnk","jtaajf","kmmy41"]}},"tableSettings":{"inventory":{"sortingByField":"amount","sortingAscending":false,"hiddenFields":[],"searchTerm":"","filterInclude":[""],"filterExclude":[""]},"products":{"sortingByField":"name_en","sortingAscending":true,"hiddenFields":[],"searchTerm":"","filterInclude":[""],"filterExclude":[""]},"transactions":{"sortingByField":"","sortingAscending":true,"hiddenFields":[],"searchTerm":"","filterInclude":[""],"filterExclude":[""]},"equipment":{"sortingByField":"","sortingAscending":true,"hiddenFields":[],"searchTerm":"","filterInclude":[""],"filterExclude":[""]}}}
+{
+  "chartSettings": {
+    "sales": {
+      "dateRange": ["2023-01-08", "2024-02-29"],
+      "precision": "year",
+      "filterInclude": ["vonu"],
+      "filterExclude": ["noni"],
+      "field": "revenue",
+      "productIds": [
+        "2b7hay",
+        "bzc156",
+        "hvo8a3",
+        "kjeofq",
+        "zbbn5d",
+        "cb6z7m",
+        "0sh75q",
+        "xhq0sn",
+        "pnwhah",
+        "40msi8",
+        "iaap4r",
+        "242uoo",
+        "msk71f",
+        "qbgdsu",
+        "xaowmk",
+        "frmb12",
+        "u9jrp0",
+        "sigbgm",
+        "3dnwe7",
+        "pzv50a",
+        "y3ndcv",
+        "6ksvb6",
+        "wqrvy1",
+        "j4u631",
+        "av2qto",
+        "rgt9zj",
+        "b0ucp3",
+        "sxmvna",
+        "834a9z",
+        "5kt1od",
+        "babusx",
+        "hefptc",
+        "4mn21j",
+        "m6vvtc",
+        "3cuum7",
+        "l4zss0"
+      ]
+    }
+  },
+  "tableSettings": {
+    "inventory": {
+      "sortingByField": "amount",
+      "sortingAscending": false,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [""],
+      "filterExclude": [""]
+    },
+    "products": {
+      "sortingByField": "name_en",
+      "sortingAscending": false,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [""],
+      "filterExclude": [""]
+    },
+    "transactions": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [""],
+      "filterExclude": [""]
+    },
+    "equipment": {
+      "sortingByField": "",
+      "sortingAscending": true,
+      "hiddenFields": [],
+      "searchTerm": "",
+      "filterInclude": [""],
+      "filterExclude": [""]
+    }
+  }
+}
