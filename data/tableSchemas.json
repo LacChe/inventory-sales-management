@@ -1,0 +1,134 @@
+{
+  "inventory": [
+    {
+      "name": "id",
+      "type": "key"
+    },
+    {
+      "name": "amount",
+      "type": "formula"
+    },
+    {
+      "name": "name_en",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "name_cn",
+      "type": "string"
+    },
+    {
+      "name": "size",
+      "type": "number"
+    },
+    {
+      "name": "unit",
+      "type": "string"
+    },
+    {
+      "name": "manufacturer",
+      "type": "string"
+    },
+    {
+      "name": "country",
+      "type": "string"
+    },
+    {
+      "name": "reminder_amount",
+      "type": "number"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ],
+  "products": [
+    {
+      "name": "id",
+      "type": "key"
+    },
+    {
+      "name": "name_en",
+      "type": "string",
+      "fill_blank_from_inventory": ["name_en"]
+    },
+    {
+      "name": "name_cn",
+      "type": "string",
+      "fill_blank_from_inventory": ["name_cn"]
+    },
+    {
+      "name": "size",
+      "type": "string",
+      "fill_blank_from_inventory": ["size", "unit"]
+    },
+    {
+      "name": "inventory_items",
+      "type": "object"
+    },
+    {
+      "name": "price",
+      "type": "number"
+    },
+    {
+      "name": "sale_price",
+      "type": "string"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ],
+  "transactions": [
+    {
+      "name": "id",
+      "type": "key"
+    },
+    {
+      "name": "date",
+      "type": "date"
+    },
+    {
+      "name": "products",
+      "type": "object"
+    },
+    {
+      "name": "revenue",
+      "type": "number"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    },
+    {
+      "name": "not_a_sale",
+      "type": "boolean"
+    }
+  ],
+  "equipment": [
+    {
+      "name": "id",
+      "type": "key"
+    },
+    {
+      "name": "name_en",
+      "type": "string"
+    },
+    {
+      "name": "name_cn",
+      "type": "string"
+    },
+    {
+      "name": "date_bought",
+      "type": "date"
+    },
+    {
+      "name": "manufacturer",
+      "type": "string"
+    },
+    {
+      "name": "notes",
+      "type": "string"
+    }
+  ]
+}
