@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useStateContext } from "../utils/StateContext";
+import { Toaster } from "react-hot-toast";
 
 /**
  * Layout to be used in HashRouter, routes are wrapped as Outlet
@@ -59,6 +60,30 @@ const Layout = () => {
       {navBar()}
       {/* Outlet renders the component selected in the route's path in App.js */}
       <Outlet />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            backgroundColor: getComputedStyle(document.body).getPropertyValue(
+              "--color-a"
+            ),
+            fontWeight: 600,
+            color: "white",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "red",
+              secondary: "blue",
+            },
+          },
+        }}
+      />
     </>
   );
 };

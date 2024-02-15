@@ -127,6 +127,27 @@ const TableContent = () => {
         </td>
       );
 
+    // color text red when below threshold
+    if (
+      field.name === "amount" &&
+      record[field.name] < record.reminder_amount
+    ) {
+      return (
+        <td
+          style={{
+            fontWeight: "600",
+            color: `${getComputedStyle(document.body).getPropertyValue(
+              "--color-highlight"
+            )}`,
+          }}
+          className={searchTermFound ? "selected" : ""}
+          key={`${field.name}`}
+        >
+          {record[field.name]}
+        </td>
+      );
+    }
+
     // other field types
     return (
       <td className={searchTermFound ? "selected" : ""} key={`${field.name}`}>

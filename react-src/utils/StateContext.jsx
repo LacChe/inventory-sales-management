@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { readFile, saveFile } from "./eventHandler";
+import toast from "react-hot-toast";
 
 const Context = createContext(null);
 
 // TODO
-// toasts for inventory below threshold and data added deleted edited
-// display record names instead of ids
 // first load very slow
 // check user inputs
 // check for errors
@@ -78,6 +77,7 @@ export const StateContext = ({ children }) => {
       let newFileData = { ...prev };
       newFileData[table] = { ...newFileData[table], [id]: record };
       saveFileHandler(table, newFileData[table]);
+      toast.success("Saved!");
       return newFileData;
     });
   }
@@ -93,6 +93,7 @@ export const StateContext = ({ children }) => {
       let newFileData = { ...prev };
       delete newFileData[table][id];
       saveFileHandler(table, newFileData[table]);
+      toast.success("Deleted!");
       return newFileData;
     });
   }
