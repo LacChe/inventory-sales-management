@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const Context = createContext(null);
 
 // TODO
-// first load very slow
+// fix comments
 // dynamic object selection for any amount of object field tpes
 
 /**
