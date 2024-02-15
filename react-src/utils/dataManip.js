@@ -79,7 +79,6 @@ export function calculateCurrentStockAmount(recordId) {
   return amount;
 }
 
-// TODO sort date and boolean
 /**
  * Sorts the given data based on the specified field in either ascending or descending order.
  * sorts sizes first by unit then by size
@@ -110,6 +109,11 @@ export function sortData(data, field, asc) {
     } else {
       a = a[field.name];
       b = b[field.name];
+    }
+
+    if (field.type === "boolean") {
+      a = a ? 1 : 0;
+      b = b ? 1 : 0;
     }
 
     if (typeof a !== "number" && typeof b !== "number") {
