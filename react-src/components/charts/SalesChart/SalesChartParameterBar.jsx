@@ -34,6 +34,16 @@ const SalesChartParameterBar = ({ chartSettings }) => {
     setUserChartSettings("sales", chartSettings);
   }
 
+  function toggleAll() {
+    if (chartSettings.productIds.length !== Object.keys(products).length) {
+      chartSettings.productIds = Object.keys(products);
+      setUserChartSettings("sales", chartSettings);
+    } else {
+      chartSettings.productIds = [];
+      setUserChartSettings("sales", chartSettings);
+    }
+  }
+
   const displayProducts = {};
   Object.keys(products).forEach(
     (id) =>
@@ -49,10 +59,7 @@ const SalesChartParameterBar = ({ chartSettings }) => {
     return (
       <div className="chart-parameters">
         <div>
-          <button
-            onClick={() => console.log("toggle all")}
-            className="selected"
-          >
+          <button onClick={toggleAll} className="selected">
             Toggle All
           </button>
         </div>
