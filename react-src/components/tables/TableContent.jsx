@@ -3,6 +3,8 @@ import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
 import Record from "../records/Record";
 import { generateDisplayData, fillBlankFields } from "../../utils/dataManip";
+import { AiFillEdit } from "react-icons/ai";
+import { AiFillCaretUp, AiFillCaretDown } from "react-icons/ai";
 
 const TableContent = () => {
   const {
@@ -49,13 +51,21 @@ const TableContent = () => {
               <th key={field.name} scope="col">
                 <button onClick={() => toggleSort(field.name)}>
                   {field.name.replaceAll("_", " ")}
+                  {tableSettings.sortingByField === field.name &&
+                    (tableSettings.sortingAscending ? (
+                      <AiFillCaretUp />
+                    ) : (
+                      <AiFillCaretDown />
+                    ))}
                 </button>
               </th>
             );
           })}
           {!tableSettings?.hiddenFields?.includes("edit") && (
             <th scope="col">
-              <div>Edit</div>
+              <div>
+                <AiFillEdit />
+              </div>
             </th>
           )}
         </tr>
@@ -187,7 +197,15 @@ const TableContent = () => {
         })}
         {!tableSettings?.hiddenFields?.includes("edit") && (
           <td>
-            <Popup modal nested trigger={<button>Edit</button>}>
+            <Popup
+              modal
+              nested
+              trigger={
+                <button className="edit-button">
+                  <AiFillEdit />
+                </button>
+              }
+            >
               <Record
                 tableName={userSettings.currentTab}
                 schema={schema}
