@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 const Context = createContext(null);
 
 // TODO
-// add icons for sorting asc and edit
 // fix comments
 // dynamic object selection for any amount of object field tpes
 
