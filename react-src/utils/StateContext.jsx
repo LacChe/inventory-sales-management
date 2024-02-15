@@ -7,7 +7,6 @@ const Context = createContext(null);
 // TODO
 // first load very slow
 // check user inputs
-// check for errors
 // dynamic object selection for any amount of object field tpes
 
 /**
@@ -18,10 +17,6 @@ const Context = createContext(null);
  */
 export const StateContext = ({ children }) => {
   const [fileData, setFileData] = useState({});
-
-  // TODO, save in settings
-  const [currentTab, setCurrentTab] = useState("inventory");
-  const [currentChart, setCurrentChart] = useState("sales");
 
   useEffect(async () => {
     // TODO check data for errors
@@ -51,6 +46,26 @@ export const StateContext = ({ children }) => {
     setFileData((prev) => {
       let newFileData = { ...prev };
       newFileData.userSettings.tableSettings[tabName] = newSettings;
+      saveFileHandler("userSettings", newFileData.userSettings);
+      return newFileData;
+    });
+  }
+
+  function setCurrentTab(tab) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      newFileData.userSettings.currentTab = tab;
+
+      console.log(tab, newFileData);
+      saveFileHandler("userSettings", newFileData.userSettings);
+      return newFileData;
+    });
+  }
+
+  function setCurrentChart(chart) {
+    setFileData((prev) => {
+      let newFileData = { ...prev };
+      newFileData.cahrtSettings.currentChart = chart;
       saveFileHandler("userSettings", newFileData.userSettings);
       return newFileData;
     });
@@ -117,8 +132,6 @@ export const StateContext = ({ children }) => {
         transactions: fileData.transactions,
         tableSchemas: fileData.tableSchemas,
         userSettings: fileData.userSettings,
-        currentTab,
-        currentChart,
 
         setUserTableSettings,
         setUserChartSettings,

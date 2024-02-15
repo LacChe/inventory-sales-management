@@ -9,15 +9,14 @@ const TableContent = () => {
     setUserTableSettings,
     tableSchemas,
     userSettings,
-    currentTab,
     inventory,
     products,
   } = useStateContext();
 
-  if (tableSchemas[currentTab] === undefined) return;
-  const displayRecords = generateDisplayData(currentTab);
-  const schema = tableSchemas[currentTab];
-  const tableSettings = userSettings.tableSettings[currentTab];
+  if (tableSchemas[userSettings.currentTab] === undefined) return;
+  const displayRecords = generateDisplayData(userSettings.currentTab);
+  const schema = tableSchemas[userSettings.currentTab];
+  const tableSettings = userSettings.tableSettings[userSettings.currentTab];
 
   /**
    * Toggles the sorting field and direction in the table settings.
@@ -31,8 +30,7 @@ const TableContent = () => {
       tableSettings.sortingByField = field;
       tableSettings.sortingAscending = true;
     }
-
-    setUserTableSettings(currentTab, tableSettings);
+    setUserTableSettings(userSettings.currentTab, tableSettings);
   }
 
   /**
@@ -101,8 +99,9 @@ const TableContent = () => {
         <td key={`${field.name}`}>
           {Object.keys(record[field.name]).map((id) => {
             let name = "";
-            if (currentTab === "products") name = inventory[id].name_en;
-            if (currentTab === "transactions")
+            if (userSettings.currentTab === "products")
+              name = inventory[id].name_en;
+            if (userSettings.currentTab === "transactions")
               name = fillBlankFields(
                 products[id],
                 tableSchemas.products
@@ -190,7 +189,7 @@ const TableContent = () => {
           <td>
             <Popup modal nested trigger={<button>Edit</button>}>
               <Record
-                tableName={currentTab}
+                tableName={userSettings.currentTab}
                 schema={schema}
                 id={recordId}
                 record={displayRecord}

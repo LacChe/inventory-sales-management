@@ -4,7 +4,7 @@ import SalesChartParameterBar from "./SalesChart/SalesChartParameterBar";
 import SalesChartContent from "./SalesChart/SalesChartContent";
 
 const Chart = () => {
-  const { currentChart, setCurrentChart, userSettings } = useStateContext();
+  const { setCurrentChart, userSettings } = useStateContext();
   const charts = ["sales"];
 
   function chartSelectionBar() {
@@ -12,7 +12,11 @@ const Chart = () => {
       <div className="charts-selection-bar">
         {charts.map((chart) => (
           <button
-            className={currentChart === chart ? "selected" : ""}
+            className={
+              userSettings.chartSettings.currentChart === chart
+                ? "selected"
+                : ""
+            }
             key={chart}
             onClick={() => setCurrentChart(chart)}
           >
@@ -24,7 +28,7 @@ const Chart = () => {
   }
 
   function getChart() {
-    switch (currentChart) {
+    switch (userSettings.chartSettings.currentChart) {
       case "sales":
         const chartSettings = userSettings.chartSettings.sales;
         return (
@@ -34,7 +38,10 @@ const Chart = () => {
           </div>
         );
       default:
-        console.error("chart doesn't exist: ", currentChart);
+        console.error(
+          "chart doesn't exist: ",
+          userSettings.chartSettings.currentChart
+        );
         return <div className="chart-wrapper">No Chart</div>;
     }
   }

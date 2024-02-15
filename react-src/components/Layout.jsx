@@ -10,7 +10,7 @@ import { Toaster } from "react-hot-toast";
  */
 const Layout = () => {
   const navigate = useNavigate();
-  const { tableSchemas, currentTab, setCurrentTab } = useStateContext();
+  const { tableSchemas, userSettings, setCurrentTab } = useStateContext();
 
   const tabNames = Object.keys(tableSchemas ? tableSchemas : {});
 
@@ -36,7 +36,7 @@ const Layout = () => {
         {tabNames.map((name) => {
           return (
             <button
-              className={currentTab === name ? "selected" : ""}
+              className={userSettings.currentTab === name ? "selected" : ""}
               key={name}
               onClick={() => tabClickHandler(name)}
             >
@@ -45,7 +45,7 @@ const Layout = () => {
           );
         })}
         <button
-          className={currentTab === "charts" ? "selected" : ""}
+          className={userSettings.currentTab === "charts" ? "selected" : ""}
           key={"charts"}
           onClick={() => tabClickHandler("charts")}
         >

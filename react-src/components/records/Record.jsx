@@ -3,6 +3,7 @@ import { generateUID } from "../../utils/helpers";
 import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
 import RecordSelectionDropdown from "./RecordSelectionDropdown";
+import { validRecord } from "../../utils/inputChecker";
 
 const Record = ({ tableName, schema, id, record }) => {
   const { saveRecord, deleteRecord } = useStateContext();
@@ -31,6 +32,28 @@ const Record = ({ tableName, schema, id, record }) => {
         newSelectedRecords;
       return newSelectedRecords;
     });
+  }
+
+  function handleDelete(e) {
+    if (recordId) deleteRecord(tableName, recordId);
+  }
+
+  function handleSave(e) {
+    e.preventDefault();
+    // TODO check input validity
+    let newId = generateUID();
+    if (!recordId) {
+      setRecordId(newId);
+    }
+    setFormRecord((prev) => {
+      schema.forEach((field) => {
+        if (field.type === "formula") delete prev[field.name];
+      });
+      return prev;
+    });
+    if (validRecord(formRecord, schema)) {
+    }
+    // saveRecord(tableName, recordId ? recordId : newId, formRecord);
   }
 
   /**
@@ -157,25 +180,6 @@ const Record = ({ tableName, schema, id, record }) => {
       default:
         console.error("invalid type: ", field.type);
     }
-  }
-
-  function handleDelete(e) {
-    if (recordId) deleteRecord(tableName, recordId);
-  }
-
-  function handleSave() {
-    // TODO check input validity
-    let newId = generateUID();
-    if (!recordId) {
-      setRecordId(newId);
-    }
-    setFormRecord((prev) => {
-      schema.forEach((field) => {
-        if (field.type === "formula") delete prev[field.name];
-      });
-      return prev;
-    });
-    saveRecord(tableName, recordId ? recordId : newId, formRecord);
   }
 
   function recordForm() {

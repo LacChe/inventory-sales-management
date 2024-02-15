@@ -10,7 +10,8 @@
     },
     {
       "name": "name_en",
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     {
       "name": "name_cn",

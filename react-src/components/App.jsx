@@ -12,7 +12,7 @@ import TableContent from "./tables/TableContent";
  * @return {JSX.Element} The JSX for the main application
  */
 const App = () => {
-  const { tableSchemas, currentTab } = useStateContext();
+  const { tableSchemas, userSettings } = useStateContext();
 
   if (!tableSchemas) return <>Loading...</>;
 
@@ -39,7 +39,7 @@ const App = () => {
             <Route key={name} path={`/${name}`} element={tableElements[name]} />
           ))}
           <Route path="/Charts" element={<Charts />} />
-          <Route path="/" element={tableElements[currentTab]} />
+          <Route path="/" element={tableElements[userSettings.currentTab]} />
         </Route>
       </Routes>
     </HashRouter>

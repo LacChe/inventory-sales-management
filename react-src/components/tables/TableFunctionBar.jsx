@@ -14,10 +14,10 @@ const TableFunctionBar = () => {
   const { setUserTableSettings, tableSchemas, userSettings, currentTab } =
     useStateContext();
 
-  if (tableSchemas[currentTab] === undefined) return;
-  const displayRecords = generateDisplayData(currentTab);
-  const schema = tableSchemas[currentTab];
-  const tableSettings = userSettings.tableSettings[currentTab];
+  if (tableSchemas[userSettings.currentTab] === undefined) return;
+  const displayRecords = generateDisplayData(userSettings.currentTab);
+  const schema = tableSchemas[userSettings.currentTab];
+  const tableSettings = userSettings.tableSettings[userSettings.currentTab];
 
   /**
    * Format shown data then download
@@ -35,7 +35,7 @@ const TableFunctionBar = () => {
     if (!fields.includes("size"))
       fields = fields.filter((field) => field !== "unit");
 
-    exportSpreadSheet(currentTab, fields, displayRecords);
+    exportSpreadSheet(userSettings.currentTab, fields, displayRecords);
   }
 
   /**
@@ -51,7 +51,7 @@ const TableFunctionBar = () => {
     } else {
       tableSettings.hiddenFields.push(field);
     }
-    setUserTableSettings(currentTab, tableSettings);
+    setUserTableSettings(userSettings.currentTab, tableSettings);
   }
 
   /**
@@ -64,7 +64,7 @@ const TableFunctionBar = () => {
   function filterIncludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterInclude = termArr;
-    setUserTableSettings(currentTab, tableSettings);
+    setUserTableSettings(userSettings.currentTab, tableSettings);
   }
 
   /**
@@ -77,7 +77,7 @@ const TableFunctionBar = () => {
   function filterExcludeOnChangeHandler(term) {
     let termArr = term.split(",");
     tableSettings.filterExclude = termArr;
-    setUserTableSettings(currentTab, tableSettings);
+    setUserTableSettings(userSettings.currentTab, tableSettings);
   }
 
   /**
@@ -87,14 +87,14 @@ const TableFunctionBar = () => {
    */
   function searchOnChangeHandler(term) {
     tableSettings.searchTerm = term;
-    setUserTableSettings(currentTab, tableSettings);
+    setUserTableSettings(userSettings.currentTab, tableSettings);
   }
 
   return (
     <div className="table-function-bar-wrapper">
       <div>
         <Popup modal nested trigger={<button>Add</button>}>
-          <Record tableName={currentTab} schema={schema} />
+          <Record tableName={userSettings.currentTab} schema={schema} />
         </Popup>
         <button onClick={downloadData}>Export</button>
         <Popup position="bottom left" trigger={<button>Toggle Columns</button>}>
