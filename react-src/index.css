@@ -81,6 +81,10 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
+input[type="checkbox"] {
+  accent-color: var(--color-a);
+}
+
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
@@ -238,6 +242,7 @@ button {
 .table-content-body td {
   white-space: nowrap;
   padding: 0px 2px;
+  vertical-align: top;
 }
 
 .table-content-body *.selected {
@@ -301,11 +306,30 @@ button {
   height: 30vh;
   overflow-y: scroll;
   padding: 4px;
+  border-collapse: collapse;
 }
 
 .record-selection-dropdown * {
   padding: 1px 4px;
-  margin: 1px;
+  margin: 1px 0px;
+}
+
+.record-selection-dropdown div:nth-child(3n - 2),
+.record-selection-dropdown div:nth-child(3n - 1) {
+  cursor: pointer;
+}
+
+.record-selection-dropdown .selected {
+  background-color: var(--color-a);
+}
+
+.record-selection-dropdown .selected:nth-child(3n - 2) {
+  border-radius: 5px 0px 0px 5px;
+}
+
+.record-selection-dropdown .selected:nth-child(3n - 1) {
+  border-radius: 0px 5px 5px 0px;
+  margin-right: 2px;
 }
 
 .record-selection-dropdown input {

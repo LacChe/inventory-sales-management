@@ -2,11 +2,17 @@ import React from "react";
 import { useStateContext } from "../../utils/StateContext";
 import Popup from "reactjs-popup";
 import Record from "../records/Record";
-import { generateDisplayData } from "../../utils/dataManip";
+import { generateDisplayData, fillBlankFields } from "../../utils/dataManip";
 
 const TableContent = () => {
-  const { setUserTableSettings, tableSchemas, userSettings, currentTab } =
-    useStateContext();
+  const {
+    setUserTableSettings,
+    tableSchemas,
+    userSettings,
+    currentTab,
+    inventory,
+    products,
+  } = useStateContext();
 
   if (tableSchemas[currentTab] === undefined) return;
   const displayRecords = generateDisplayData(currentTab);
@@ -89,14 +95,22 @@ const TableContent = () => {
         </td>
       );
 
-    // display object type by listing key then values
+    // display object type by listing values then corresponding name
     if (field.type === "object")
       return (
         <td key={`${field.name}`}>
-          {Object.keys(record[field.name]).map((key) => {
+          {Object.keys(record[field.name]).map((id) => {
+            let name = "";
+            if (currentTab === "products") name = inventory[id].name_en;
+            if (currentTab === "transactions")
+              name = fillBlankFields(
+                products[id],
+                tableSchemas.products
+              ).name_en;
+
             return (
-              <div className={searchTermFound ? "selected" : ""} key={key}>
-                {record[field.name][key]} {key}
+              <div className={searchTermFound ? "selected" : ""} key={id}>
+                {record[field.name][id]} {name}
               </div>
             );
           })}
